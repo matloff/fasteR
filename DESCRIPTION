@@ -1,0 +1,9 @@
+Package: fasteR
+Title: Fast Lane to Learning R!
+Version: 0.0.0.9000
+Authors@R: c(person("Norman", "Matloff", email =
+   "matloff@cs.ucdavis.edu", role = c("aut", "cre")))
+Description: Quick,no-prereqs, nonpolemic way to become proficient in R.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
