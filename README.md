@@ -12,4 +12,6 @@ you're fine.
 * **No polemics**:  You won't be made to feel guilty for not using an
 instructor's favorite R tool or style. :-)
 
+* No frills:  E.g. no IDEs; RStudio, ESS etc. are great, but you
+shouldn't be burdened with learning R *and* an IDE at the same tim.e
 
