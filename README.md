@@ -1,10 +1,16 @@
 
 # fasterR: Fast Lane to Learning R!
 
+### Professor of Computer Science, UC Davis
+### [my bio](http://heather.cs.ucdavis.edu/matloff.html)
+
+## Overview:
+
 The site is for those who know nothing of R or even of programming, and
 seek a quick, painless entree to the world of R.
 
-* *FAST*:  You'll already be doing good stuff in R on your first try.
+* *FAST*:  You'll already be doing good stuff -- useful data analysis
+--- in R in your very first lesson.
 
 * No prerequisites:  If you're comfortable with navigating the Web,
 you're fine.  This tutorial is aimed at you, not experienced
