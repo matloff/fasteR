@@ -1,6 +1,8 @@
 
 # fasterR: Fast Lane to Learning R!
 
+![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
+
 ### Professor of Computer Science, UC Davis
 ### [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
@@ -19,20 +21,33 @@ C or Python coders.
 * No polemics:  You won't be made to feel guilty for not using an
 instructor's favorite R tool or style, including mine. :-)
 
-* No frills:  E.g. no IDEs; RStudio, ESS etc. are great, but you
-shouldn't be burdened with learning R *and* an IDE at the same time.
+* No frills:  E.g. no IDEs (Integrated Development Environments);
+  RStudio, ESS etc. are great, but you shouldn't be burdened with
+learning R *and* an IDE at the same time.  This can come later,
+optionally.
 
 * Nonpassive approach:  Passive learning, just watching the screen is NO
-learning.  There will be occasional Your Turn sections, in which you the 
+learning.  There will be occasional **Your Turn** sections, in which you the 
 learner must try your own variants on what has been presented.
 Sometimes the tutorial will be give you some suggestions, but even then,
 you should cook up your own variants to try.
 
-## Contribute your own lesson!
+* Contribute your own lessons!:  Yes, "your name in lights"; see below.
+
+Please note again:  You will just be using R from the command line here.
+Most tutorials, say the excellent one by [R-Ladies
+Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
+start with RStudio, a very attractive, many-featured IDE.  But even the
+R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
+stick to the R command line, and focus on data analysis, not advanced
+tools.
+
+## Contribute your own lessons!
 
 If there is any interest, it would be fun for some useRs out there to
-contribute lessons here.  Both experts and novices are encouraged!
-(Please check with me.  Note the rules above.  I will be the arbiter here.)
+contribute lessons here.  Both experts **and novices** are encouraged,
+especially the latter!  Maybe do one with a friend.  I'll help you
+through the kinks, and your name will be displayed with your contribution.
 
 ## Getting started:
 
@@ -69,7 +84,7 @@ Let's find the mean flow:
 [1] 919.35
 ```
 
-Here **mean** is an example of an R *function*, and in this case Mile is
+Here **mean** is an example of an R *function*, and in this case Nile is
 an *argument* -- fancy way of saying "input" -- to that function.  That
 output, 919.35, is called the **return value** or simply *value*.
 
@@ -95,7 +110,7 @@ Now you can see how the row labels work.  There are 15 numbers per row,
 here, so the second row starts with the 16th, indicated by '[16]'.
 
 R has great graphics, not only in base R but also in user-contributed
-packages, such as **ggplot2** and **lattice**.  But will start with a
+packages, such as **ggplot2** and **lattice**.  But we'll start with a
 very simple, non-dazzling one, a no-frills histogram:
 
 ``` r
@@ -143,16 +158,18 @@ How do we designate the 80th through 100th elements in the **Nile**
 data?
 
 First, note that a set of numbers such as **Nile** is called a *vector*.
-Individual elements can be accessed using *subscripts* or *indices*;
-e.g. 
+Individual elements can be accessed using *subscripts* or *indices*,
+which are specified using brackets, e.g. 
 
 ``` r
 > Nile[2]
 [1] 1160
 ```
 
-The **c** ("concatenate") function strings several numbers together.
-E.g. we can get the 2nd, 5th and 6th:
+for the second element (which we see above is indeed 1160).
+
+The **c** ("concatenate") function builds a vector, strings several
+numbers together.  E.g. we can get the 2nd, 5th and 6th:
 
 ``` r
 > Nile[c(2,5,6)]
@@ -166,6 +183,33 @@ And 80:100 means all the numbers from 80:10.  So can do
 [1] 877.6667
 ```
 
+If we plan to do more with that time period, we should make a copy of
+it:
+
+``` r
+> n80100 <- Nile[80:100]
+> mean(n80100)
+[1] 877.6667
+> sd(n80100)
+[1] 122.4117
+```
+
+The function **sd** finds the standard deviation.
+
+We can pretty much choose any name we want; "n80100" just was chosen
+to easily remember this new vectors's provenance.  (But names can't
+include spaces, and must start with a letter.)
+
+Note that **n80100** now is a 21-element vector.  Its first element is
+now element 80 of **Nile**:
+
+``` r
+> n80100[1]
+[1] 890
+> Nile[80]
+[1] 890
+```
+
 <blockquote>
 
 **Your Turn:** Devise and try variants of the above, say finding the
@@ -174,3 +218,71 @@ mean over the years 1945-1960.
 </blockquote>
 
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
+
+## Lesson 2:  More on vectors
+
+Continuing along the Nile, say we would like to know in how many years
+the level exceeded 1200.  Let's first introduce R's **sum** function:
+
+``` r
+> sum(c(5,12,13))
+[1] 30
+```
+
+Here the ***c*** function built a vector consisting of 5, 12 and 13, and
+that vector was then fed into the **sum** function, returning 5+12+13 = 30.
+
+By the way, the above is our first example of *function composition*,
+where the output of one function, ***c*** here, is fed as input into
+another, **sum** in this case.
+
+We can now use this to answer our question on the **Nile** data:
+
+``` r
+> sum(Nile > 1200)
+[1] 7
+```
+
+But how in the world did that work?  Bear with me a bit here.
+
+``` r
+> x <- c(5,12,13)
+> x > 8
+[1] FALSE  TRUE  TRUE
+> sum(x > 8)
+[1] 2
+```
+
+First, that 8 was *recycled* into 3 8s, i.e. the vector (8,8,8), in
+order to have the same length as **x**.  Then, the 5 was compared to the
+first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 was
+compared to the second 8, then 13 with the third.  So, we got the vector
+FALSE,TRUE,TRUE)
+
+Fine, but how will **sum** add up some TRUEs and FALSEs?  The
+answer is that R, like most computer languages, treats TRUE and FALSE as
+1 and 0, respectively.  So we summed the vector (0,1,1), yielding 2.
+
+<blockquote>
+
+**Your Turn:** Try a few other experiments of your choice using **sum**.
+I'd suggest starting with finding the sum of the first 25 elements in
+**Nile**.  You may wish to start with experiments on a small vector, say
+(2,1,1,6,8,5), so you will know that your answers are correct.
+Remember, you'll learn best nonpassively.  Code away!
+
+</blockquote>
+
+## Lesson 3:  On to data frames!
+
+Right after vectors, the next major workhorse of R is the *data frame*.
+It's a rectangular table consisting of one row for each data point.
+
+Say we have height, weight and age on each of 100 people.  Our data
+frame would have 100 rows and 3 columns.  The entry in, e.g., the second
+row and third column would be the age of the second person in our data. 
+
+As our example, let's use the famous Pima diabetes study.  Obtain it as
+follows:
+
+
