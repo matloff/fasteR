@@ -194,7 +194,8 @@ it:
 [1] 122.4117
 ```
 
-The function **sd** finds the standard deviation.
+The function **sd** finds the standard deviation.  Note that we used R's
+*assignment operator* here to copy the **Nile** element to **n80100**.
 
 We can pretty much choose any name we want; "n80100" just was chosen
 to easily remember this new vectors's provenance.  (But names can't
@@ -282,7 +283,68 @@ Say we have height, weight and age on each of 100 people.  Our data
 frame would have 100 rows and 3 columns.  The entry in, e.g., the second
 row and third column would be the age of the second person in our data. 
 
-As our example, let's use the famous Pima diabetes study.  Obtain it as
-follows:
+As our first example, consider the **ToothGrowth** dataset built-in to
+R.  Again, you can read about it in the online help (the data turn out
+to be on guinea pigs, with orange juice or Vitamin C as growth agents).
+Let's take a quick look from the command line.
+
+``` r
+> head(ToothGrowth)
+   len supp dose
+1  4.2   VC  0.5
+2 11.5   VC  0.5
+3  7.3   VC  0.5
+4  5.8   VC  0.5
+5  6.4   VC  0.5
+6 10.0   VC  0.5
+```
+
+R's **head** function displays (by default) the first 6 rows of the
+given dataframe.  We see there are length, supplement and dosage
+columns.  
+
+To avoid writing out the long word "ToothGrowth" repeatedly, let's
+make a copy.
+
+``` r
+> tg <- ToothGrowth
+```
+
+How large is the dataset?
+
+``` r
+> dim(tg)
+[1] 60  3
+```
+
+Ah, 60 rows and 3 columns (60 guinea pigs, 3 measurements each).
+
+Dollar signs are used to denote the individual columns.  E.g. we can
+print out the mean length; **tg$len** is the tooth length column, so
+
+``` r
+> mean(tg$len)
+[1] 18.81333
+```
+
+Subscripts in data frames are pairs, specifying row and column numbers.
+To get the element in row 3, column 1:
+
+``` r
+> tg[3,1]
+[1] 7.3
+```
+which matches what we saw above.  Or, use the fact that **tg$len** is a
+vector:
+
+``` r
+> tg$len[3]
+[1] 7.3
+```
+
+The element in row 3, column 1 in the *data frame* **tg** is element 3 in
+the *vector* *tg$len*.
+
+
 
 
