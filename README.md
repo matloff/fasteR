@@ -1,9 +1,9 @@
 
-# fasterR: Fast Lane to Learning R!
+# fasteR: Fast Lane to Learning R!
 
 ![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
 
-### Professor of Computer Science, UC Davis
+### Norm Matloff, Prof. of Computer Science, UC Davis
 ### [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
 ## Overview:
@@ -21,14 +21,19 @@ C or Python coders.
 * No polemics:  You won't be made to feel guilty for not using an
 instructor's favorite R tool or style, including mine. :-)
 
-* No frills:  E.g. no IDEs (Integrated Development Environments);
-  RStudio, ESS etc. are great, but you shouldn't be burdened with
+* No frills:  E.g. no IDEs (Integrated Development Environments).
+RStudio, ESS etc. are great, but you shouldn't be burdened with
 learning R *and* an IDE at the same time.  This can come later,
 optionally.
 
+* "When in doubt, Try it out!"  This is a motto I devised for teaching.
+If you are unclear or curious about something, try it out!  Just devise
+a little experiment, and type in the code.  Don't worry -- you won't
+"break" things.
+
 * Nonpassive approach:  Passive learning, just watching the screen is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
-learner must try your own variants on what has been presented.
+learner must devise and try your own variants on what has been presented.
 Sometimes the tutorial will be give you some suggestions, but even then,
 you should cook up your own variants to try.
 
@@ -38,24 +43,33 @@ For the time being, the main part of this online course will be this
 **README.md** file.  It is set up as a potential R package, though, and
 I may implement that later.
 
+GPL-3:  Permission granted to copy/modify, provided the source (N. Matloff) is
+stated.  No warranties.
+
 ## Please note again:  
 
 * You will just be using R from the command line here.  Most tutorials,
 say the excellent one by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
-start with RStudio, a very attractive, many-featured IDE.  But even the
+start with RStudio.  It is a very attractive, powerful IDE.  But even the
 R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
 stick to the R command line, and focus on data analysis, not advanced
 tools.
 
-* The **Your Turn** sections are absolutely crucial.  Devise your own
-little examples, and try them out!
+* Nonpassive learning is absolutely key!  So even if the output of an R
+command is shown here, run the command yourself in your R console,
+by copy-and-pasting from this document.
+
+* Similarly, the **Your Turn** sections are absolutely crucial.  Devise
+your own little examples, and try them out!
 
 ## Contribute your own lessons!
 
 If there is any interest, it would be fun for some useRs out there to
 contribute lessons here.  Both experts **and novices** are encouraged,
-especially the latter!  Maybe do one with a friend.  I'll help you
+especially the latter!  It's like what happens in a classroom, where
+only a few students ask questions and the rest are too shy to do so.
+Don't be shy!  Maybe do one with a friend.  I'll help you
 through the kinks, and your name will be displayed with your contribution.
 
 ## Getting started:
@@ -66,21 +80,23 @@ window.
 
 As noted, this tutorial will be "bare bones."  In particular, there is
 no script to type your command for you.  Instead, you will either
-copy-and-paste from the test here, or type by hand.
+copy-and-paste from the test here, or type by hand.  (Note that the code
+lines here will all begin with the R interactive prompt, '>'; that
+should not be typed.)
 
 ## First R steps:
 
 The R command prompt is '>'.  It will be shown here, but you don't type
 it.
 
-So, just type '1+1'.  Sure enough, it prints out 2:
+So, just type '1+1' then hit Enter.  Sure enough, it prints out 2:
 
 ```R
 > 1 + 1
 [1] 2
 ```
 But what is that '[1]' here?  It's just a row label.  We'll go into that
-later, not needed now.
+later, not needed yet.
 
 R includes a number of built-in datasets, mainly for illustration
 purposes.  One of them is **Nile**, 100 years of annual flow data on the
@@ -133,7 +149,8 @@ No return value for the **hist** function, but it does create the graph
 
 
 **Your Turn:**  The **hist** function draws 10 bins in the histogram by
-default, but you can choose other values.  E.g.
+default, but you can choose other values, by specifying a second
+argument to the function, named **breaks**:  
 
 ``` r
 > hist(Nile,breaks=20)
@@ -177,7 +194,7 @@ which are specified using brackets, e.g.
 
 for the second element (which we see above is indeed 1160).
 
-The **c** ("concatenate") function builds a vector, strings several
+The **c** ("concatenate") function builds a vector, stringing several
 numbers together.  E.g. we can get the 2nd, 5th and 6th:
 
 ``` r
@@ -185,7 +202,8 @@ numbers together.  E.g. we can get the 2nd, 5th and 6th:
 [1] 1160 1160 1160
 ```
 
-And 80:100 means all the numbers from 80:10.  So can do
+And 80:100 means all the numbers from 80:10.  So, to answer the above
+question on the mean flow during 1951-1971, we can do
 
 ``` r
 > mean(Nile[80:100])
@@ -203,14 +221,15 @@ it:
 [1] 122.4117
 ```
 
-The function **sd** finds the standard deviation.  Note that we used R's
-*assignment operator* here to copy the **Nile** element to **n80100**.
-(In most situations, you can use "=" instead of "<-", but why worry
-about what the exceptions might be?  They are arcane, so it's easier
-just to always Use "<-".)
+The function **sd** finds the standard deviation.  
+
+Note that we used R's *assignment operator* here to copy those
+particular  **Nile** elements to **n80100**.  (In most situations, you
+can use "=" instead of "<-", but why worry about what the exceptions
+might be?  They are arcane, so it's easier just to always use "<-".)
 
 We can pretty much choose any name we want; "n80100" just was chosen
-to easily remember this new vectors's provenance.  (But names can't
+to easily remember this new vector's provenance.  (But names can't
 include spaces, and must start with a letter.)
 
 Note that **n80100** now is a 21-element vector.  Its first element is
@@ -222,6 +241,10 @@ now element 80 of **Nile**:
 > Nile[80]
 [1] 890
 ```
+
+Keep in mind that although **Nile** and **n80100** now have identical
+contents, they are *separate* vectors; if one changes, the other will
+not.
 
 <blockquote>
 
@@ -242,8 +265,9 @@ the level exceeded 1200.  Let's first introduce R's **sum** function:
 [1] 30
 ```
 
-Here the ***c*** function built a vector consisting of 5, 12 and 13, and
-that vector was then fed into the **sum** function, returning 5+12+13 = 30.
+Here the ***c*** function ("concatenate") built a vector consisting of
+5, 12 and 13.  That vector was then fed into the **sum** function,
+returning 5+12+13 = 30.
 
 By the way, the above is our first example of *function composition*,
 where the output of one function, ***c*** here, is fed as input into
@@ -256,7 +280,8 @@ We can now use this to answer our question on the **Nile** data:
 [1] 7
 ```
 
-But how in the world did that work?  Bear with me a bit here.
+But how in the world did that work?  Bear with me a bit here.  Let's
+look at a small example first:
 
 ``` r
 > x <- c(5,12,13)
@@ -270,7 +295,7 @@ First, that 8 was *recycled* into 3 8s, i.e. the vector (8,8,8), in
 order to have the same length as **x**.  Then, the 5 was compared to the
 first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 was
 compared to the second 8, then 13 with the third.  So, we got the vector
-FALSE,TRUE,TRUE)
+(FALSE,TRUE,TRUE).
 
 Fine, but how will **sum** add up some TRUEs and FALSEs?  The
 answer is that R, like most computer languages, treats TRUE and FALSE as
@@ -297,8 +322,8 @@ row and third column would be the age of the second person in our data.
 
 As our first example, consider the **ToothGrowth** dataset built-in to
 R.  Again, you can read about it in the online help (the data turn out
-to be on guinea pigs, with orange juice or Vitamin C as growth agents).
-Let's take a quick look from the command line.
+to be on guinea pigs, with orange juice or Vitamin C as growth
+supplements).  Let's take a quick look from the command line.
 
 ``` r
 > head(ToothGrowth)
@@ -357,6 +382,36 @@ vector:
 The element in row 3, column 1 in the *data frame* **tg** is element 3 in
 the *vector* **tg$len**.
 
+Some data frames don't have column names, but that is no obstacle.  We
+can use column numbers, e.g.
+
+``` r
+> mean(tg[,1])
+[1] 18.81333
+```
+
+One can extract subsets of data frames, using either some of the rows or
+some of the columns, e.g.:
+
+``` r
+> z <- tg[2:5,c(1,3)]
+> z
+   len dose
+2 11.5  0.5
+3  7.3  0.5
+4  5.8  0.5
+5  6.4  0.5
+```
+
+Here we extracted rows 2 through 5, and columns 1 and 3, assigning the
+result to **z**.  To extract those columns but keep all rows, do
+
+``` r
+> y <- tg[ ,c(,1,3)]
+```
+
+i.e. leave the row specification field empty.
+
 <blockquote>
 
 **Your Turn:** Devise your own little examples with the **ToothGrowth**
@@ -369,13 +424,97 @@ last eruption.
 
 </blockquote>
 
-## Lesson 4:  Data cleaning
+## Lesson 4:  R Factor Class
+
+Each object in R has a *class*. The number 3 is of the **'numeric'**
+class, the character string 'abc' is of the **'character'** class, and
+so on.  (In R, class names are quoted; one can use single or double
+quotation marks.) What about **tg** and **tg$supp**?
+
+``` r
+> class(tg)
+[1] "data.frame"
+> class(tg$supp)
+[1] "factor"
+```
+
+R factors are used when we have *categorical* variables.  If in a
+genetics study, say, we have a variable for hair color, that might
+comprise four categories:  black, brown, red, blond.  We can find the
+list of categories for **tg$supp** as follows:
+
+``` r
+> levels(tg$supp)
+[1] "OJ" "VC"
+```
+
+The supplements were either orange juice or Vitamin C.
+
+Factors can sometimes be a bit tricky to work with, but the above is
+enough for now.  Let's see how to apply the notion in the current
+dataset.
+
+Let's compare mean tooth length for the two types of supplements:
+
+``` r
+> tgoj <- tg[tg$supp == 'OJ',]
+> tgvc <- tg[tg$supp == 'VC',]
+> mean(tgoj$len)
+[1] 20.66333
+> mean(tgvc$len)
+[1] 16.96333
+```
+
+What did that first line do?  We extracted the rows of **tg** for which
+the suppolement was orange juice, with no restriction on columns, and
+assigned the result to **tgoj**.  (Once again, we can choose any name;
+we chose this one to help remember what we put into that variable.)
+
+Often in R there is a shorter, more compact way of doing things.  That's
+the case here; we can use the magical **tapply** function:
+
+``` r
+> tapply(tg$len,tg$supp,mean)
+      OJ       VC 
+20.66333 16.96333 
+```
+
+In English:  "Split **tg$len** into two groups, according to the value
+of **tg$supp**, then apply **mean** to each group."  Note that the
+result was returned as a vector:
+
+``` r
+> z <- tapply(tg$len,tg$supp,mean)
+> z[1]
+      OJ 
+20.66333 
+> z[2]
+      VC 
+16.96333 
+```
+
+That can be quite handy, because we can use that result in subsequent
+code.
+
+<blockquote>
+
+**Your Turn:**  One of the most famous built-in R datasets is
+**mtcars**, which has various measurements on cars from the 60s and 70s.
+Lots of opportunties for you to cook up little experiments here!  You
+may wish to start by comparing the mean miles-per-gallon values for 4-,
+6- and 8-cylinder cars.  Another suggestion would be to find *how many*
+cars there are in each category, using **tapply**.  Use R's **length**
+function instead of **mean**.
+
+</blockquote>
+
+## Lesson 5:  Data cleaning
 
 Most real-world data is "dirty," i.e. filled with errors.  The famous
 [New York taxi trip
 dataset](https://data.cityofnewyork.us/Transportation/2017-Yellow-Taxi-Trip-Data/biws-g3hs),
 for instance, has one trip destination whose lattitude and longitude
-place it in Antartica! The presence of such data on one's statistical
+place it in Antartica! The impact of such erroneous data on one's statistical
 analysis can be anywhere from mild to disabling.  Let's see below how one
 might ferret out bad data.  And along the way, we'll cover several new R
 concepts.
@@ -479,8 +618,8 @@ one object:
 > pima$glucose[pima$glucose == 0] <- NA
 ```
 
-Note the double-equal sign!  If we wish to test whether, say, **a** and
-**b** are equal, the expression must be "a == b", not "a = b"; the
+Note the double-equal sign!  If we wish to test whether, say, ***a*** and
+***b*** are equal, the expression must be "a == b", not "a = b"; the
 latter would do "a <- b".
 
 As a check, let's verify that we now have 5 NAs in the glucose variable:
