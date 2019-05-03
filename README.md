@@ -34,13 +34,18 @@ you should cook up your own variants to try.
 
 * Contribute your own lessons!:  Yes, "your name in lights"; see below.
 
-Please note again:  You will just be using R from the command line here.
-Most tutorials, say the excellent one by [R-Ladies
+## Please note again:  
+
+* You will just be using R from the command line here.  Most tutorials,
+say the excellent one by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 start with RStudio, a very attractive, many-featured IDE.  But even the
 R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
 stick to the R command line, and focus on data analysis, not advanced
 tools.
+
+* The **Your Turn** sections are absolutely crucial.  Devise your own
+little examples, and try them out!
 
 ## Contribute your own lessons!
 
@@ -343,8 +348,20 @@ vector:
 ```
 
 The element in row 3, column 1 in the *data frame* **tg** is element 3 in
-the *vector* *tg$len*.
+the *vector* **tg$len**.
 
+<blockquote>
 
+**Your Turn:** Devise your own little examples with the **ToothGrowth**
+data.  For instance, write code that finds the number of cases in which
+the length was less than 16.  Also, try some examples with another
+built-in R dataset, **faithful**.  This one involves the Old Faithful
+geyser in Yellowstone National Park in the US.  The first column gives
+duration of the eruption, and the second has the waiting time since the
+last eruption.
+
+</blockquote>
+
+## Lesson 4:  Data cleaning
 
 
