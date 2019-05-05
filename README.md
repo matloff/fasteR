@@ -840,6 +840,9 @@ of the list, which is the first column of the data frame.
 
 ## Lesson 7:  Another Look at the Nile Data
 
+Here we'll learn several new concepts, using the **Nile** data as our
+starting point.
+
 If you look again at the histogram of the Nile we generated, you'll see
 a gap between the lowest numbers and the rest.  In what year(s) did
 those really low values occur?  Let's plot the data:
@@ -850,4 +853,64 @@ those really low values occur?  Let's plot the data:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/NileOverTime.png)
 
+Looks like maybe 1912 or so.  Is this an error?  Or was there some big
+historical event then?  This would require more than R to track down,
+but at least R can tell us which year or years correspond to the
+unusually low flow.
 
+<blockquote>
+
+**Your Turn:**  Let's say this one is for Extra Credit.  But try it!  It's actually not too hard.  Do some exploration.  Find out the year(s) in which this occurred.  We said earlier that programming is like solving a puzzle.  Well, here is a puzzle for you!  You have various tools you've learned; use them in some manner to achieve the goal of finding the time( s) of the low flow(s).
+
+</blockquote>
+
+Here is another point:  That function **plot** is not quite so innocuous
+as it may seem.
+
+``` r
+> plot(mtcars$wt,mtcars$mpg)
+```
+
+In contrast to the previous plot, in which our data were on the vertical
+axis and time was on the horizontal, now we are plotting *two* datasets,
+against each other.
+
+There are a couple of important points here.  First, as we might guess,
+we see that the heavier cars tended to get poorer gas mileage.  But
+here's more:  That **plot** function is pretty smart!
+
+Why?  Well, **plot** knew to take different actions for different input
+types.  When we fed it a single vector, it plotted those numbers against
+time.  When we fed it two vectors, it knew to do a scatter plot.
+
+In fact, **plot** was even smarter than that.  It noticed that **Nile**
+is not just of **'numeric'** type, but also of another class, **'ts'**
+("time series"):
+
+``` r
+> is.numeric(Nile)
+[1] TRUE
+> class(Nile)
+[1] "ts"
+```
+
+So, it put years on the horizontal axis, instead of subscripts 1,2,3,...
+
+And one more thing:  Say we wanted to know the flow in the year 1925.
+The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  The
+means the flow for that year is in element 1+44 = 55.
+
+``` r
+> Nile[55]
+[1] 698
+```
+
+OK, but why did we do this arithmetic ourselves?  We should have R do
+it:
+
+``` r
+> Nile[1925 - 1871 + 1]
+[1] 698
+```
+
+This is the start of your path to programming.
