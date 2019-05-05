@@ -23,7 +23,7 @@ instructor's favorite R tool or style, including mine. :-)
 
 * No frills:  E.g. no IDEs (Integrated Development Environments).
 RStudio, ESS etc. are great, but you shouldn't be burdened with
-learning R *and* an IDE at the same time.  This can come later,
+learning R *and* learning an IDE at the same time.  This can come later,
 optionally.
 
 * "When in doubt, Try it out!"  This is a motto I devised for teaching.
@@ -153,7 +153,7 @@ very simple, non-dazzling one, a no-frills histogram:
 ```
 
 No return value for the **hist** function, but it does create the graph
-(not shown here; it should be on your screen).
+(shown here; it should be on your screen too).
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
@@ -450,7 +450,12 @@ last eruption.
 Each object in R has a *class*. The number 3 is of the **'numeric'**
 class, the character string 'abc' is of the **'character'** class, and
 so on.  (In R, class names are quoted; one can use single or double
-quotation marks.) What about **tg** and **tg$supp**?
+quotation marks.) Note that vectors of numbers are of  **'numeric'**
+class too; actually, a single number is considered to be a vector of
+length 1.  So, **c('abc','xw')**, for instance, is  **'numeric'**
+as well.
+
+What about **tg** and **tg$supp**?
 
 ``` r
 > class(tg)
@@ -714,9 +719,14 @@ the function to skip the NAs:
 <blockquote>
 
 **Your Turn:**  Determine which other columns in **pima** have
-suspcious 0s, and replace them with NA values.
+suspcious 0s, and replace them with NA values.  
 
 </blockquote>
+
+Now, look again at the plot we made earlier of the Nile flow histogram.
+There seems to be a gap between the numbers at the low end and the rest.
+What years did these correspond to?
+
 
 ## Lesson 6:  R List Class
 
@@ -827,3 +837,17 @@ Each column is one element of the list.  So for instance,
 
 Here we used the double-brackets list notation to get the first element
 of the list, which is the first column of the data frame.
+
+## Lesson 7:  Another Look at the Nile Data
+
+If you look again at the histogram of the Nile we generated, you'll see
+a gap between the lowest numbers and the rest.  In what year(s) did
+those really low values occur?  Let's plot the data:
+
+``` r
+> plot(Nile)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/NileOverTime.png)
+
+
