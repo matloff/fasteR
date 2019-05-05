@@ -197,8 +197,8 @@ How do we designate the 80th through 100th elements in the **Nile**
 data?
 
 First, note that a set of numbers such as **Nile** is called a *vector*.
-Individual elements can be accessed using *subscripts* or *indices*,
-which are specified using brackets, e.g. 
+Individual elements can be accessed using *subscripts* or *indices*
+(singular is *index*), which are specified using brackets, e.g. 
 
 ``` r
 > Nile[2]
@@ -206,6 +206,8 @@ which are specified using brackets, e.g.
 ```
 
 for the second element (which we see above is indeed 1160).
+
+The value 2 here is the index.
 
 The **c** ("concatenate") function builds a vector, stringing several
 numbers together.  E.g. we can get the 2nd, 5th and 6th:
@@ -266,6 +268,14 @@ mean over the years 1945-1960.
 
 </blockquote>
 
+Another oft-used function is **length**, which gives the length of the
+vector, e.g.
+
+``` r
+> length(Nile)
+[1] 100
+```
+
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
 ## Lesson 2:  More on vectors
@@ -305,7 +315,8 @@ look at a small example first:
 ```
 
 First, that 8 was *recycled* into 3 8s, i.e. the vector (8,8,8), in
-order to have the same length as **x**.  Then, the 5 was compared to the
+order to have the same length as **x**.  This sets up an
+element-by-element comparison.  Then, the 5 was compared to the
 first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 was
 compared to the second 8, then 13 with the third.  So, we got the vector
 (FALSE,TRUE,TRUE).
@@ -522,15 +533,30 @@ result was returned as a vector:
 That can be quite handy, because we can use that result in subsequent
 code.
 
+Instead of **mean**, we can use any function as that third argument in
+**tapply**.  Here is another example, using the built-in dataset
+**PlantGrowth**:
+
+``` r
+> tapply(PlantGrowth$weight,PlantGrowth$group,length)
+ctrl trt1 trt2 
+  10   10   10 
+```
+
+Here **tapply** split the **weight** vector into subsets according to
+the **group** variable, then called the **length** function on each
+subset.  We see that each subset had length 10, i.e. the experiment had
+assigned 10 plants to the control, 10 to treatment 1 and 10 to treatment
+2.
+
 <blockquote>
 
 **Your Turn:**  One of the most famous built-in R datasets is
 **mtcars**, which has various measurements on cars from the 60s and 70s.
 Lots of opportunties for you to cook up little experiments here!  You
 may wish to start by comparing the mean miles-per-gallon values for 4-,
-6- and 8-cylinder cars.  Another suggestion would be to find *how many*
-cars there are in each category, using **tapply**.  Use R's **length**
-function instead of **mean**.
+6- and 8-cylinder cars.  Another suggestion would be to find how many
+cars there are in each cylinder category, using **tapply**.  
 
 </blockquote>
 
@@ -788,7 +814,7 @@ We can access them individually with the dollar sign notation:
  [1] 22.8 24.4 22.8 32.4 30.4 33.9 21.5 27.3 26.0 30.4 21.4
 ```
 
-Or, we can use subscripts, though now with double brackets:
+Or, we can use indices, though now with double brackets:
 
 ``` r
 > mtl[[1]]
@@ -856,11 +882,37 @@ those really low values occur?  Let's plot the data:
 Looks like maybe 1912 or so.  Is this an error?  Or was there some big
 historical event then?  This would require more than R to track down,
 but at least R can tell us which year or years correspond to the
-unusually low flow.
+unusually low flow.  Here is how:
+
+We see from the graph that the unusually low value was below 600.  We
+can use R's **which** function to see when that occurred:
+
+``` r
+> which(Nile < 600)       
+[1] 43
+```
+
+As before, make sure to understand what happened in this code.  The
+expression "Nile < 600" yields 100 TRUEs and FALSEs.  The **which**
+then tells us which of those were TRUEs.
+
+So, element 43 is the culprit here, corresponding to year 1871+42=1913.  Again, 
+we would have to find supplementary information in order
+to decide whether this is a genuine value or an error.
+
+Of course, since this is a small dataset, we could have just printed out the
+entire data and visually scanned it for a low number.  But what if the
+length of the data vector had been 100,000 instead of 100?  Then the
+visual approach wouldn't work.  Moreover, a goal of programming is to
+automate tasks, rather than doing them by hand.
 
 <blockquote>
 
-**Your Turn:**  Let's say this one is for Extra Credit.  But try it!  It's actually not too hard.  Do some exploration.  Find out the year(s) in which this occurred.  We said earlier that programming is like solving a puzzle.  Well, here is a puzzle for you!  You have various tools you've learned; use them in some manner to achieve the goal of finding the time( s) of the low flow(s).
+**Your Turn:**  There appear to be some unusually high values as well,
+e.g. one around 1875.  Determine which year this was, using the
+techniques presented here.  Also, try some similar analysis on the
+built-in **AirPassengers** data.  Can you guess why those peaks are
+occurring?
 
 </blockquote>
 
@@ -894,7 +946,7 @@ is not just of **'numeric'** type, but also of another class, **'ts'**
 [1] "ts"
 ```
 
-So, it put years on the horizontal axis, instead of subscripts 1,2,3,...
+So, it put years on the horizontal axis, instead of indices 1,2,3,...
 
 And one more thing:  Say we wanted to know the flow in the year 1925.
 The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  The
@@ -913,4 +965,24 @@ it:
 [1] 698
 ```
 
-This is the start of your path to programming.
+R did the computation 1925 - 1871 + 1 itself, yielding 55, then looked
+up the value of **Nile[55]**.  This is the start of your path to
+programming.
+
+## Pause to Reflect
+
+How does one build a house?  There of course is no set formula.  One has
+various tools and materials, and the goal is to put these together in a
+creative way to produce the end result, the house.
+
+It's the same with R.  The tools here are the various functions, e.g.
+**mean** and **which**, and the materials are one's data.  One then must
+creatively put them together to achieve one's goal, say ferreting out
+patterns in ridership in a public transportation system.  Again, it is a
+creative process; there is no formula for anything.  But that is what
+makes it fun, like solving a puzzle.
+
+And...we can combine various functions in order to build *our own*
+functions.  This will come in future lessons.
+
+## Lesson 8:  (under construction)
