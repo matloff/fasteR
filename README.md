@@ -155,7 +155,7 @@ very simple, non-dazzling one, a no-frills histogram:
 No return value for the **hist** function, but it does create the graph
 (not shown here; it should be on your screen).
 
-![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/Nile.png)
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
 
 <blockquote>
