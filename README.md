@@ -998,9 +998,9 @@ packages, with the best known being **ggplot2** and **lattice**.  These
 latter two are extremely powerful, and will be the subjects of future
 lessons, but for now we'll concentrate on the base.
 
-As our example here, we'll use a dataset I compiled on programmers and
-engineers, from the US 2000 census.  Let's read in the data and take a
-look at the first records:
+As our example here, we'll use a dataset I compiled on Silicon Valley 
+programmers and engineers, from the US 2000 census.  Let's read 
+in the data and take a look at the first records:
 
 ``` r
 > pe <- read.table('https://raw.githubusercontent.com/matloff/polyreg/master/data/prgeng.txt',header=TRUE)
@@ -1013,3 +1013,30 @@ look at the first records:
 5 51.18112   11 100   2     160       1
 6 57.70413   11 100   1       0       0
 ```
+
+Here **educ** and **occ** are codes, for levels of education and
+different occupations.  For now, let's not worry about the specific
+codes.
+
+Let's start with a scatter plot of wage vs. age:
+
+``` r
+> plot(pe$age,pe$wageinc)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge1.png)
+
+Oh not, the dreaded Black Screen Problem!  There are about 20,000 data
+points, thus filling certain parts of the screen.  So, let's just plot a
+random sample, say 2500.  
+
+``` r
+> indxs <- sample(1:nrow(pe),2500)
+> pe2500 <- pe[indxs,]
+```
+
+R's built-in **sample** function does what it's name implies.  Here it
+randomly sample 2500 of the numbers from 1 to 20090.  We then extracted
+those rows of **pe**, in a new data frame **pe2500**.
+
+
