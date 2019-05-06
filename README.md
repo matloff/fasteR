@@ -1157,9 +1157,18 @@ we really want.  (In the case of **ggplot2**, this is handled by the
 software.)
 
 Well, then, what does the graph tell us?  The peak for women, a little
-less than $50,000, seems to be at a lower wage than for men, at
+less than $50,000, seems to be at a lower wage than that for men, at
 something like $60,000.  At salaries around, say, $125,000, there seem
-to be more men than women (black curve higher than red curve; remember,
-the curves are just smoothed histograms).
+to be more men than women.  (Black curve higher than red curve. 
+Remember, the curves are just smoothed histograms, so, if a curve is
+really high at, say 168.0, that means that 168.0 is very
+frequently-occurring value..)
+
+<blockquote>
+
+**Your Turn:**  Try plotting multiple such curves on the same, for other
+data.
+
+</blockquote>
 
 
