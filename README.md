@@ -745,7 +745,7 @@ the function to skip the NAs:
 <blockquote>
 
 **Your Turn:**  Determine which other columns in **pima** have
-suspcious 0s, and replace them with NA values.  
+suspicious 0s, and replace them with NA values.  
 
 </blockquote>
 
