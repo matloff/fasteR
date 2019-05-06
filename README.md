@@ -463,7 +463,7 @@ class, the character string 'abc' is of the **'character'** class, and
 so on.  (In R, class names are quoted; one can use single or double
 quotation marks.) Note that vectors of numbers are of  **'numeric'**
 class too; actually, a single number is considered to be a vector of
-length 1.  So, **c('abc','xw')**, for instance, is  **'numeric'**
+length 1.  So, **c('abc','xw')**, for instance, is  **'character'**
 as well.
 
 What about **tg** and **tg$supp**?
