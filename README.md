@@ -17,7 +17,7 @@
 * [Lesson 6:  R List Class](#less6)
 * [Lesson 7:  Another Look at the Nile Data](#less7)
 * [Pause to Reflect](#pause1)
-* [Lesson 8 (under construction)](#less8)
+* [Lesson 8: Introduction to Base R Graphics ](#less8)
 
 ## <a name="overview"> </a> Overview and Getting Started
 
@@ -1073,10 +1073,29 @@ requires an R factor; the function **as.factor** does the conversion.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge3.png)
 
-The red dots are the women.  Are they generally paid less than men?
-There seems to be a hint of that, but detailed statistical analysis is
-needed (a future lesson).  One thing we can see, though:  There appear
-to be no women at that $300,000 level.
+The red dots are the women.  (Details below.) Are they generally paid
+less than men?  There seems to be a hint of that, but detailed
+statistical analysis is needed (a future lesson).  
 
-It would be good to have better labels on the axes, and a legend to
-state who are the black dots and who are the red.
+It would be good to have better labels on the axes, and maybe smaller
+dots:
+
+``` r
+> plot(pe2500$age,pe2500$wageinc,col=as.factor(pe2500$sex),xlab='age',ylab='wage',cex=0.6)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge4.png)
+
+Here 'xlab' meant "X label" and similarly for 'ylab'.  The argument 'cex
+= 0.6' means "Draw the dots at 60% of default size."
+
+Now, how did the men's dots come out black and the women's red?  The
+first record in the data was for a man, so black was assigned to men.
+And why black and red?  They are chosen from a list of default colors;
+again, details in a future lesson.
+
+There are many, many other features.  More in a future lesson.
+
+
+
+
