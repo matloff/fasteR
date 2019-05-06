@@ -18,33 +18,34 @@
 * [Lesson 7:  Another Look at the Nile Data](#less7)
 * [Pause to Reflect](#pause1)
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
+* [Lesson 9: More on Graphics ](#less9)
 
 ## <a name="overview"> </a> Overview and Getting Started
 
 The site is for those who know nothing of R or even of programming, and
 seek a quick, painless entree to the world of R.
 
-* *FAST*:  You'll already be doing good stuff -- useful data analysis
+* **FAST**:  You'll already be doing good stuff -- useful data analysis
 --- in R in your very first lesson.
 
-* No prerequisites:  If you're comfortable with navigating the Web,
+* **No prerequisites:**  If you're comfortable with navigating the Web,
 you're fine.  This tutorial is aimed at you, not experienced
 C or Python coders.
 
-* No polemics:  You won't be made to feel guilty for not using an
+* **Motivating:**  Every lesson involves a *real problem* to be solved,
+on *real data*.  The lessons do *not* consist of a few toy examples that
+are not related to the real world.  The material is presented in a
+conversational, story-telling manner.
+
+* **No polemics:**  You won't be made to feel guilty for not using an
 instructor's favorite R tool or style, including mine. :-)
 
-* No frills:  For example, no Integrated Development Environments
+* **No frills:**  For example, no Integrated Development Environments
 (IDEs).  RStudio, ESS etc. are great, but you shouldn't be burdened with
 learning R *and* learning an IDE at the same time.  This can come later,
 optionally.
 
-* "When in doubt, Try it out!"  This is a motto I devised for teaching.
-If you are unclear or curious about something, try it out!  Just devise
-a little experiment, and type in the code.  Don't worry -- you won't
-"break" things.
-
-* Nonpassive approach:  Passive learning, just watching the screen is NO
+* **Nonpassive approach:**  Passive learning, just watching the screen is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
 learner must devise and try your own variants on what has been presented.
 Sometimes the tutorial will be give you some suggestions, but even then,
@@ -75,7 +76,10 @@ command is shown here, run the command yourself in your R console,
 by copy-and-pasting from this document.
 
 * Similarly, the **Your Turn** sections are absolutely crucial.  Devise
-your own little examples, and try them out!
+  your own little examples, and try them out!  "When in doubt, Try it
+out!"  This is a motto I devised for teaching.  If you are unclear or
+curious about something, try it out!  Just devise a little experiment,
+and type in the code.  Don't worry -- you won't "break" things.
 
 * Also similarly:  I cannot *teach* you how to program.  I can merely
 give you the tools, e.g. R vectors, and some examples.  For a given
@@ -96,6 +100,12 @@ copy-and-paste from the test here, or type by hand.  (Note that the code
 lines here will all begin with the R interactive prompt, '>'; that
 should not be typed.)
 
+This is a Markdown file.  You can read it right there on GitHub, which
+has its own Markdown renderer, or on your own machine in Chrome using
+the Markdown Reader extension (be sure to enable Allow Access to File
+URLs).  RStudio also has a built-in Markdown reader, though again I
+suggest holding off on IDEs for now.
+
 ## <a name="firstr"> </a> First R Steps
 
 The R command prompt is '>'.  It will be shown here, but you don't type
@@ -103,7 +113,7 @@ it.
 
 So, just type '1+1' then hit Enter.  Sure enough, it prints out 2:
 
-```R
+``` r
 > 1 + 1
 [1] 2
 ```
@@ -116,19 +126,19 @@ Nile River.
 
 Let's find the mean flow:
 
-``` R
+``` r
 > mean(Nile)
 [1] 919.35
 ```
 
 Here **mean** is an example of an R *function*, and in this case Nile is
 an *argument* -- fancy way of saying "input" -- to that function.  That
-output, 919.35, is called the **return value** or simply *value*.
+output, 919.35, is called the *return value* or simply *value*.
 
 Since there are only 100 data points here, it's not unwieldy to print
 them out:
 
-``` R
+``` r
 > Nile
 Time Series:
 Start = 1871 
@@ -1059,7 +1069,7 @@ does seem there is an age discrimination problem in Silicon Valley.
 
 * Note the horizontal streaks.  Some people in the census had 0 income
 (or close to it), as they were not working.  And the census imposed a
-top wage limit of $300,000 (probably out of privacy concerns).
+top wage limit of $350,000 (probably out of privacy concerns).
 
 We can break things down by gender, via color coding:
 
@@ -1096,6 +1106,60 @@ again, details in a future lesson.
 
 There are many, many other features.  More in a future lesson.
 
+<blockquote>
 
+**Your Turn:**  Try some scatter plots on various datasets.  I suggest
+first using the above data with wage against age again, but this time
+color-coding by education level.  (By the way, 1-9 codes no college;
+10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
+professional degree and 16 is a doctorate.)
+
+</blockquote>
+
+## <a name="less9"> </a> Lesson 9:  More on Graphics
+
+We can also plot multiple histograms on the same graph.  But the
+pictures are more effective using a smoothed version of histograms,
+available in R's **density** function.  Let's compare men's and women's
+wages in the census datar
+
+First we use **split** to separate the data by gender:
+
+``` r
+> wageByGender <- split(pe$wageinc,pe$sex)
+> dm <- density(wageByGender[[1]])
+> dw <- density(wageByGender[[2]])
+```
+
+Remember, **wageByGender[[1]]** will now be the vector of men's wages,
+and similarly **wageByGender[[1]]** will have the women's wages.
+
+The **density** function does not automatically plot; it has the plot in
+a return value, which we've assigned to **dm** and **dw** here.  We can
+now plot the graph:
+
+``` r
+> plot(dw,col='red')
+> points(dm,cex=0.2)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MWWages.png)
+
+Why did we call **points** instead of **plot** in that second line?  The
+issue is that calling **plot** again would destroy the first plot; we
+merely want to *add points* to the existing graph.
+
+And why did we plot the women's data first?  As you can see, the women's
+curve is taller, so if we plotted the men first, part of the women's
+curve would be cut off.  Of course, we didn't know that ahead of time,
+but graphics often is a matter of trial-and-error to get to the picture
+we really want.  (In the case of **ggplot2**, this is handled by the
+software.)
+
+Well, then, what does the graph tell us?  The peak for women, a little
+less than $50,000, seems to be at a lower wage than for men, at
+something like $60,000.  At salaries around, say, $125,000, there seem
+to be more men than women (black curve higher than red curve; remember,
+the curves are just smoothed histograms).
 
 
