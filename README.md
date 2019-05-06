@@ -950,7 +950,7 @@ So, it put years on the horizontal axis, instead of indices 1,2,3,...
 
 And one more thing:  Say we wanted to know the flow in the year 1925.
 The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  The
-means the flow for that year is in element 1+44 = 55.
+flow for that year is in element 1+44 = 55.
 
 ``` r
 > Nile[55]
