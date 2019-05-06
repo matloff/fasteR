@@ -1014,6 +1014,9 @@ in the data and take a look at the first records:
 6 57.70413   11 100   1       0       0
 ```
 
+We used **read.table** here because the file is not of the CSV type. It
+uses blank spaces rather than commas as its delineator between fields.
+
 Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
 codes.
@@ -1028,7 +1031,8 @@ Let's start with a scatter plot of wage vs. age:
 
 Oh not, the dreaded Black Screen Problem!  There are about 20,000 data
 points, thus filling certain parts of the screen.  So, let's just plot a
-random sample, say 2500.  
+random sample, say 2500.  (There are other ways of handling the problem,
+say with smaller dots or *alpha blending*.)
 
 ``` r
 > indxs <- sample(1:nrow(pe),2500)
@@ -1039,4 +1043,32 @@ R's built-in **sample** function does what it's name implies.  Here it
 randomly sample 2500 of the numbers from 1 to 20090.  We then extracted
 those rows of **pe**, in a new data frame **pe2500**.
 
+``` r
+> plot(pe2500$age,pe2500$wageinc)
+```
 
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge2.png)
+
+OK, now we are in business.  A few things worth noting:
+
+* The relation between wage and age is not linear, indeed not even
+monotonic.  After the early 40s, one's wage tends to decrease.  As with
+any observational dataset, the underlying factors are complex, but it
+does seem there is an age discrimination problem in Silicon Valley.
+(And it is well documented in various studies and litigation.)
+
+* Note the horizontal streaks.  Some people in the census had 0 income
+(or close to it), as they were not working.  And the census imposed a
+top wage limit of $300,000 (probably out of privacy concerns).
+
+We can break things down by gender, via color coding:
+
+``` r
+> plot(pe2500$age,pe2500$wageinc,col=as.factor(pe2500$sex))
+```
+
+The **col** argument indicates we wish to color code, in this case by
+gender.  Note that **pe2500$sex** is a numeric vector, but **col**
+requires an R factor; the function **as.factor** does the conversion.
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge3.png)
