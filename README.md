@@ -169,7 +169,7 @@ argument to the function, named **breaks**:
 > hist(Nile,breaks=20)
 ```
 
-would draw the histogram with 20 bins.  Try plotting using
+would draw the histogram with (more or less) 20 bins.  Try plotting using
 several different large and small values of the number of bins.
 
 </blockquote>
