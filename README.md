@@ -1072,3 +1072,11 @@ gender.  Note that **pe2500$sex** is a numeric vector, but **col**
 requires an R factor; the function **as.factor** does the conversion.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge3.png)
+
+The red dots are the women.  Are they generally paid less than men?
+There seems to be a hint of that, but detailed statistical analysis is
+needed (a future lesson).  One thing we can see, though:  There appear
+to be no women at that $300,000 level.
+
+It would be good to have better labels on the axes, and a legend to
+state who are the black dots and who are the red.
