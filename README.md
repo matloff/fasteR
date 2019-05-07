@@ -3,8 +3,36 @@
 
 ![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
 
-### Norm Matloff, Prof. of Computer Science, UC Davis
-### [my bio](http://heather.cs.ucdavis.edu/matloff.html)
+### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
+
+The site is for those who know nothing of R or even of programming, and
+seek a quick, painless entree to the world of R.
+
+* **FAST**:  You'll already be doing good stuff -- useful data analysis
+--- in R in your very first lesson.
+
+* **No prerequisites:**  If you're comfortable with navigating the Web,
+you're fine.  This tutorial is aimed at you, not experienced
+C or Python coders.
+
+* **Motivating:**  Every lesson involves a *real problem* to be solved,
+on *real data*.  The lessons do *not* consist of a few toy examples, 
+unrelated to the real world.  The material is presented in a
+conversational, story-telling manner.
+
+* **No polemics:**  You won't be made to feel guilty for not using an
+instructor's favorite R tool or style, including mine. :-)
+
+* **No frills:**  Notably, no Integrated Development Environments
+(IDEs).  RStudio, ESS etc. are great, but you shouldn't be burdened with
+learning R *and* learning an IDE at the same time.  This can come later,
+optionally.
+
+* **Nonpassive approach:**  Passive learning, just watching the screen, is NO
+learning.  There will be occasional **Your Turn** sections, in which you the 
+learner must devise and try your own variants on what has been presented.
+Sometimes the tutorial will be give you some suggestions, but even then,
+you should cook up your own variants to try.
 
 ## Table of Contents
 
@@ -20,36 +48,7 @@
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
 
-## <a name="overview"> </a> Overview and Getting Started
-
-The site is for those who know nothing of R or even of programming, and
-seek a quick, painless entree to the world of R.
-
-* **FAST**:  You'll already be doing good stuff -- useful data analysis
---- in R in your very first lesson.
-
-* **No prerequisites:**  If you're comfortable with navigating the Web,
-you're fine.  This tutorial is aimed at you, not experienced
-C or Python coders.
-
-* **Motivating:**  Every lesson involves a *real problem* to be solved,
-on *real data*.  The lessons do *not* consist of a few toy examples that
-are not related to the real world.  The material is presented in a
-conversational, story-telling manner.
-
-* **No polemics:**  You won't be made to feel guilty for not using an
-instructor's favorite R tool or style, including mine. :-)
-
-* **No frills:**  For example, no Integrated Development Environments
-(IDEs).  RStudio, ESS etc. are great, but you shouldn't be burdened with
-learning R *and* learning an IDE at the same time.  This can come later,
-optionally.
-
-* **Nonpassive approach:**  Passive learning, just watching the screen is NO
-learning.  There will be occasional **Your Turn** sections, in which you the 
-learner must devise and try your own variants on what has been presented.
-Sometimes the tutorial will be give you some suggestions, but even then,
-you should cook up your own variants to try.
+## <a name="starting"> </a> Getting Started
 
 For the time being, the main part of this online course will be this
 **README.md** file.  It is set up as a potential R package, though, and
