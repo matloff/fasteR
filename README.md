@@ -47,6 +47,7 @@ you should cook up your own variants to try.
 * [Pause to Reflect](#pause1)
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
+* [Lesson 10: Writing Your Own Functions](#less10)
 * [To Learn More](#forMore)
 
 ## <a name="starting"> </a> Getting Started
