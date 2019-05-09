@@ -1245,6 +1245,17 @@ we said, "R, please execute **mgd** with **Nile** playing the role of
 **x**, and 1200 playing the role of **d**.  (Here **Nile** and 1200 are
 known as the *actual* arguments.)
 
+As you have seen with R's built-in functions, a function will typically
+have a return value.  In our case here, we could arrange that by writing
+
+``` r
+> mgd <- function(x,d) return(mean(x[x > d]))
+```
+
+But it's not needed, because in any function, R will return the last
+value computed, in this case the requested mean.
+
+
 And we can save the function for later use:
 
 ``` r
@@ -1261,6 +1272,16 @@ run
 ```
 
 and then **mgd** will be restored, ready for us to use again.
+
+<blockquote>
+
+**Your Turn:**  Try your hand at writing some simple functions along the
+lines seen here.  You might start with a function **n0(x)**, that returns
+the number of 0s in the vector **x**.  Another suggestion would be a
+function **hld(x,d)**, which draws a histogram for those elements in the
+vector **x** that are less than **d**.
+
+</blockquote>
 
 
 ## <a name="forMore"> </a> To Learn More 
