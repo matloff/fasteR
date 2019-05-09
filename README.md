@@ -47,6 +47,7 @@ you should cook up your own variants to try.
 * [Pause to Reflect](#pause1)
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
+* [To Learn More](#forMore)
 
 ## <a name="starting"> </a> Getting Started
 
@@ -1171,4 +1172,135 @@ data.
 
 </blockquote>
 
+## <a name="less10"> </a> Lesson 10:  Writing Your Own Functions
+
+Recall a line we had in Lesson 2:
+
+``` r
+> sum(Nile > 1200)
+```
+
+This gave us the count of the elements in the **Nile** data larger than 1200.  
+Now, say we want the mean of those elements:
+
+``` r
+> mean(Nile[Nile > 1200])
+[1] 1250
+```
+
+Let's review how this works.  The expression 'Nile > 1200' gives us a
+bunch of TRUEs and FALSEs, one for each element of **Nile**.  Then
+'Nile[Nile > 1200]' gives us the subvector of **Nile** corresponding to
+the TRUEs, i.e. the stated condition.  We then take the mean of that.
+
+Say we want to do this again, but with 1350 instead of 1200.  Or, with
+the **tg$len** vector from Lesson 3, with 10.2 as our lower bound.  We
+*could* keep typing the same pattern as above, but if we're going to
+do this a lot, it's better to write a function for it:
+
+``` r
+> mgd <- function(x,d) mean(x[x > d])
+```
+
+I named it 'mgd' for "mean of elements greater than d," but any name is
+fine.
+
+Let's try it out, then explain:
+
+``` r
+> mgd(Nile,1200)
+[1] 1250
+> mgd(tg$len,10.2)
+[1] 21.58125
+```
+
+This saved me typing.  In the second call, I would have had to type
+
+``` r
+mean(tg$len[tg$len > 10.2])
+```
+
+considerably longer.
+
+So, how does all this work?  Again, look at the code:
+
+``` r
+> mgd <- function(x,d) mean(x[x > d])
+```
+
+Odd to say, but there is a built-in function in R named 'function'!
+We're calling it here.  And its job is to build a function, which we
+assigned to **mgd**.  We can then call the latter, as we saw above.
+
+The above line of code says that **mgd** will have two arguments, **x**
+and **d**.  These are known as *formal* arguments, as they are just
+placeholders.  For example, in 
+
+``` r
+> mgd(Nile,1200)
+```
+
+we said, "R, please execute **mgd** with **Nile** playing the role of
+**x**, and 1200 playing the role of **d**.  (Here **Nile** and 1200 are
+known as the *actual* arguments.)
+
+And we can save the function for later use:
+
+``` r
+> save(mgd,file='mean_greater_than_d')
+```
+
+The function has now been saved in the indicated file, which will be in
+whatever folder R is running in right now.  We can leave R, and say,
+come back tomorrow.  If we then start R from that same folder, we then
+run
+
+``` r
+> load('mean_greater_than_d')
+```
+
+and then **mgd** will be restored, ready for us to use again.
+
+
+## <a name="forMore"> </a> To Learn More 
+
+(under construction)
+
+**R Programming and Language**
+
+* John Chambers, *Software for Data Analysis: Programming with R*, Springer
+
+* Norm Matloff, *The Art of R Programming*, NSP
+
+* Norm Matloff, *Parallel Computation for Data Science*, CRC
+
+* Hadley Wickham, *Advanced R*, CRC
+
+**Data Science with R**
+
+* John Mount and Nina Zumel, *Practical Data Science with R*, Manning
+
+* Hadley Wickham and Garrett, Grolemund, *R for Data Science: Import,
+Tidy, Transform, Visualize, and Model Data*, O'Reilly
+
+**Graphics in R**
+
+* Winston Chang, *R Graphics Cookbook: Practical Recipes for Visualizing Data*, O'Reilly
+
+* Paul Murrell, *R Graphics* (third ed.), CRC
+
+* Hadley Wickham, *ggplot2: Elegant Graphics for Data Analysis*, Springer
+
+**regression analysis, using R**
+
+* Julian Faraway, *Linear Models with R*, CRC
+
+* Julian Faraway, *Extending the Linear Model with R*, CRC
+
+* Frank Harrell, *Regression Modeling Strategies: With Applications to
+Linear Models, Logistic and Ordinal Regression, and Survival Analysis*,
+Springer 
+
+* Norm Matloff, *Statistical Regression and Classification: from Linear
+Models to Machine Learning*, CRC
 
