@@ -1292,7 +1292,7 @@ Tidy, Transform, Visualize, and Model Data*, O'Reilly
 
 * Hadley Wickham, *ggplot2: Elegant Graphics for Data Analysis*, Springer
 
-**regression analysis, using R**
+**Regression Analysis, Using R**
 
 * Julian Faraway, *Linear Models with R*, CRC
 
