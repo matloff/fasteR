@@ -48,6 +48,7 @@ you should cook up your own variants to try.
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
 * [Lesson 10: Writing Your Own Functions](#less10)
+* [Lesson 11: Loops and Vectorization](#less11)
 * [To Learn More](#forMore)
 
 ## <a name="starting"> </a> Getting Started
@@ -1283,10 +1284,31 @@ vector **x** that are less than **d**.
 
 </blockquote>
 
+## <a name="less11"> </a> Lesson 11:  Loops and Vectorization
+
+Recall that in Lesson 5, we found that there were several columns in the
+Pima dataset which contained values of 0, which were physiologically
+impossible.  These should be coded NA.  We saw how to do that recoding
+for the glucose variable:
+
+``` r
+> pima$glucose[pima$glucose == 0] <- NA
+```
+
+But there are several columns like this, and we'd like to avoid doing
+this all by hand.  (What if there were several *hundred* such columns?)
+Instead, we'd like to do this *programmatically*.  This can be done with
+R's **for** loop construct.  
+
+(under construction)
+
 
 ## <a name="forMore"> </a> To Learn More 
 
 (under construction)
+
+These are books and other resources that I myself consult a lot. (Yes, I
+do consult my own books; can't keep it all in my head. :-) )
 
 **R Programming and Language**
 
