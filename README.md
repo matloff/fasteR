@@ -458,7 +458,7 @@ Here we extracted rows 2 through 5, and columns 1 and 3, assigning the
 result to **z**.  To extract those columns but keep all rows, do
 
 ``` r
-> y <- tg[ ,c(,1,3)]
+> y <- tg[ ,c(1,3)]
 ```
 
 i.e. leave the row specification field empty.
