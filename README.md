@@ -48,7 +48,7 @@ you should cook up your own variants to try.
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
 * [Lesson 10: Writing Your Own Functions](#less10)
-* [Lesson 11: Loops and Vectorization](#less11)
+* [Lesson 11: For Loops](#less11)
 * [To Learn More](#forMore)
 
 ## <a name="starting"> </a> Getting Started
@@ -1284,7 +1284,7 @@ vector **x** that are less than **d**.
 
 </blockquote>
 
-## <a name="less11"> </a> Lesson 11:  Loops and Vectorization
+## <a name="less11"> </a> Lesson 11:  For Loops
 
 Recall that in Lesson 5, we found that there were several columns in the
 Pima dataset which contained values of 0, which were physiologically
@@ -1300,8 +1300,89 @@ this all by hand.  (What if there were several *hundred* such columns?)
 Instead, we'd like to do this *programmatically*.  This can be done with
 R's **for** loop construct.  
 
-(under construction)
+Let's first check which columns seem appropriate for recoding.
 
+``` r
+> for (i in 1:9) print(sum(pima[,i] == 0))
+[1] 111
+[1] 5
+[1] 35
+[1] 227
+[1] 374
+[1] 11
+[1] 0
+[1] 0
+[1] 500
+```
+
+This is known in the programming world as a *for loop*.  
+
+The 'print(etc.)' is called the *body* of the loop.  The 'for (i in
+1:9)' part says, "Execute the body of the loop with i = 1, then execute
+it with i = 2, then i = 3, etc. up through i = 9."
+
+In other words, the above code instructs R to do the following:
+
+``` r
+print(sum(pima[,1] == 0))
+print(sum(pima[,2] == 0))
+print(sum(pima[,3] == 0))
+print(sum(pima[,4] == 0))
+print(sum(pima[,5] == 0))
+print(sum(pima[,6] == 0))
+print(sum(pima[,7] == 0))
+print(sum(pima[,8] == 0))
+print(sum(pima[,9] == 0))
+```
+
+Now, it's worth reviewing what those statements do, say the first.  Once
+again, **pima[,1] == 0** yields a vector of TRUEs and FALSEs, each
+indicating whether the corresponding element of column 1 is 0.  When we
+call **sum**, TRUEs and FALSEs are treated as 1s and 0s, so we get the
+total number of 1s -- which is a count of the number of elements in that
+column that are 0.
+
+We probably have forgotten which column is which, so let's see:
+
+``` r
+> colnames(pima)
+[1] "pregnant"  "glucose"   "diastolic" "triceps"   "insulin"   "bmi"      
+[7] "diabetes"  "age"       "test"     
+```
+
+Since some women will indeed have had 0 pregnancies, that column should
+not be recoded.  And the last column states whether the test for
+diabetes came out positive, 1 for yes, 0 for no, so those 0s are
+legitimate too.  
+
+But 0s in columns 2 through 6 ought to be recoded as NAs.  And the fact
+that it's a repetitive action suggests that a **for** loop can be used
+there too:
+
+``` r
+> for (i in 2:6) pima[pima[,i] == 0],i] <- NA
+```
+
+You'll probably find this line quite challenging, but be patient and, as
+with everything in R, you'll find you can master it.
+
+First, let's write it in more easily digestible (though a bit more
+involved) form:
+
+``` r
+> for (i in 2:6) {
++    zeroIndices <- which(pima[,i] == 0)
++    pima[zeroIndices,i] <- NA
++ }
+```
+
+Here I intended the body of the loop to consist of a *block* of two
+statements, not one, so I needed to tell R that, by typing '{' before
+writing my two statements, then letting R know I was finished, by typing
+'}'.  Meanwhile R was helpfully using its '+' prompt to remind me that I
+was still in the midst of typing the block.
+
+(under construction)
 
 ## <a name="forMore"> </a> To Learn More 
 
