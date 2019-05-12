@@ -51,6 +51,8 @@ you should cook up your own variants to try.
 * [Lesson 11: For Loops](#less11)
 * [To Learn More](#forMore)
 
+More lessons coming soon!
+
 ## <a name="starting"> </a> Getting Started
 
 For the time being, the main part of this online course will be this
@@ -441,6 +443,11 @@ can use column numbers, e.g.
 [1] 18.81333
 ```
 
+Note the expression '[,1]'.  Since there is a 1 in the second position,
+we are talking about column 1.  And since the first position, before the
+comma, is empty, no rows are specified -- so *all* rows are included.
+That boils down to: all of column 1.
+
 One can extract subsets of data frames, using either some of the rows or
 some of the columns, e.g.:
 
@@ -521,8 +528,12 @@ Let's compare mean tooth length for the two types of supplements:
 [1] 16.96333
 ```
 
-What did that first line do?  We extracted the rows of **tg** for which
-the suppolement was orange juice, with no restriction on columns, and
+What did that first line do?  First, **tg$supp == 'OJ'** produces a
+vector of TRUEs and FALSEs, which in an indices context is used to
+select indices.  In this case, we get the row numbers corresponding to
+the specified condition ('OJ'), so **tgoj** does become those rows of
+**tg**.  In other words, we extracted the rows of **tg** for which the
+supplement was orange juice, with no restriction on columns, and
 assigned the result to **tgoj**.  (Once again, we can choose any name;
 we chose this one to help remember what we put into that variable.)
 
@@ -1360,7 +1371,7 @@ that it's a repetitive action suggests that a **for** loop can be used
 there too:
 
 ``` r
-> for (i in 2:6) pima[pima[,i] == 0],i] <- NA
+> for (i in 2:6) pima[pima[,i] == 0,i] <- NA
 ```
 
 You'll probably find this line quite challenging, but be patient and, as
@@ -1378,15 +1389,36 @@ involved) form:
 
 Here I intended the body of the loop to consist of a *block* of two
 statements, not one, so I needed to tell R that, by typing '{' before
-writing my two statements, then letting R know I was finished, by typing
-'}'.  Meanwhile R was helpfully using its '+' prompt to remind me that I
-was still in the midst of typing the block.
+writing my two statements, then letting R know I was finished with the
+block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt to
+remind me that I was still in the midst of typing the block.
 
-(under construction)
+So, the block (two lines here) will be executed with **i = 2**, then 3,
+4 and so on.  The line 
+
+``` r
+zeroIndices <- which(pima[,i] == 0)
+```
+
+determines where the 0s are in column **i**, and then the line
+
+``` r
+ pima[zeroIndices,i] <- NA
+```
+
+replaces those 0s by NAs.
+
+Note that I have indented the two lines in the block.  This is not
+required but is considered good for clear code.
+
+<blockquote>
+
+**Your Turn**: Write a function with call form **countNAs(dfr)**, which
+prints the numbers of NAs in each column of the data frame **dfr**.
+
+</blockquote>
 
 ## <a name="forMore"> </a> To Learn More 
-
-(under construction)
 
 These are books and other resources that I myself consult a lot. (Yes, I
 do consult my own books; can't keep it all in my head. :-) )
@@ -1405,7 +1437,7 @@ do consult my own books; can't keep it all in my head. :-) )
 
 * John Mount and Nina Zumel, *Practical Data Science with R*, Manning
 
-* Hadley Wickham and Garrett, Grolemund, *R for Data Science: Import,
+* Hadley Wickham and Garrett Grolemund, *R for Data Science: Import,
 Tidy, Transform, Visualize, and Model Data*, O'Reilly
 
 **Graphics in R**
@@ -1416,15 +1448,22 @@ Tidy, Transform, Visualize, and Model Data*, O'Reilly
 
 * Hadley Wickham, *ggplot2: Elegant Graphics for Data Analysis*, Springer
 
-**Regression Analysis, Using R**
+**Regression Analysis and Machine Learning, Using R**
+
+* Francis Chollet and JJ Allaire, *Deep Learning in R*, Manning
 
 * Julian Faraway, *Linear Models with R*, CRC
 
 * Julian Faraway, *Extending the Linear Model with R*, CRC
 
+* John Fox and Sanford Weisberg, *An R Companion to Applied Regression*,
+SAGE
+
 * Frank Harrell, *Regression Modeling Strategies: With Applications to
 Linear Models, Logistic and Ordinal Regression, and Survival Analysis*,
 Springer 
+
+* Max Kuhn, *Applied Predictive Modeling*, Spriner
 
 * Norm Matloff, *Statistical Regression and Classification: from Linear
 Models to Machine Learning*, CRC
