@@ -15,20 +15,20 @@ seek a quick, painless entree to the world of R.
 you're fine.  This tutorial is aimed at you, not experienced
 C or Python coders.
 
-* **Motivating:**  Every lesson involves a *real problem* to be solved,
-on *real data*.  The lessons do *not* consist of a few toy examples, 
-unrelated to the real world.  The material is presented in a
+* **Motivating:**  Every lesson centers around a *real problem* to be
+solved, on *real data*.  The lessons do *not* consist of a few toy
+examples, unrelated to the real world.  The material is presented in a
 conversational, story-telling manner.
 
-* **No polemics:**  You won't be made to feel guilty for not using an
-instructor's favorite R tool or style, including mine. :-)  Coverage is
-mainly limited to base R, so for instance the "Tidyverse" is not
-treated.
-
-* **No frills:**  Notably, no Integrated Development Environments
-(IDEs).  RStudio, ESS etc. are great, but you shouldn't be burdened with
-learning R *and* learning an IDE at the same time.  This can come later,
-optionally.
+* **Just the basics, no frills or polemics:** 
+Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
+etc. are great, but you shouldn't be burdened with learning R *and*
+learning an IDE at the same time.  This can come later, optionally.
+Similarly, no polemics.  Coverage is mainly limited to base R, so for
+instance the self-described "opinionated"
+[Tidyverse](https://www.tidyverse.or) is not treated, partly due to its
+controversial nature but mainly because it would be a burden on the user
+to learn both base R and the Tidyverse at the same time.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
