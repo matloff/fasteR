@@ -21,7 +21,9 @@ unrelated to the real world.  The material is presented in a
 conversational, story-telling manner.
 
 * **No polemics:**  You won't be made to feel guilty for not using an
-instructor's favorite R tool or style, including mine. :-)
+instructor's favorite R tool or style, including mine. :-)  Coverage is
+mainly limited to base R, so for instance the "Tidyverse" is not
+treated.
 
 * **No frills:**  Notably, no Integrated Development Environments
 (IDEs).  RStudio, ESS etc. are great, but you shouldn't be burdened with
