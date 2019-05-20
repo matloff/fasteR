@@ -55,7 +55,7 @@ you should cook up your own variants to try.
 
 More lessons coming soon!
 
-## <a name="starting"> </a> Getting Started
+## <a name="overview"> </a> Getting Started
 
 For the time being, the main part of this online course will be this
 **README.md** file.  It is set up as a potential R package, though, and
@@ -76,7 +76,9 @@ Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 start with RStudio.  It is a very attractive, powerful IDE.  But even the
 R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
 stick to the R command line, and focus on data analysis, not advanced
-tools.
+tools.  At some point in your evolution as a programmer, you'll need to
+start using either an IDE or external text editor; this will be
+discussed in a later lesson.
 
 * Nonpassive learning is absolutely key!  So even if the output of an R
 command is shown here, run the command yourself in your R console,
@@ -140,7 +142,8 @@ Let's find the mean flow:
 
 Here **mean** is an example of an R *function*, and in this case Nile is
 an *argument* -- fancy way of saying "input" -- to that function.  That
-output, 919.35, is called the *return value* or simply *value*.
+output, 919.35, is called the *return value* or simply *value*.  The act
+of running the function is termed *calling* the function.
 
 Since there are only 100 data points here, it's not unwieldy to print
 them out:
@@ -171,31 +174,28 @@ very simple, non-dazzling one, a no-frills histogram:
 > hist(Nile)
 ```
 
-No return value for the **hist** function, but it does create the graph
-(shown here; it should be on your screen too).
+No return value for the **hist** function (there is one, but it is
+seldom used, and we won't go into it here), but it does create the
+graph.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
 
-<blockquote>
+> **Your Turn:**  The **hist** function draws 10 bins in the histogram by
+> default, but you can choose other values, by specifying a second
+> argument to the function, named **breaks**.  E.g.  
+> 
+> ``` r
+> > hist(Nile,breaks=20)
+> ```
+> 
+> would draw the histogram with 20 bins.  Try plotting using
+> several different large and small values of the number of bins.
+> 
+> **Note:**  The **hist** function, as with many R functions, has many
+> different options, specifiable via various arguments.  For now, we'll
+> just keep things simple.
 
-
-**Your Turn:**  The **hist** function draws 10 bins in the histogram by
-default, but you can choose other values, by specifying a second
-argument to the function, named **breaks**:  
-
-``` r
-> hist(Nile,breaks=20)
-```
-
-would draw the histogram with 20 bins.  Try plotting using
-several different large and small values of the number of bins.
-
-**Note:**  The **hist** function, as with many R functions, has many
-different options, specifiable via various arguments.  For now, we'll
-just keep things simple.
-
-</blockquote>
 
 R has lots of online help, which you can access via '?'.  E.g. typing
 
@@ -205,14 +205,10 @@ R has lots of online help, which you can access via '?'.  E.g. typing
 
 will tell you to full story on all the options available for the
 **hist** function.  Note, there are far too many for you to digest for
-now, but it's a vital resource to know.
+now (most users don't ever find a need for the more esoteric ones), but
+it's a vital resource to know.
 
-<blockquote>
-
-
-**Your Turn:**  Look at the online help for **mean** and **Nile**.
-
-</blockquote>
+> **Your Turn:**  Look at the online help for **mean** and **Nile**.
 
 Now, one more new thing for this first lesson.  Say we want to find the
 mean flow after year 1950.  Since 1971 is the 100th year, 1951 is the 80th.
@@ -284,12 +280,10 @@ Keep in mind that although **Nile** and **n80100** now have identical
 contents, they are *separate* vectors; if one changes, the other will
 not.
 
-<blockquote>
 
-**Your Turn:** Devise and try variants of the above, say finding the
-mean over the years 1945-1960.
+> **Your Turn:** Devise and try variants of the above, say finding the
+> mean over the years 1945-1960.
 
-</blockquote>
 
 Another oft-used function is **length**, which gives the length of the
 vector, e.g.
@@ -337,7 +331,7 @@ look at a small example first:
 [1] 2
 ```
 
-First, that 8 was *recycled* into 3 8s, i.e. the vector (8,8,8), in
+First, R *recycled* that 8 into 3 8s, i.e. the vector (8,8,8), in
 order to have the same length as **x**.  This sets up an
 element-by-element comparison.  Then, the 5 was compared to the
 first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 was
@@ -348,15 +342,11 @@ Fine, but how will **sum** add up some TRUEs and FALSEs?  The
 answer is that R, like most computer languages, treats TRUE and FALSE as
 1 and 0, respectively.  So we summed the vector (0,1,1), yielding 2.
 
-<blockquote>
-
-**Your Turn:** Try a few other experiments of your choice using **sum**.
-I'd suggest starting with finding the sum of the first 25 elements in
-**Nile**.  You may wish to start with experiments on a small vector, say
-(2,1,1,6,8,5), so you will know that your answers are correct.
-Remember, you'll learn best nonpassively.  Code away!
-
-</blockquote>
+> **Your Turn:** Try a few other experiments of your choice using **sum**.
+> I'd suggest starting with finding the sum of the first 25 elements in
+> **Nile**.  You may wish to start with experiments on a small vector, say
+> (2,1,1,6,8,5), so you will know that your answers are correct.
+> Remember, you'll learn best nonpassively.  Code away!
 
 ## <a name="less3"> </a> Lesson 3:  On to Data Frames!
 
@@ -366,6 +356,8 @@ It's a rectangular table consisting of one row for each data point.
 Say we have height, weight and age on each of 100 people.  Our data
 frame would have 100 rows and 3 columns.  The entry in, e.g., the second
 row and third column would be the age of the second person in our data. 
+The second row as a whole would be all the data for that second person,
+i.e. the height, weight and age of that person.
 
 As our first example, consider the **ToothGrowth** dataset built-in to
 R.  Again, you can read about it in the online help (the data turn out
@@ -385,7 +377,7 @@ supplements).  Let's take a quick look from the command line.
 
 R's **head** function displays (by default) the first 6 rows of the
 given dataframe.  We see there are length, supplement and dosage
-columns.  
+columns; each column is an R vector.  
 
 The **head** function works on vectors too:
 
@@ -472,17 +464,13 @@ result to **z**.  To extract those columns but keep all rows, do
 
 i.e. leave the row specification field empty.
 
-<blockquote>
-
-**Your Turn:** Devise your own little examples with the **ToothGrowth**
-data.  For instance, write code that finds the number of cases in which
-the length was less than 16.  Also, try some examples with another
-built-in R dataset, **faithful**.  This one involves the Old Faithful
-geyser in Yellowstone National Park in the US.  The first column gives
-duration of the eruption, and the second has the waiting time since the
-last eruption.
-
-</blockquote>
+> **Your Turn:** Devise your own little examples with the **ToothGrowth**
+> data.  For instance, write code that finds the number of cases in which
+> the length was less than 16.  Also, try some examples with another
+> built-in R dataset, **faithful**.  This one involves the Old Faithful
+> geyser in Yellowstone National Park in the US.  The first column gives
+> duration of the eruption, and the second has the waiting time since the
+> last eruption.
 
 ## <a name="less4"> </a> Lesson 4:  R Factor Class
 
@@ -531,13 +519,21 @@ Let's compare mean tooth length for the two types of supplements:
 ```
 
 What did that first line do?  First, **tg$supp == 'OJ'** produces a
-vector of TRUEs and FALSEs, which in an indices context is used to
-select indices.  In this case, we get the row numbers corresponding to
-the specified condition ('OJ'), so **tgoj** does become those rows of
-**tg**.  In other words, we extracted the rows of **tg** for which the
-supplement was orange juice, with no restriction on columns, and
-assigned the result to **tgoj**.  (Once again, we can choose any name;
-we chose this one to help remember what we put into that variable.)
+vector of TRUEs and FALSEs.  The lines in which supplement = OJ produce
+TRUE, the rest FALSE.  We saw above that TRUEs and FALSEs can be
+interpreted as 1s and 0s in a context like that of the **sum** function,
+but here they are used to select indices.  
+
+In the context here, **tg$supp == 'OJ'** appeared in a row-indices
+context.  R takes this to mean that we want just those rows of **tg** that
+produced the TRUEs. (The column-index field, after the comma, was blank,
+so we want all columns of those rows.)
+
+So **tgoj** does become those rows of **tg**.  In other words, we
+extracted the rows of **tg** for which the supplement was orange juice,
+with no restriction on columns, and assigned the result to **tgoj**.
+(Once again, we can choose any name; we chose this one to help remember
+what we put into that variable.)
 
 Often in R there is a shorter, more compact way of doing things.  That's
 the case here; we can use the magical **tapply** function:
@@ -550,7 +546,8 @@ the case here; we can use the magical **tapply** function:
 
 In English:  "Split **tg$len** into two groups, according to the value
 of **tg$supp**, then apply **mean** to each group."  Note that the
-result was returned as a vector:
+result was returned as a vector, which we could save by assigning it to,
+say **z**:
 
 ``` r
 > z <- tapply(tg$len,tg$supp,mean)
@@ -581,16 +578,12 @@ subset.  We see that each subset had length 10, i.e. the experiment had
 assigned 10 plants to the control, 10 to treatment 1 and 10 to treatment
 2.
 
-<blockquote>
-
-**Your Turn:**  One of the most famous built-in R datasets is
-**mtcars**, which has various measurements on cars from the 60s and 70s.
-Lots of opportunties for you to cook up little experiments here!  You
-may wish to start by comparing the mean miles-per-gallon values for 4-,
-6- and 8-cylinder cars.  Another suggestion would be to find how many
-cars there are in each cylinder category, using **tapply**.  
-
-</blockquote>
+> **Your Turn:**  One of the most famous built-in R datasets is
+> **mtcars**, which has various measurements on cars from the 60s and 70s.
+> Lots of opportunties for you to cook up little experiments here!  You
+> may wish to start by comparing the mean miles-per-gallon values for 4-,
+> 6- and 8-cylinder cars.  Another suggestion would be to find how many
+> cars there are in each cylinder category, using **tapply**.  
 
 By the way, the **mtcars** data frame has a "phantom" column.  
 
@@ -774,12 +767,8 @@ the function to skip the NAs:
 [1] 121.6868
 ```
 
-<blockquote>
-
-**Your Turn:**  Determine which other columns in **pima** have
-suspicious 0s, and replace them with NA values.  
-
-</blockquote>
+> **Your Turn:**  Determine which other columns in **pima** have
+> suspicious 0s, and replace them with NA values.  
 
 Now, look again at the plot we made earlier of the Nile flow histogram.
 There seems to be a gap between the numbers at the low end and the rest.
@@ -807,13 +796,9 @@ one for 4-cylinder cars, one for 6 and one for 8.  We *could* do
 
 and so on.  
 
-<blockquote>
-
-**Your Turn:**  In order to keep up, make sure you understand how that
-line of code works, with the TRUEs and FALSEs etc.  First print out the
-value of **mtcars$cyl == 4**, and go from there.
-
-</blockquote>
+> **Your Turn:**  In order to keep up, make sure you understand how that
+> line of code works, with the TRUEs and FALSEs etc.  First print out the
+> value of **mtcars$cyl == 4**, and go from there.
 
 
 But there is a cleaner way:
@@ -937,15 +922,11 @@ length of the data vector had been 100,000 instead of 100?  Then the
 visual approach wouldn't work.  Moreover, a goal of programming is to
 automate tasks, rather than doing them by hand.
 
-<blockquote>
-
-**Your Turn:**  There appear to be some unusually high values as well,
-e.g. one around 1875.  Determine which year this was, using the
-techniques presented here.  Also, try some similar analysis on the
-built-in **AirPassengers** data.  Can you guess why those peaks are
-occurring?
-
-</blockquote>
+> **Your Turn:**  There appear to be some unusually high values as well,
+> e.g. one around 1875.  Determine which year this was, using the
+> techniques presented here.  Also, try some similar analysis on the
+> built-in **AirPassengers** data.  Can you guess why those peaks are
+> occurring?
 
 Here is another point:  That function **plot** is not quite so innocuous
 as it may seem.
@@ -1122,15 +1103,11 @@ again, details in a future lesson.
 
 There are many, many other features.  More in a future lesson.
 
-<blockquote>
-
-**Your Turn:**  Try some scatter plots on various datasets.  I suggest
-first using the above data with wage against age again, but this time
-color-coding by education level.  (By the way, 1-9 codes no college;
-10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
-professional degree and 16 is a doctorate.)
-
-</blockquote>
+> **Your Turn:**  Try some scatter plots on various datasets.  I suggest
+> first using the above data with wage against age again, but this time
+> color-coding by education level.  (By the way, 1-9 codes no college;
+> 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
+> professional degree and 16 is a doctorate.)
 
 ## <a name="less9"> </a> Lesson 9:  More on Graphics
 
@@ -1180,12 +1157,8 @@ Remember, the curves are just smoothed histograms, so, if a curve is
 really high at, say 168.0, that means that 168.0 is very
 frequently-occurring value..)
 
-<blockquote>
-
-**Your Turn:**  Try plotting multiple such curves on the same, for other
-data.
-
-</blockquote>
+> **Your Turn:**  Try plotting multiple such curves on the same, for other
+> data.
 
 ## <a name="less10"> </a> Lesson 10:  Writing Your Own Functions
 
@@ -1287,15 +1260,11 @@ run
 
 and then **mgd** will be restored, ready for us to use again.
 
-<blockquote>
-
-**Your Turn:**  Try your hand at writing some simple functions along the
-lines seen here.  You might start with a function **n0(x)**, that returns
-the number of 0s in the vector **x**.  Another suggestion would be a
-function **hld(x,d)**, which draws a histogram for those elements in the
-vector **x** that are less than **d**.
-
-</blockquote>
+> **Your Turn:**  Try your hand at writing some simple functions along the
+> lines seen here.  You might start with a function **n0(x)**, that returns
+> the number of 0s in the vector **x**.  Another suggestion would be a
+> function **hld(x,d)**, which draws a histogram for those elements in the
+> vector **x** that are less than **d**.
 
 ## <a name="less11"> </a> Lesson 11:  For Loops
 
@@ -1411,14 +1380,10 @@ determines where the 0s are in column **i**, and then the line
 replaces those 0s by NAs.
 
 Note that I have indented the two lines in the block.  This is not
-required but is considered good for clear code.
+required but is considered good for clear code. 
 
-<blockquote>
-
-**Your Turn**: Write a function with call form **countNAs(dfr)**, which
-prints the numbers of NAs in each column of the data frame **dfr**.
-
-</blockquote>
+> **Your Turn**: Write a function with call form **countNAs(dfr)**, which
+> prints the numbers of NAs in each column of the data frame **dfr**.
 
 ## <a name="forMore"> </a> To Learn More 
 
