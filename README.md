@@ -24,9 +24,9 @@ conversational, story-telling manner.
 Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  This can come later, optionally.
-Similarly, no polemics.  Coverage is mainly limited to base R, so for
-instance the self-described "opinionated"
-[Tidyverse](https://www.tidyverse.or) is not treated, partly due to its
+Coverage is mainly limited to base R, so for
+instance the popular but self-described "opinionated"
+is not treated, partly due to its
 controversial nature but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
@@ -1046,6 +1046,27 @@ say with smaller dots or *alpha blending*.)
 > pe2500 <- pe[indxs,]
 ```
 
+Note by the way that I could have written the more companct
+
+``` r
+> pe2500 <- pe[sample(1:nrow(pe),2500),]
+```
+
+but it would be hard to read that way.  I also use direct function
+composition sparingly, preferring to break
+
+``` r
+h(g(f(x),3)
+```
+
+into
+
+``` r
+y <- f(x) 
+z <- g(y,3) 
+h(z) 
+```
+
 R's built-in **sample** function does what it's name implies.  Here it
 randomly sample 2500 of the numbers from 1 to 20090.  We then extracted
 those rows of **pe**, in a new data frame **pe2500**.
@@ -1430,8 +1451,18 @@ SAGE
 Linear Models, Logistic and Ordinal Regression, and Survival Analysis*,
 Springer 
 
-* Max Kuhn, *Applied Predictive Modeling*, Spriner
+* Max Kuhn, *Applied Predictive Modeling*, Springer
+
+* Max Kuhn and Kjell Johnson, Feature Engineering and Selection: *A
+Practical Approach for Predictive Models*, CRC
 
 * Norm Matloff, *Statistical Regression and Classification: from Linear
 Models to Machine Learning*, CRC
 
+I also would recommend various Web tutorials:
+
+* Szilard Palka, 
+[CEU Business Analytics program: Use Case Seminar 2 with Szilard Pafka (2019- 05-08)](https://t.co/kbhw44Tbbn) 
+
+* Hadley Wickham, 
+[the Tidyverse](https://www.tidyverse.or) 
