@@ -145,6 +145,16 @@ an *argument* -- fancy way of saying "input" -- to that function.  That
 output, 919.35, is called the *return value* or simply *value*.  The act
 of running the function is termed *calling* the function.
 
+Another point to note is that we didn't need to call R's **print**
+function.  We could have,
+
+``` r
+> print(mean(Nile))
+```
+
+but whenever we are at the R '>' prompt, any expression we type will be
+printed out.
+
 Since there are only 100 data points here, it's not unwieldy to print
 them out:
 
@@ -257,10 +267,12 @@ it:
 
 The function **sd** finds the standard deviation.  
 
-Note that we used R's *assignment operator* here to copy those
-particular  **Nile** elements to **n80100**.  (In most situations, you
-can use "=" instead of "<-", but why worry about what the exceptions
-might be?  They are arcane, so it's easier just to always use "<-".)
+Note that we used R's *assignment operator* here to copy ("assign")
+those particular  **Nile** elements to **n80100**.  (In most situations,
+you can use "=" instead of "<-", but why worry about what the exceptions
+might be?  They are arcane, so it's easier just to always use "<-".
+And though "keyboard shortcuts" for this are possible, again let's just
+stick to the basics for now.)
 
 We can pretty much choose any name we want; "n80100" just was chosen
 to easily remember this new vector's provenance.  (But names can't
@@ -626,6 +638,27 @@ frame:
 [31] "Maserati Bora"       "Volvo 142E"         
 ```
 
+As with everything else, **row.names** is a function, and as you can see
+above, its return value is a 32-element vector.  The elements of that
+vector are of type **character**.
+
+You can even assign to that vector:
+
+``` r
+> row.names(mtcars)[7]
+[1] "Duster 360"
+> row.names(mtcars)[7] <- 'Dustpan'
+> row.names(mtcars)[7]
+[1] "Dustpan"
+```
+
+(If you have some background in programming, it may appear odd to you to
+have a function call on the *left* side of an assignment.  This is
+actually common in R.)
+
+> **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
+> finding the mean MPG for 6-cylinder cars.
+
 ## <a name="less5"> </a> Lesson 5:  Data cleaning
 
 Most real-world data is "dirty," i.e. filled with errors.  The famous
@@ -638,7 +671,7 @@ might ferret out bad data.  And along the way, we'll cover several new R
 concepts.
 
 We'll use the famous Pima Diabetes dataset.  Various versions exist, but
-we'll use the one that is included in **faraday**, an R package compiled
+we'll use the one included in **faraway**, an R package compiled
 by Julian Faraway, author of several popular books on statistical
 regression analysis in R.
 
@@ -655,9 +688,10 @@ it, and assigned the resulting data frame to a variable we chose to name
 **pima**.
 
 Note that second argument, 'header=TRUE'.  A header in a file, if one
-exists, states what names the columns in the data frame are to have.  If
-the file doesn't have one, set **header** to FALSE.  You can always add
-names to your data frame later (future lesson).
+exists, is in the first line in the file.  It states what names the
+columns in the data frame are to have.  If the file doesn't have one,
+set **header** to FALSE.  You can always add names to your data frame
+later (future lesson).
 
 It's always good to take a quick look at a new data frame:
 
@@ -698,8 +732,8 @@ variable.
   1   3   3   1   4   2   4   1   1   2   3   2   3   4   1   1 
 ```
 
-Uh, oh!  5 women in the study had glucose level 0.  Presumably this is
-not physiologically possible.
+Uh, oh!  5 women in the study had glucose level 0.  And 44 had level 1,
+etc.  Presumably this is not physiologically possible.
 
 Let's consider a version of the glucose data that excludes these 0s.
 
@@ -729,14 +763,14 @@ statistical analyses.
 
 R has a special code for missing values, NA, for situations like this.
 Rather than removing the 0s, it's better to recode them as NAs.  Let's
-do this, back in the original dataset so we keep all the variables in
+do this, back in the original dataset so we keep all the data in
 one object:
 
 ``` r
 > pima$glucose[pima$glucose == 0] <- NA
 ```
 
-Note the double-equal sign!  If we wish to test whether, say, ***a*** and
+Note again the double-equal sign!  If we wish to test whether, say, ***a*** and
 ***b*** are equal, the expression must be "a == b", not "a = b"; the
 latter would do "a <- b".
 
@@ -769,10 +803,11 @@ the function to skip the NAs:
 
 > **Your Turn:**  Determine which other columns in **pima** have
 > suspicious 0s, and replace them with NA values.  
-
-Now, look again at the plot we made earlier of the Nile flow histogram.
-There seems to be a gap between the numbers at the low end and the rest.
-What years did these correspond to?
+> 
+> Now, look again at the plot we made earlier of the Nile flow histogram.
+> There seems to be a gap between the numbers at the low end and the rest.
+> What years did these correspond to?  Find the mean of the data,
+> excluding these cases.
 
 ## <a name="less6"> </a> Lesson 6:  R List Class
 
@@ -787,14 +822,14 @@ data.  Again, to save typing, let's make a copy first:
 > mtmpg <- mtcars$mpg
 ```
 
-Suppose we wish to split the original vector into three vector, 
+Suppose we wish to split the original vector into three vectors, 
 one for 4-cylinder cars, one for 6 and one for 8.  We *could* do
 
 ``` r
 > mt4 <- mtmpg[mtcars$cyl == 4]
 ```
 
-and so on.  
+and so on for **mt6** and **mt8**..  
 
 > **Your Turn:**  In order to keep up, make sure you understand how that
 > line of code works, with the TRUEs and FALSEs etc.  First print out the
@@ -819,7 +854,7 @@ $`8`
 ```
 
 In English, the call to **split** said, "Split **mtmpg** into multiple
-vectors, with the split criterion being the values in **mtcars$cyl**."
+vectors, with the splitting criterion being the values in **mtcars$cyl**."
 
 
 Now **mtl**, an object of R class **"list"**, contains the 3 vectors.
@@ -924,7 +959,9 @@ automate tasks, rather than doing them by hand.
 
 > **Your Turn:**  There appear to be some unusually high values as well,
 > e.g. one around 1875.  Determine which year this was, using the
-> techniques presented here.  Also, try some similar analysis on the
+> techniques presented here.  
+>
+> Also, try some similar analysis on the
 > built-in **AirPassengers** data.  Can you guess why those peaks are
 > occurring?
 
