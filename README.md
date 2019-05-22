@@ -994,12 +994,12 @@ as it may seem.
 > plot(mtcars$wt,mtcars$mpg)
 ```
 
-![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MTCarsWtMPG .png)
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MTCarsWtMPG.png)
 
 In contrast to the previous plot, in which our data were on the vertical
 axis and time was on the horizontal, now we are plotting *two* datasets,
 against each other.  This enables us to explore the relation between
-weight and gas mileage.
+weight and gas mileage.  
 
 There are a couple of important points here.  First, as we might guess,
 we see that the heavier cars tended to get poorer gas mileage.  But
