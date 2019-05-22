@@ -24,8 +24,9 @@ conversational, story-telling manner.
 Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  This can come later, optionally.
-Coverage is mainly limited to base R, so for
-instance the popular but self-described "opinionated"
+Coverage is mainly limited to base R (the **gplot2** graphics package
+will be an exception), so for
+instance the popular but self-described "opinionated" Tidyverse
 is not treated, partly due to its
 controversial nature but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
@@ -770,6 +771,18 @@ one object:
 > pima$glucose[pima$glucose == 0] <- NA
 ```
 
+Or, broken up into smaller steps (I recommend this especially for
+beginners),
+
+``` r
+> z <- pima$glucose == 0 
+> pima$glucose[z] <- NA
+```
+
+So ***z*** will be a vector of TRUEs and FALSEs, which we then use to
+select the desired elements in **pima$glucose** and set them to
+NA.
+
 Note again the double-equal sign!  If we wish to test whether, say, ***a*** and
 ***b*** are equal, the expression must be "a == b", not "a = b"; the
 latter would do "a <- b".
@@ -904,7 +917,7 @@ $b
 ```
 
 Note that here we can names to the list elements, 'a' and 'b'.  In
-forming **mtl** using **split** abover, the names were assigned
+forming **mtl** using **split** above, the names were assigned
 according to the values of the vector beiing split.  If we don't like
 those default names, we can change them:
 
@@ -1098,7 +1111,7 @@ Let's start with a scatter plot of wage vs. age:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge1.png)
 
-Oh not, the dreaded Black Screen Problem!  There are about 20,000 data
+Oh no, the dreaded Black Screen Problem!  There are about 20,000 data
 points, thus filling certain parts of the screen.  So, let's just plot a
 random sample, say 2500.  (There are other ways of handling the problem,
 say with smaller dots or *alpha blending*.)
@@ -1108,7 +1121,13 @@ say with smaller dots or *alpha blending*.)
 > pe2500 <- pe[indxs,]
 ```
 
-Note by the way that I could have written the more companct
+The **nrow()** function returns the number of rows in the argument,
+which in this case is 20090.
+R's **sample** function does what it's name implies.  Here it
+randomly samples 2500 of the numbers from 1 to 20090.  We then extracted
+those rows of **pe**, in a new data frame **pe2500**.
+
+Note again that I could have written the more companct
 
 ``` r
 > pe2500 <- pe[sample(1:nrow(pe),2500),]
@@ -1129,9 +1148,7 @@ z <- g(y,3)
 h(z) 
 ```
 
-R's built-in **sample** function does what it's name implies.  Here it
-randomly sample 2500 of the numbers from 1 to 20090.  We then extracted
-those rows of **pe**, in a new data frame **pe2500**.
+So, here is the new plot:
 
 ``` r
 > plot(pe2500$age,pe2500$wageinc)
@@ -1197,7 +1214,7 @@ There are many, many other features.  More in a future lesson.
 We can also plot multiple histograms on the same graph.  But the
 pictures are more effective using a smoothed version of histograms,
 available in R's **density** function.  Let's compare men's and women's
-wages in the census datar
+wages in the census data.
 
 First we use **split** to separate the data by gender:
 
@@ -1229,8 +1246,8 @@ And why did we plot the women's data first?  As you can see, the women's
 curve is taller, so if we plotted the men first, part of the women's
 curve would be cut off.  Of course, we didn't know that ahead of time,
 but graphics often is a matter of trial-and-error to get to the picture
-we really want.  (In the case of **ggplot2**, this is handled by the
-software.)
+we really want.  (In the case of **ggplot2**, this is handled
+automatically by the software.)
 
 Well, then, what does the graph tell us?  The peak for women, a little
 less than $50,000, seems to be at a lower wage than that for men, at
