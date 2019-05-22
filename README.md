@@ -876,12 +876,14 @@ Looking a little closer:
 
 ``` r
 > head(mtcars$cyl)
-[1] 6 6 4 6 8 6
-```
-We see that the first car had 6 cylinders, so the first element of
-**mtmpg**, 21.0, was thrown into the `6` pile, i.e. **mtl[[2]]**, and so on.
+[1] 6 6 4 6 8 6 
+``` 
 
-And of course we can make copies for convenience:
+We see that the first car had 6 cylinders, so the
+first element of **mtmpg**, 21.0, was thrown into the `6` pile, i.e.
+**mtl[[2]]** (see above printout of **mtl**), and so on.
+
+And of course we can make copies for later convenience:
 
 ``` r
 > m4 <- mtl[[1]]
@@ -900,6 +902,26 @@ $a
 $b
 [1] "sky"
 ```
+
+Note that here we can names to the list elements, 'a' and 'b'.  In
+forming **mtl** using **split** abover, the names were assigned
+according to the values of the vector beiing split.  If we don't like
+those default names, we can change them:
+
+``` r
+> names(mtl) <- c('four','six','eight')
+> mtl
+$four
+ [1] 22.8 24.4 22.8 32.4 30.4 33.9 21.5 27.3 26.0 30.4 21.4
+
+$six
+[1] 21.0 21.0 21.4 18.1 19.2 17.8 19.7
+
+$eight
+ [1] 18.7 14.3 16.4 17.3 15.2 10.4 10.4 14.7 15.5 15.2 13.3 19.2 15.8
+15.0
+```
+
 
 By the way, it's no coincidence that a dollar sign is used for
 delineation in both data frames and lists; data frames *are* lists.
@@ -972,9 +994,12 @@ as it may seem.
 > plot(mtcars$wt,mtcars$mpg)
 ```
 
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MTCarsWtMPG .png)
+
 In contrast to the previous plot, in which our data were on the vertical
 axis and time was on the horizontal, now we are plotting *two* datasets,
-against each other.
+against each other.  This enables us to explore the relation between
+weight and gas mileage.
 
 There are a couple of important points here.  First, as we might guess,
 we see that the heavier cars tended to get poorer gas mileage.  But
