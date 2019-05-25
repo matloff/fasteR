@@ -1536,6 +1536,10 @@ Well, congratulations!  With **for** and now **ifelse**, you've really
 gotten into the programming business.  We'll be using them a lot in the
 coming lessons.
 
+> **Your Turn:** Recode the **Nile** data to a new vector **nile**, with
+> the values 1, 2 and 3, according to whether the corresponding number in
+> **Nile** is less than 800, between 800 and 1150, or greater than 1150.
+
 ## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot. (Yes, I
