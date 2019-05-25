@@ -51,7 +51,8 @@ you should cook up your own variants to try.
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
 * [Lesson 9: More on Graphics ](#less9)
 * [Lesson 10: Writing Your Own Functions](#less10)
-* [Lesson 11: For Loops](#less11)
+* [Lesson 11: 'For' Loops](#less11)
+* [Lesson 12: If-Else](#less11)
 * [To Learn More](#forMore)
 
 More lessons coming soon!
@@ -1101,7 +1102,10 @@ uses blank spaces rather than commas as its delineator between fields.
 
 Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
-codes.
+codes.  (You can find them in the
+[Census Bureau document](https://www.census.gov/prod/cen2000/doc/pums.pdf).
+For instance, search for "Educational Attainment for the **educ**
+variable.)
 
 Let's start with a scatter plot of wage vs. age:
 
@@ -1122,10 +1126,11 @@ say with smaller dots or *alpha blending*.)
 ```
 
 The **nrow()** function returns the number of rows in the argument,
-which in this case is 20090.
-R's **sample** function does what it's name implies.  Here it
-randomly samples 2500 of the numbers from 1 to 20090.  We then extracted
-those rows of **pe**, in a new data frame **pe2500**.
+which in this case is 20090, the number of rows in **pe**.
+
+R's **sample** function does what its name implies.  Here it randomly
+samples 2500 of the numbers from 1 to 20090.  We then extracted those
+rows of **pe**, in a new data frame **pe2500**.
 
 Note again that I could have written the more companct
 
@@ -1238,9 +1243,9 @@ now plot the graph:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MWWages.png)
 
-Why did we call **points** instead of **plot** in that second line?  The
-issue is that calling **plot** again would destroy the first plot; we
-merely want to *add points* to the existing graph.
+Why did we call the **points** function instead of **plot** in that
+second line?  The issue is that calling **plot** again would destroy the
+first plot; we merely want to *add points* to the existing graph.
 
 And why did we plot the women's data first?  As you can see, the women's
 curve is taller, so if we plotted the men first, part of the women's
@@ -1257,7 +1262,7 @@ Remember, the curves are just smoothed histograms, so, if a curve is
 really high at, say 168.0, that means that 168.0 is very
 frequently-occurring value..)
 
-> **Your Turn:**  Try plotting multiple such curves on the same, for other
+> **Your Turn:**  Try plotting multiple such curves on the same graph, for other
 > data.
 
 ## <a name="less10"> </a> Lesson 10:  Writing Your Own Functions
@@ -1316,12 +1321,12 @@ So, how does all this work?  Again, look at the code:
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
-Odd to say, but there is a built-in function in R named 'function'!
+Odd to say, but there is a built-in function in R itself named 'function'!
 We're calling it here.  And its job is to build a function, which we
 assigned to **mgd**.  We can then call the latter, as we saw above.
 
-The above line of code says that **mgd** will have two arguments, **x**
-and **d**.  These are known as *formal* arguments, as they are just
+The above line of code says that **mgd** will have two arguments, ***x***
+and ***d***.  These are known as *formal* arguments, as they are just
 placeholders.  For example, in 
 
 ``` r
@@ -1329,7 +1334,7 @@ placeholders.  For example, in
 ```
 
 we said, "R, please execute **mgd** with **Nile** playing the role of
-**x**, and 1200 playing the role of **d**.  (Here **Nile** and 1200 are
+***x***, and 1200 playing the role of ***d***.  (Here **Nile** and 1200 are
 known as the *actual* arguments.)
 
 As you have seen with R's built-in functions, a function will typically
@@ -1343,7 +1348,8 @@ But it's not needed, because in any function, R will return the last
 value computed, in this case the requested mean.
 
 
-And we can save the function for later use:
+And we can save the function for later use, by using R's **save**
+function, which can be used to save any R object:
 
 ``` r
 > save(mgd,file='mean_greater_than_d')
@@ -1362,14 +1368,14 @@ and then **mgd** will be restored, ready for us to use again.
 
 > **Your Turn:**  Try your hand at writing some simple functions along the
 > lines seen here.  You might start with a function **n0(x)**, that returns
-> the number of 0s in the vector **x**.  Another suggestion would be a
+> the number of 0s in the vector ***x***.  Another suggestion would be a
 > function **hld(x,d)**, which draws a histogram for those elements in the
-> vector **x** that are less than **d**.
+> vector ***x*** that are less than ***d***.
 
-## <a name="less11"> </a> Lesson 11:  For Loops
+## <a name="less11"> </a> Lesson 11:  'For' Loops
 
 Recall that in Lesson 5, we found that there were several columns in the
-Pima dataset which contained values of 0, which were physiologically
+Pima dataset that contained values of 0, which were physiologically
 impossible.  These should be coded NA.  We saw how to do that recoding
 for the glucose variable:
 
@@ -1378,9 +1384,9 @@ for the glucose variable:
 ```
 
 But there are several columns like this, and we'd like to avoid doing
-this all by hand.  (What if there were several *hundred* such columns?)
-Instead, we'd like to do this *programmatically*.  This can be done with
-R's **for** loop construct.  
+this all repeatedly by hand.  (What if there were several *hundred* such
+columns?) Instead, we'd like to do this *programmatically*.  This can be
+done with R's **for** loop construct.  
 
 Let's first check which columns seem appropriate for recoding.
 
@@ -1465,7 +1471,7 @@ block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt to
 remind me that I was still in the midst of typing the block.
 
 So, the block (two lines here) will be executed with **i = 2**, then 3,
-4 and so on.  The line 
+4, 5 and 6.  The line 
 
 ``` r
 zeroIndices <- which(pima[,i] == 0)
@@ -1484,6 +1490,51 @@ required but is considered good for clear code.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
+
+## <a name="ifelse"> </a> If/Else
+
+If our Census data example above, it was stated that education codes 0-9
+all corresponded to having no college education at all.  For instance, 9
+means high school graduate, while 6 means schooling through the 10th
+grade.  (Of course, few if any programmers and engineers have
+educational attainment level below college, but this dataset was
+extracted from the general data.)  13 means a bachelor's degree.
+
+Suppose we wish to color-code the wage-age graph by educational
+attainment, and amalgamate all codes under 13, giving them the code 12:
+
+``` r
+> edu1 <- ifelse(edu < 13,12,edu)
+```
+
+Let's check that it worked, by printing out, say, the first 10 elements
+of **edu** and **edu1**:
+
+``` r
+> head(edu,10)
+ [1] 13  9  9 11 11 11 12 11 14  9
+> head(edu1,10)
+ [1] 13 12 12 12 12 12 12 12 14 12
+```
+
+Good, now how did that work?  As you see above, R's **ifelse** function
+has three arguments, and its return value is a new vector, that in this
+case we've assigned to **edu1**.  Here, **edu < 12** produces a vector
+of TRUEs and FALSEs.  For each TRUE, we set the corresponding element of
+the output to 12; for each FALSE, we set the corresponding element of
+the output to the corresponding element of **edu**.
+
+So, we can now produce the desired graph:
+
+``` r
+> plot(pe$age,pe$wageinc,col=edu1)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageAgeEdu.png)
+
+Well, congratulations!  With **for** and now **ifelse**, you've really
+gotten into the programming business.  We'll be using them a lot in the
+coming lessons.
 
 ## <a name="forMore"> </a> To Learn More 
 
