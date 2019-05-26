@@ -400,6 +400,13 @@ The **head** function works on vectors too:
 [1]  4.2 11.5  7.3  5.8  6.4 10.0
 ```
 
+Like many R functions, **head** has an optional second argument,
+specifying how many elements to print:
+
+``` r
+> head(ToothGrowth$len,10)
+ [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
+```
 
 To avoid writing out the long word "ToothGrowth" repeatedly, let's
 make a copy.
@@ -1491,7 +1498,7 @@ required but is considered good for clear code.
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
 
-## <a name="ifelse"> </a> If/Else
+## <a name="ifelse"> </a> If-Else
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -1501,28 +1508,57 @@ educational attainment level below college, but this dataset was
 extracted from the general data.)  13 means a bachelor's degree.
 
 Suppose we wish to color-code the wage-age graph by educational
-attainment, and amalgamate all codes under 13, giving them the code 12:
+attainment, and amalgamate all codes under 13, giving them the code 12.
+
+The straightforward but overly complicated potentiall slower way would
+be this:
 
 ``` r
-> edu1 <- ifelse(edu < 13,12,edu)
+> head(pe$educ,15)
+ [1] 13  9  9 11 11 11 12 11 14  9 12 13 12 13  6
+> for (i in 1:nrow(pe)) {
++    if (pe$educ[i] < 13) pe$educ[i] <- 12 
++ }
+> head(pe$educ,15)
+ [1] 13 12 12 12 12 12 12 12 14 12 12 13 12 13 12
 ```
 
-Let's check that it worked, by printing out, say, the first 10 elements
-of **edu** and **edu1**:
+For pedagogical clarity, I've inserted "before and after" code, to show
+the **educ** did indeed change where it should.
+
+The **if** statement works pretty much like the word "if" in English.
+First **i** will be set to 1, so R will test whether **pe$educ[1]** is
+less than 13.  If so, it will reset that element to 12; otherwise, do
+nothing.  Then it will do the same for **i** equal to 2, and so on.  You
+can see above that, for instance, **pe$educ[2]** did indeed change from
+9 to 12.
+
+But there is a slicker way to do this (re-read the data file before
+running this, so as to be sure the code worked):
 
 ``` r
-> head(edu,10)
- [1] 13  9  9 11 11 11 12 11 14  9
-> head(edu1,10)
- [1] 13 12 12 12 12 12 12 12 14 12
+> edu <- pe$educ
+> pe$educ <- ifelse(edu < 13,12,edu)
 ```
 
-Good, now how did that work?  As you see above, R's **ifelse** function
+(Again, we've broken what could have been one line into two, for
+clarity.)
+
+Now how did that work?  As you see above, R's **ifelse** function
 has three arguments, and its return value is a new vector, that in this
-case we've assigned to **edu1**.  Here, **edu < 12** produces a vector
+case we've reassigned to **pe$educ**.  Here, **edu < 12** produces a vector
 of TRUEs and FALSEs.  For each TRUE, we set the corresponding element of
 the output to 12; for each FALSE, we set the corresponding element of
-the output to the corresponding element of **edu**.
+the output to the corresponding element of **edu**.  That's exactly what
+we want to happen.
+
+The **if** can be paired with **else** (not **ifelse**).  For example,
+say we need to set **y** to either -1 or 1, depending on whether **x**
+is less than 3.  We could write
+
+``` r
+if (x < 3) y <- -1 else y <- 1
+```
 
 So, we can now produce the desired graph:
 
@@ -1531,6 +1567,15 @@ So, we can now produce the desired graph:
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageAgeEdu.png)
+
+One more important point:  Using **ifelse** instead of a loop in the
+above example is termed *vectorization*.  The name comes from the fact
+that **ifelse** operates on vectors, while in the loop we operate on one
+individual element at a time.
+
+Vectorized code is typically much more compact than loop-based code, as
+was the case here.  In some cases, though certainly not all, the
+vectorized will be much faster.
 
 Well, congratulations!  With **for** and now **ifelse**, you've really
 gotten into the programming business.  We'll be using them a lot in the
