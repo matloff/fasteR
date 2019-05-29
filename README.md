@@ -1613,6 +1613,9 @@ Tidy, Transform, Visualize, and Model Data*, O'Reilly
 
 * Paul Murrell, *R Graphics* (third ed.), CRC
 
+* Deepayan Sarkar, *Lattice: Multivariate Data Visualization with R*,
+Springer
+
 * Hadley Wickham, *ggplot2: Elegant Graphics for Data Analysis*, Springer
 
 **Regression Analysis and Machine Learning, Using R**
