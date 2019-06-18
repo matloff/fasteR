@@ -24,10 +24,9 @@ conversational, story-telling manner.
 Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  This can come later, optionally.
-Coverage is mainly limited to base R (the **gplot2** graphics package
-will be an exception), so for
-instance the popular but self-described "opinionated" Tidyverse
-is not treated, partly due to its
+Coverage is mainly limited to base R (the **ggplot2** graphics package
+will be an exception), so for instance the popular but self-described 
+"opinionated" Tidyverse is not treated, partly due to its
 controversial nature but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
@@ -52,7 +51,7 @@ you should cook up your own variants to try.
 * [Lesson 9: More on Graphics ](#less9)
 * [Lesson 10: Writing Your Own Functions](#less10)
 * [Lesson 11: 'For' Loops](#less11)
-* [Lesson 12: If-Else](#less11)
+* [Lesson 12: If-Else](#ifelse)
 * [To Learn More](#forMore)
 
 More lessons coming soon!
