@@ -52,6 +52,7 @@ you should cook up your own variants to try.
 * [Lesson 10: Writing Your Own Functions](#less10)
 * [Lesson 11: 'For' Loops](#less11)
 * [Lesson 12: If-Else](#ifelse)
+* [Lesson 12: Linear regression analysis](#linreg)
 * [To Learn More](#forMore)
 
 More lessons coming soon!
@@ -1583,6 +1584,11 @@ coming lessons.
 > **Your Turn:** Recode the **Nile** data to a new vector **nile**, with
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
+
+## <a name="linreg"> </a> Linear regression analysis
+
+Many people gain weight as they age.  But what about professional
+athletes?  They are supposed to keep fit, after all.
 
 ## <a name="forMore"> </a> To Learn More 
 
