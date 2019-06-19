@@ -52,7 +52,8 @@ you should cook up your own variants to try.
 * [Lesson 10: Writing Your Own Functions](#less10)
 * [Lesson 11: 'For' Loops](#less11)
 * [Lesson 12: If-Else](#ifelse)
-* [Lesson 12: Linear regression analysis](#linreg)
+* [Lesson 13: Do pro athletes keep fit?](#keepfit)
+* [Lesson 14: Linear regression analysis](#linreg)
 * [To Learn More](#forMore)
 
 More lessons coming soon!
@@ -720,7 +721,7 @@ It's always good to take a quick look at a new data frame:
 768 people in the study, 9 variables measured on each.
 
 Since this is a study of diabetes, let's take a look at the glucose
-variable.
+variable.  R's **table** function is quite handy.
 
 ``` r
 > table(pima$glucose)
@@ -1585,7 +1586,7 @@ coming lessons.
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
 
-## <a name="linreg"> </a> Linear regression analysis
+## <a name="keepfit"> </a> Do professional athletes keep fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -1611,8 +1612,9 @@ As usual, after reading in the data, we took a look around, glancing at
 the first few records, and looking at a couple of data types.
 
 Now, as a first try in assessing the question of weight gain over time,
-let's look at the mean weight for each age.  We'll round the ages to the
-nearest integer first, using the R function, **round**:
+let's look at the mean weight for each age group.  We'll round the ages
+to the nearest integer first, using the R function, **round**, so that
+e.g.  21.8 becomes 22 and 35.1 becomes 35.
 
 ``` r
 > age <- round(mlb$Age)
@@ -1625,10 +1627,11 @@ age
 ```
 
 Not surprisingly, there are few players of extreme age -- e.g. only two of
-age 21 and one of age 49.
+age 21 and one of age 49.  So we don't have a good sampling at those age
+levels, and may wish to exclude them (which we will do shortly).
 
 Now, how do we find group means?  It's a perfect job for the **tapply**
-function, as we used it before:
+function, in the same way we used it before:
 
 ``` r
 > taout <- tapply(mlb$Weight,age,mean)
@@ -1649,11 +1652,22 @@ To review:  The call to **tapply** instructed R to split the
 gives us exactly what we want, the mean weight in each age group.
 
 So, do we see a time trend above?  Again, we should dismiss the extreme
-low and high ages, and we cannot expect a consistent upward trend over
+low and high ages, and we cannot expect a fully consistent upward trend over
 time, because each mean value is subject to sampling variation.  (We
 view the data as a sample from the population of all professional
 baseball players, past, present and future.)  That said, it does seem
 there is a slight upward trend; older players tend to be heavier!
+
+By the way, note that **taout** is vector, but with additional
+information, in that the elements have names.  In fact, we can extract
+the names into its own vector if needed:
+
+``` r
+> names(taout)
+ [1] "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33"
+"34" "35"
+[16] "36" "37" "38" "39" "40" "41" "42" "43" "44" "49"
+```
 
 Let's plot it.  We'll just plot the means that are based on larger
 amounts of data.  So we'll restrict it to, say, ages 23 through 35,
@@ -1668,9 +1682,16 @@ since all of those means were based on at least 30 players.
 There does indeed seem to be an upward trend in time.  These players
 should be more careful!
 
+Note again that the **plot** function, seeing that we supplied it with
+two arguments instead of one, drew a scatter plot.  For instance, in
+**taoout** we see that for age group 25, the mean weight was 200.2427,
+so there is a dot in the graph for the point (25,200.2427).
+
 Looking at the picture, it seems we could draw a straight line through
 that cloud of points that fits the points pretty well.  Here is where
-linear regression analysis comes in.  
+linear regression analysis comes in, and our next lesson.  
+ 
+## <a name="linreg"> </a> Linear regression analysis
 
 
 ## <a name="forMore"> </a> To Learn More 
