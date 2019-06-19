@@ -1663,6 +1663,14 @@ since all of those means were based on at least 30 players.
 > plot(23:35,taout[3:15])
 ```
 
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
+
+There does indeed seem to be an upward trend in time.  These players
+should be more careful!
+
+Looking at the picture, it seems we could draw a straight line through
+that cloud of points that fits the points pretty well.  Here is where
+linear regression analysis comes in.  
 
 
 ## <a name="forMore"> </a> To Learn More 
