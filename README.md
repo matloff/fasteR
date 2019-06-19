@@ -1655,6 +1655,14 @@ view the data as a sample from the population of all professional
 baseball players, past, present and future.)  That said, it does seem
 there is a slight upward trend; older players tend to be heavier!
 
+Let's plot it.  We'll just plot the means that are based on larger
+amounts of data.  So we'll restrict it to, say, ages 23 through 35,
+since all of those means were based on at least 30 players.
+
+``` r
+> plot(23:35,taout[3:15])
+```
+
 
 
 ## <a name="forMore"> </a> To Learn More 
