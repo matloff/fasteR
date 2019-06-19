@@ -1588,7 +1588,74 @@ coming lessons.
 ## <a name="linreg"> </a> Linear regression analysis
 
 Many people gain weight as they age.  But what about professional
-athletes?  They are supposed to keep fit, after all.
+athletes?  They are supposed to keep fit, after all.  Let's explore this
+using data on professional baseball players.
+
+``` r
+> mlb <- read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/mlb.txt',header=TRUE)
+> head(mlb)
+             Name Team       Position Height Weight   Age PosCategory
+1   Adam_Donachie  BAL        Catcher     74    180 22.99     Catcher
+2       Paul_Bako  BAL        Catcher     74    215 34.69     Catcher
+3 Ramon_Hernandez  BAL        Catcher     72    210 30.78     Catcher
+4    Kevin_Millar  BAL  First_Baseman     72    210 35.43   Infielder
+5     Chris_Gomez  BAL  First_Baseman     73    188 35.71   Infielder
+6   Brian_Roberts  BAL Second_Baseman     69    176 29.39   Infielder
+> class(mlb$Height)
+[1] "integer"
+> class(mlb$Name)
+[1] "factor"
+```
+
+As usual, after reading in the data, we took a look around, glancing at
+the first few records, and looking at a couple of data types.
+
+Now, as a first try in assessing the question of weight gain over time,
+let's look at the mean weight for each age.  We'll round the ages to the
+nearest integer first, using the R function, **round**:
+
+``` r
+> age <- round(mlb$Age)
+> table(age)
+age
+ 21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40 
+  2  20  58  80 103 104 106  84  80  74  70  44  44  32  32  22  20  12   6   7 
+ 41  42  43  44  49 
+  9   2   2   1   1 
+```
+
+Not surprisingly, there are few players of extreme age -- e.g. only two of
+age 21 and one of age 49.
+
+Now, how do we find group means?  It's a perfect job for the **tapply**
+function, as we used it before:
+
+``` r
+> taout <- tapply(mlb$Weight,age,mean)
+> taout
+      21       22       23       24       25       26       27       28 
+215.0000 192.8500 196.2241 194.4500 200.2427 200.4327 199.2925 203.9643 
+      29       30       31       32       33       34       35       36 
+199.4875 204.1757 202.8429 206.7500 203.5909 204.8750 209.6250 205.6364 
+      37       38       39       40       41       42       43       44 
+203.2000 200.6667 208.3333 207.8571 205.2222 230.5000 229.5000 175.0000 
+      49 
+188.0000 
+```
+
+To review:  The call to **tapply** instructed R to split the
+**mlb$Weight** vector according to the corresponding elements in the
+**age** vector, and then find the mean in each resulting group.  This
+gives us exactly what we want, the mean weight in each age group.
+
+So, do we see a time trend above?  Again, we should dismiss the extreme
+low and high ages, and we cannot expect a consistent upward trend over
+time, because each mean value is subject to sampling variation.  (We
+view the data as a sample from the population of all professional
+baseball players, past, present and future.)  That said, it does seem
+there is a slight upward trend; older players tend to be heavier!
+
+
 
 ## <a name="forMore"> </a> To Learn More 
 
