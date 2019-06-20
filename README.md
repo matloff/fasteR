@@ -8,8 +8,8 @@
 The site is for those who know nothing of R or even of programming, and
 seek a quick, painless entree to the world of R.
 
-* **FAST**:  You'll already be doing good stuff -- useful data analysis
---- in R in your very first lesson.
+* **FAST**:  You'll already be doing good stuff in R -- useful data analysis
+--- in your very first lesson.
 
 * **No prerequisites:**  If you're comfortable with navigating the Web,
 you're fine.  This tutorial is aimed at you, not experienced
@@ -21,10 +21,12 @@ examples, unrelated to the real world.  The material is presented in a
 conversational, story-telling manner.
 
 * **Just the basics, no frills or polemics:** 
-Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
+
+    - Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  This can come later, optionally.
-Coverage is mainly limited to base R, so for instance the 
+
+    - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
 treated, partly due to its controversial nature (I am a 
 [skeptic](http://github.com/matloff/TidyverseSkeptic)),
@@ -76,14 +78,14 @@ run on a famous dataset called *Swiss Roll*.
 ### Please note again:  
 
 * You will just be using R from the command line here.  Most tutorials,
-say the excellent one by [R-Ladies
+  say the excellent one by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
-start with RStudio.  It is a very attractive, powerful IDE.  But even the
-R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
-stick to the R command line, and focus on data analysis, not advanced
+start with RStudio.  It is a very attractive, powerful IDE.  But even
+the R-Ladies tutorial laments that RStudio can be "overwhelming."  Here
+we stick to the R command line, and focus on data analysis, not advanced
 tools.  At some point in your evolution as a programmer, you'll need to
-start using either an IDE or external text editor; this will be
-discussed in a later lesson, but for now, we'll take the fastest
+start using either an IDE or external text editor (I use Vim); this
+will be discussed in a later lesson, but for now, we'll take the fastest
 possible road to getting you skilled at R -- the command line.
 
 * Nonpassive learning is absolutely key!  So even if the output of an R
@@ -96,7 +98,7 @@ out!"  This is a motto I devised for teaching.  If you are unclear or
 curious about something, try it out!  Just devise a little experiment,
 and type in the code.  Don't worry -- you won't "break" things.
 
-* Also similarly:  I cannot *teach* you how to program.  I can merely
+* Very important:  I cannot *teach* you how to program.  I can merely
 give you the tools, e.g. R vectors, and some examples.  For a given
 desired programming task, then, you must creatively put these tools
 together to attain the goal.  Treat it like a puzzle!  I think you'll
@@ -116,9 +118,9 @@ lines here will all begin with the R interactive prompt, '>'; that
 should not be typed.)
 
 This is a Markdown file.  You can read it right there on GitHub, which
-has its own Markdown renderer, or on your own machine in Chrome using
-the Markdown Reader extension (be sure to enable Allow Access to File
-URLs).  
+has its own Markdown renderer. Or you can download it to your own
+machine in Chrome and use the Markdown Reader extension to view it (be
+sure to enable Allow Access to File URLs).  
 
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
@@ -128,7 +130,8 @@ matloff@cs.ucdavis.edu
 The R command prompt is '>'.  It will be shown here, but you don't type
 it.
 
-So, just type '1+1' then hit Enter.  Sure enough, it prints out 2:
+So, just type '1+1' then hit Enter.  Sure enough, it prints out 2 (you
+were expecting maybe 12108?):
 
 ``` r
 > 1 + 1
@@ -154,7 +157,7 @@ output, 919.35, is called the *return value* or simply *value*.  The act
 of running the function is termed *calling* the function.
 
 Another point to note is that we didn't need to call R's **print**
-function.  We could have,
+function.  We could have typed,
 
 ``` r
 > print(mean(Nile))
@@ -1598,7 +1601,8 @@ coming lessons.
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
-using data on professional baseball players.
+using data on professional baseball players.  (Dataset courtesy of the
+UCLA Statistics Dept.)
 
 ``` r
 > mlb <- read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/mlb.txt',header=TRUE)
