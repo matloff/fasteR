@@ -24,10 +24,11 @@ conversational, story-telling manner.
 Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  This can come later, optionally.
-Coverage is mainly limited to base R (the **ggplot2** graphics package
-will be an exception), so for instance the popular but self-described 
-"opinionated" Tidyverse is not treated, partly due to its
-controversial nature but mainly because it would be a burden on the user
+Coverage is mainly limited to base R, so for instance the 
+popular but self-described "opinionated" Tidyverse is not 
+treated, partly due to its controversial nature (I am a 
+[skeptic](http://github.com/matloff/TidyverseSkeptic).
+but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
@@ -179,9 +180,12 @@ Frequency = 1
 Now you can see how the row labels work.  There are 15 numbers per row,
 here, so the second row starts with the 16th, indicated by '[16]'.
 
-R has great graphics, not only in base R but also in user-contributed
-packages, such as **ggplot2** and **lattice**.  But we'll start with a
-very simple, non-dazzling one, a no-frills histogram:
+R has great graphics, not only in base R but also in wonderful
+user-contributed packages, such as **ggplot2** and **lattice**.  But
+we'll stick with base-R graphics for now, and save **ggplot2** and
+**lattice** for a later lesson.
+
+We'll start with a very simple, non-dazzling one, a no-frills histogram:
 
 ``` r
 > hist(Nile)
@@ -1612,9 +1616,9 @@ As usual, after reading in the data, we took a look around, glancing at
 the first few records, and looking at a couple of data types.
 
 Now, as a first try in assessing the question of weight gain over time,
-let's look at the mean weight for each age group.  We'll round the ages
-to the nearest integer first, using the R function, **round**, so that
-e.g.  21.8 becomes 22 and 35.1 becomes 35.
+let's look at the mean weight for each age group.  In order to have
+groups, we'll round the ages to the nearest integer first, using the R
+function, **round**, so that e.g.  21.8 becomes 22 and 35.1 becomes 35.
 
 ``` r
 > age <- round(mlb$Age)
@@ -1671,7 +1675,7 @@ the names into its own vector if needed:
 
 Let's plot it.  We'll just plot the means that are based on larger
 amounts of data.  So we'll restrict it to, say, ages 23 through 35,
-since all of those means were based on at least 30 players.
+all of whose means were based on at least 30 players.
 
 ``` r
 > plot(23:35,taout[3:15])
@@ -1682,16 +1686,36 @@ since all of those means were based on at least 30 players.
 There does indeed seem to be an upward trend in time.  These players
 should be more careful!
 
-Note again that the **plot** function, seeing that we supplied it with
-two arguments instead of one, drew a scatter plot.  For instance, in
-**taoout** we see that for age group 25, the mean weight was 200.2427,
-so there is a dot in the graph for the point (25,200.2427).
+Note again that the **plot** function noticed that we supplied it with
+two arguments instead of one, and thus drew a scatter plot.  For
+instance, in **taout** we see that for age group 25, the mean weight
+was 200.2427, so there is a dot in the graph for the point
+(25,200.2427).
 
-Looking at the picture, it seems we could draw a straight line through
-that cloud of points that fits the points pretty well.  Here is where
-linear regression analysis comes in, and our next lesson.  
+> **Your Turn:** There are lots of little experiments you can do on this
+> dataset.  For instance, use **tapply** to find the mean weight for
+> each position; is the stereotype of the "beefy" catcher accurate, i.e.
+> is the mean weight for that position higher than for the others?
+> Another suggestion:  Plot the number of players at each age group, to
+> visualize the ages at which the bulk of the players fall.
  
 ## <a name="linreg"> </a> Linear regression analysis
+
+Looking at the picture in the last lesson, it seems we could draw a
+straight line through that cloud of points that fits the points pretty
+well.  Here is where linear regression analysis comes in. 
+
+We of course cannot go into the details of statistical methodology here,
+but it will be helpful to at least get a good definition set:
+
+> As mentioned, we treat the data as a sample from the (conceptual)
+> population of all players, past, present and future.  Accordingly,
+> there is a population mean for each age group.  It is assumed that
+> those population means, when plotted against age, lie on some straight
+> line.
+
+So, we need to use the data to estimate the slope and intercept of that
+straight line, which R's **lm** ("linear model") function does for us.
 
 
 ## <a name="forMore"> </a> To Learn More 
