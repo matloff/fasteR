@@ -27,7 +27,7 @@ learning an IDE at the same time.  This can come later, optionally.
 Coverage is mainly limited to base R, so for instance the 
 popular but self-described "opinionated" Tidyverse is not 
 treated, partly due to its controversial nature (I am a 
-[skeptic](http://github.com/matloff/TidyverseSkeptic).
+[skeptic](http://github.com/matloff/TidyverseSkeptic)),
 but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
@@ -53,8 +53,9 @@ you should cook up your own variants to try.
 * [Lesson 10: Writing Your Own Functions](#less10)
 * [Lesson 11: 'For' Loops](#less11)
 * [Lesson 12: If-Else](#ifelse)
-* [Lesson 13: Do pro athletes keep fit?](#keepfit)
-* [Lesson 14: Linear regression analysis](#linreg)
+* [Lesson 13: Do Pro Athletes Keep Fit?](#keepfit)
+* [Lesson 14: Linear Regression Analysis](#linreg)
+* (more lessons coming soon!)
 * [To Learn More](#forMore)
 
 More lessons coming soon!
@@ -82,7 +83,8 @@ R-Ladies tutorial laments that RStudio can be "overwhelming."  Here we
 stick to the R command line, and focus on data analysis, not advanced
 tools.  At some point in your evolution as a programmer, you'll need to
 start using either an IDE or external text editor; this will be
-discussed in a later lesson.
+discussed in a later lesson, but for now, we'll take the fastest
+possible road to getting you skilled at R -- the command line.
 
 * Nonpassive learning is absolutely key!  So even if the output of an R
 command is shown here, run the command yourself in your R console,
@@ -116,8 +118,10 @@ should not be typed.)
 This is a Markdown file.  You can read it right there on GitHub, which
 has its own Markdown renderer, or on your own machine in Chrome using
 the Markdown Reader extension (be sure to enable Allow Access to File
-URLs).  RStudio also has a built-in Markdown reader, though again I
-suggest holding off on IDEs for now.
+URLs).  
+
+Good luck!  And if you have any questions, feel free to e-mail me, at
+matloff@cs.ucdavis.edu
 
 ## <a name="firstr"> </a> First R Steps
 
@@ -1590,7 +1594,7 @@ coming lessons.
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
 
-## <a name="keepfit"> </a> Do professional athletes keep fit?
+## <a name="keepfit"> </a> Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -1699,7 +1703,7 @@ was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg"> </a> Linear regression analysis
+## <a name="linreg"> </a> Linear Regression Analysis
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -1740,6 +1744,95 @@ superimposed on our scatter plot:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
+## <a name="s3"> </a> S3 classes
+
+One small but important point about the graph in the last lesson: 
+We had typed
+
+``` r
+> abline(181.4366,0.6936)
+```
+
+but we really shouldn't have to type those numbers in by hand -- and we
+don't have to.  Here's why:
+
+As mentioned earlier, R is an *object-oriented language*. Everthing is
+an *object*, and every object has a *class*.  One of the most common
+classes is called 'S3'.  
+
+When we call **lm**, the latter returns an object of 'S3' class:
+
+``` r
+> lmout <- lm(Weight ~ Age,data=mlb)
+> class(lmout)
+[1] "lm"
+```
+
+A handy way to take a quick glance at the contents of an object is
+**str**:
+
+``` r
+> str(lmout)
+List of 12
+ $ coefficients : Named num [1:2] 181.437 0.694
+  ..- attr(*, "names")= chr [1:2] "(Intercept)" "Age"
+...
+...
+ - attr(*, "class")= chr "lm"
+```
+
+Our use of ... here is to indicate that we've omitted a lot of the
+output.  But a couple of things stand out even in this excerpt:
+
+1. An S3 object is actually an R list.
+
+2. But it has an extra *attribute*, which is the class name.
+
+3. One of the components of the list is named **coefficients**, and it
+   is a vector containing the slope and intercept.
+
+So, we don't have to type the slope and intercept in by hand after all.
+
+``` r
+> cfs <- lmout$coefficients
+> abline(a = cfs[1], b = cfs[2])
+```
+
+Now, what about our original question -- do baseball players gain weight
+as they age?  The answer appears to be yes; for each additional year of
+age, the estimated mean age increases by about 0.7 pound.  That's about
+7 pounds in 10 years, rather remarkable.
+
+Again, this is only an estimate, generated from sample data.  We can get
+an idea of the accuracy of this estimate by calculating a *confidence
+interval*, but we'll leave that for a future lesson.
+
+But we can do more right now.  One might ask, Shouldn't we also account
+for a player's height, not just his age?  After all, taller people tend
+to be heavier.  Yes, we should do this:
+
+``` r
+> lmo <- lm(Weight ~ Height + Age, data=mlb)
+> lmo
+
+Call:
+lm(formula = Weight ~ Height + Age, data = mlb)
+
+Coefficients:
+(Intercept)       Height          Age  
+  -187.6382       4.9236       0.9115  
+```
+
+This says:
+
+<pre>
+estimated mean weight = -187.6382 + 4.9236 height + 0.9115 age
+</pre>
+
+So, under this more refined analysis, things are even more pessimistic;
+players on average gain about 0.9 pounds per year.  And by the way, an
+extra inch of height corresponds on average to about 4.9 pounds of extra
+weight; taller players are indeed heavier, as we surmised.
 
 ## <a name="forMore"> </a> To Learn More 
 
