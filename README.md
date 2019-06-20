@@ -1715,7 +1715,30 @@ but it will be helpful to at least get a good definition set:
 > line.
 
 So, we need to use the data to estimate the slope and intercept of that
-straight line, which R's **lm** ("linear model") function does for us.
+straight line, which R's **lm** ("linear model") function does for us:
+
+``` r
+> lm(Weight ~ Age,data=mlb)
+
+Call:
+lm(formula = Weight ~ Age, data = mlb)
+
+Coefficients:
+(Intercept)          Age  
+   181.4366       0.6936  
+```
+Here the call instructed R to estimate the regression line of weight
+against age, based on the **mlb** data.
+
+So the estimated slope and intercept are 0.6936 and 181.4366,
+respectively.  R has a provision by which we can draw the line,
+superimposed on our scatter plot:
+
+``` r
+> abline(181.4366,0.6936)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
 
 ## <a name="forMore"> </a> To Learn More 
