@@ -2016,6 +2016,12 @@ Moreover, we now have our results in a data frame for further use.  For
 instance, we may wish to plot the four lines on the same graph, and we
 would use rows of the data frame as input.
 
+Finally, what about those results?  There is substantial variation in
+those estimated slopes, but again, they are only estimates.  The
+question of whether there is substantial variation at the population
+level is one of statistical inference, beyond the scope of this R
+course, though we'll cover it briefly in a future lesson.
+
 ## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot. (Yes, I
