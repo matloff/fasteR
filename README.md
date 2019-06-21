@@ -51,12 +51,13 @@ you should cook up your own variants to try.
 * [Lesson 7:  Another Look at the Nile Data](#less7)
 * [Pause to Reflect](#pause1)
 * [Lesson 8: Introduction to Base R Graphics ](#less8)
-* [Lesson 9: More on Graphics ](#less9)
+* [Lesson 9: More on Base Graphics ](#less9)
 * [Lesson 10: Writing Your Own Functions](#less10)
 * [Lesson 11: 'For' Loops](#less11)
 * [Lesson 12: If-Else](#ifelse)
 * [Lesson 13: Do Pro Athletes Keep Fit?](#keepfit)
-* [Lesson 14: Linear Regression Analysis](#linreg)
+* [Lesson 14: Linear Regression Analysis, I](#linreg1)
+* [Lesson 15: Baseball Player Analysis (cont'd.) ](#less15)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -98,12 +99,12 @@ out!"  This is a motto I devised for teaching.  If you are unclear or
 curious about something, try it out!  Just devise a little experiment,
 and type in the code.  Don't worry -- you won't "break" things.
 
-* Very important:  I cannot *teach* you how to program.  I can merely
-give you the tools, e.g. R vectors, and some examples.  For a given
-desired programming task, then, you must creatively put these tools
-together to attain the goal.  Treat it like a puzzle!  I think you'll
-find that if you stick with it, you'll find you're pretty good at it.
-After all, we can all work puzzles.
+* <span style="color:red">Tip:</span>  I cannot *teach* you how to
+program.  I can merely give you the tools, e.g. R vectors, and some
+examples.  For a given desired programming task, then, you must
+creatively put these tools together to attain the goal.  Treat it like a
+puzzle!  I think you'll find that if you stick with it, you'll find
+you're pretty good at it.  After all, we can all work puzzles.
 
 ### Starting out:
 
@@ -288,6 +289,7 @@ might be?  They are arcane, so it's easier just to always use "<-".
 And though "keyboard shortcuts" for this are possible, again let's just
 stick to the basics for now.)
 
+<span style="color:red">Tip:</span>
 We can pretty much choose any name we want; "n80100" just was chosen
 to easily remember this new vector's provenance.  (But names can't
 include spaces, and must start with a letter.)
@@ -420,8 +422,9 @@ specifying how many elements to print:
  [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
 ```
 
-To avoid writing out the long word "ToothGrowth" repeatedly, let's
-make a copy.
+<span style="color:red">Tip:</span>
+To avoid writing out the long words repeatedly, it's handy to
+make a copy with a shorter name.
 
 ``` r
 > tg <- ToothGrowth
@@ -568,6 +571,7 @@ with no restriction on columns, and assigned the result to **tgoj**.
 (Once again, we can choose any name; we chose this one to help remember
 what we put into that variable.)
 
+<span style="color:red">Tip:</span>
 Often in R there is a shorter, more compact way of doing things.  That's
 the case here; we can use the magical **tapply** function:
 
@@ -714,6 +718,7 @@ columns in the data frame are to have.  If the file doesn't have one,
 set **header** to FALSE.  You can always add names to your data frame
 later (future lesson).
 
+<span style="color:red">Tip:</span>
 It's always good to take a quick look at a new data frame:
 
 ``` r
@@ -791,8 +796,10 @@ one object:
 > pima$glucose[pima$glucose == 0] <- NA
 ```
 
-Or, broken up into smaller steps (I recommend this especially for
-beginners),
+<span style="color:red">Tip:</span>
+That's pretty complicated.  It's clearer to break things up
+into smaller steps (I recommend this especially for
+beginners):
 
 ``` r
 > z <- pima$glucose == 0 
@@ -803,9 +810,11 @@ So ***z*** will be a vector of TRUEs and FALSEs, which we then use to
 select the desired elements in **pima$glucose** and set them to
 NA.
 
+<span style="color:red">Tip:</span>
 Note again the double-equal sign!  If we wish to test whether, say, ***a*** and
 ***b*** are equal, the expression must be "a == b", not "a = b"; the
-latter would do "a <- b".
+latter would do "a <- b".  This is a famous beginning programmer's
+error.
 
 As a check, let's verify that we now have 5 NAs in the glucose variable:
 
@@ -1009,8 +1018,11 @@ to decide whether this is a genuine value or an error.
 Of course, since this is a small dataset, we could have just printed out the
 entire data and visually scanned it for a low number.  But what if the
 length of the data vector had been 100,000 instead of 100?  Then the
-visual approach wouldn't work.  Moreover, a goal of programming is to
-automate tasks, rather than doing them by hand.
+visual approach wouldn't work.  
+
+<span style="color:red">Tip:</span>
+Remember, a goal of programming is to automate tasks, rather 
+than doing them by hand.
 
 > **Your Turn:**  There appear to be some unusually high values as well,
 > e.g. one around 1875.  Determine which year this was, using the
@@ -1078,10 +1090,11 @@ programming.
 
 ## <a name="pause1"> </a> Pause to Reflect
 
+<span style="color:red">Tip:</span>
+Repeating n earlier point:
 How does one build a house?  There of course is no set formula.  One has
 various tools and materials, and the goal is to put these together in a
 creative way to produce the end result, the house.
-
 It's the same with R.  The tools here are the various functions, e.g.
 **mean** and **which**, and the materials are one's data.  One then must
 creatively put them together to achieve one's goal, say ferreting out
@@ -1151,7 +1164,9 @@ R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
 rows of **pe**, in a new data frame **pe2500**.
 
-Note again that I could have written the more companct
+<span style="color:red">Tip:</span>
+Note again that it's clearer to break complex operations into simpler,
+smaller ones.  I could have written the more companct
 
 ``` r
 > pe2500 <- pe[sample(1:nrow(pe),2500),]
@@ -1305,7 +1320,10 @@ bunch of TRUEs and FALSEs, one for each element of **Nile**.  Then
 'Nile[Nile > 1200]' gives us the subvector of **Nile** corresponding to
 the TRUEs, i.e. the stated condition.  We then take the mean of that.
 
-Say we want to do this again, but with 1350 instead of 1200.  Or, with
+<span style="color:red">Tip:</span>
+If we have an operation we will use a lot, we should consider writing a
+function for it.
+Say we want to do the above again, but with 1350 instead of 1200.  Or, with
 the **tg$len** vector from Lesson 3, with 10.2 as our lower bound.  We
 *could* keep typing the same pattern as above, but if we're going to
 do this a lot, it's better to write a function for it:
@@ -1449,6 +1467,11 @@ call **sum**, TRUEs and FALSEs are treated as 1s and 0s, so we get the
 total number of 1s -- which is a count of the number of elements in that
 column that are 0.
 
+A technical point:  Why did we need the explicit call to **print**?
+Didn't we see earlier that just typing an expression 
+at the R '>' prompt will automatically print out the value of the
+expression?  Ah yes -- but we are not at the R prompt here!
+
 We probably have forgotten which column is which, so let's see:
 
 ``` r
@@ -1504,6 +1527,7 @@ determines where the 0s are in column **i**, and then the line
 
 replaces those 0s by NAs.
 
+<span style="color:red">Tip:</span>
 Note that I have indented the two lines in the block.  This is not
 required but is considered good for clear code. 
 
@@ -1553,8 +1577,9 @@ running this, so as to be sure the code worked):
 > pe$educ <- ifelse(edu < 13,12,edu)
 ```
 
-(Again, we've broken what could have been one line into two, for
-clarity.)
+<span style="color:red">Tip:</span>
+Once again, we've broken what could have been one line into two, for
+clarity.
 
 Now how did that work?  As you see above, R's **ifelse** function
 has three arguments, and its return value is a new vector, that in this
@@ -1620,6 +1645,7 @@ UCLA Statistics Dept.)
 [1] "factor"
 ```
 
+<span style="color:red">Tip:</span>
 As usual, after reading in the data, we took a look around, glancing at
 the first few records, and looking at a couple of data types.
 
@@ -1707,7 +1733,7 @@ was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg"> </a> Linear Regression Analysis
+## <a name="linreg1"> </a> Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -1750,8 +1776,10 @@ superimposed on our scatter plot:
 
 ## <a name="s3"> </a> S3 classes
 
-One small but important point about the graph in the last lesson: 
-We had typed
+<span style="color:red">Tip:</span>
+Remember, the point of computers is to alleviate us of work.  We should
+avoid doing what the computer could do.  For instance,
+concerning the graph in the last lesson: We had typed
 
 ``` r
 > abline(181.4366,0.6936)
@@ -1837,6 +1865,156 @@ So, under this more refined analysis, things are even more pessimistic;
 players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
 weight; taller players are indeed heavier, as we surmised.
+
+## <a name="less15"> </a> Baseball Player Analysis (cont'd.)
+
+This lesson will be a little longer, but it will give you more practice
+on a number of earlier topics, and will also bring in some new R
+functions for you.
+
+We might wonder whether the regression lines differ much among player
+positions.  Let's first see what positions are tabulated:
+
+``` r
+> table(mlb$PosCategory)
+   Catcher  Infielder Outfielder    Pitcher 
+        76        210        194        535 
+```
+
+Let's fit the regression lines separately for each position type. 
+
+There are various ways to do this, involving avoidance of loops to
+various degrees.  But we'll keep it simple, which will be clearer.
+
+First, let's split the data by position.  You might at first think this
+is easily done using the **split** function, but that doesn't work,
+since that function is for splitting vectors.  Here we wish to split a
+data frame.
+
+So what can be done instead?  Recall the statement at the outset of this
+tutorial:
+
+> I cannot *teach* you how to program.  I can merely
+> give you the tools, e.g. R vectors, and some examples.  For a given
+> desired programming task, then, you must creatively put these tools
+> together to attain the goal.  Treat it like a puzzle!  I think you'll
+> find that if you stick with it, you'll find you're pretty good at it.
+> After all, we can all work puzzles.
+
+So we need to think creatively here.  One solution is this:
+
+We need to determine the row numbers of the catchers, the row numbers of
+the infielders and so on.  So we can take the row numbers,
+**1:nrow(mlb)**, and apply **split** to that vector!
+
+``` r
+> rownums <- split(1:nrow(mlb),mlb$PosCategory)
+```
+
+<span style="color:red">Tip:</span>
+As usual, following an intricate operation like this, we should glance
+at the result:
+
+``` r
+> str(rownums)
+List of 4
+ $ Catcher   : int [1:76] 1 2 3 35 36 66 67 68 101 102 ...
+ $ Infielder : int [1:210] 4 5 6 7 8 9 37 38 39 40 ...
+ $ Outfielder: int [1:194] 10 11 12 13 14 15 16 43 44 45 ...
+ $ Pitcher   : int [1:535] 17 18 19 20 21 22 23 24 25 26 ...
+```
+
+So the output is an R list; no surprise there, as we knew before before
+that **split** produces an R list.  Also not surprisingly, the elements
+of the list are named "Catcher" etc.  So for example, the third
+outfielder is in row 12 of the data frame.
+
+<span style="color:red">Tip:</span>
+The idea here, using **split** on **1:nrow(mlb)**, was a bit of a trick.
+Actually, it is a common ploy for experienced R coders, but you might
+ask, "How could a novice come up with this idea?"  The answer, as noted
+several times already here, is the programming is a creative process.
+Creativity may not come quickly!  In some case, one might need to mull
+over a problem for a long time before coming up with a solution.  Don't
+give up!  The more you think about a problem, the more skilled you will
+get, even if you sometimes come up empty-handed.  And of course, 
+there are many forums on the Web at which you can ask questions,
+e.g. Stack Overflow.
+
+<span style="color:red">Tip:</span>
+Now, remember, a nice thing about R lists is that we can reference their
+elements in various ways.  The first element above, for instance, is any
+of **rownums$Catcher**, **rownums[['Catcher']]** and **rownums[[1]]**,
+This versatility is great, as for example we can use the latter two
+forms to write loops.
+
+And a loop is exactly what we need here.  We want to call **lm** four
+times.  We could do this, say, with a loop beginning with
+
+``` r
+for (i in 1:4)
+```
+
+to iterate through the four position types, but it will be clearer if we
+use the names:
+
+``` r
+for (pos in c('Catcher','Infielder','Outfielder','Pitcher')
+```
+
+And we could have a **print** call in the body of the loop.  But let's
+be a little fancier, building up a matrix with the output:
+
+``` r
+> posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
+> m <- data.frame()
+> for (pos in posNames) {
++   lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
++   newrow <- lmo$coefficients
++   m <- rbind(m,newrow)
++ }
+> m
+  X180.828029016113 X0.794925225995348
+1          180.8280          0.7949252
+2          170.2466          0.8589593
+3          176.2884          0.7883343
+4          185.5994          0.6543904
+```
+
+Two key things to note here.  First, in the call to **lm**, we used
+**mlb[rownums[[pos]],]** instead of **mlb** as previously, since here we
+wanted to fit a regression line on each subgroup.  So, we restricted
+attention to only those rows of **mlb**.
+
+Second, we used R's **rbind** ("row bind") function.  The expression 
+**rbind(m,newrow)** forms a new data frame, by adding **newrow** onto
+**m**.
+
+Good, with the two columns aligned nicely.  But those column names are
+awful, and the row labels should be nicer than 1,2,3,4.  We can fix
+these things:
+
+``` r
+> row.names(m) <- posNames
+> names(m) <- c('intercept','slope')
+> m
+           intercept     slope
+Catcher     180.8280 0.7949252
+Infielder   170.2466 0.8589593
+Outfielder  176.2884 0.7883343
+Pitcher     185.5994 0.6543904
+```
+
+What happened here?  R has a built-in **row.names** function, so that
+setting row names was easy.  But what about the column names?  Recall
+that a data frame is actually an R list, consisting of several vectors
+of the same length.  We have two vectors here, so we need to supply two
+items to **names**.
+
+So with a little finessing here, we got some nicely-formatted output.
+Moreover, we now have our results in a data frame for further use.  For
+instance, we may wish to plot the four lines on the same graph, and we
+would use rows of the data frame as input.
 
 ## <a name="forMore"> </a> To Learn More 
 
