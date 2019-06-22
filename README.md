@@ -253,7 +253,8 @@ for the second element (which we see above is indeed 1160).
 The value 2 here is the index.
 
 The **c** ("concatenate") function builds a vector, stringing several
-numbers together.  E.g. we can get the 2nd, 5th and 6th:
+numbers together.  E.g. we can get the 2nd, 5th and 6th elements of
+**Nile**:
 
 ``` r
 > Nile[c(2,5,6)]
@@ -332,7 +333,7 @@ the level exceeded 1200.  Let's first introduce R's **sum** function:
 [1] 30
 ```
 
-Here the ***c*** function ("concatenate") built a vector consisting of
+Here the ***c*** function built a vector consisting of
 5, 12 and 13.  That vector was then fed into the **sum** function,
 returning 5+12+13 = 30.
 
@@ -384,7 +385,8 @@ Say we have height, weight and age on each of 100 people.  Our data
 frame would have 100 rows and 3 columns.  The entry in, e.g., the second
 row and third column would be the age of the second person in our data. 
 The second row as a whole would be all the data for that second person,
-i.e. the height, weight and age of that person.
+i.e. the height, weight and age of that person.  The third column as a
+whole would be the vector of all ages in our dataset.
 
 As our first example, consider the **ToothGrowth** dataset built-in to
 R.  Again, you can read about it in the online help (the data turn out
@@ -406,21 +408,6 @@ R's **head** function displays (by default) the first 6 rows of the
 given dataframe.  We see there are length, supplement and dosage
 columns; each column is an R vector.  
 
-The **head** function works on vectors too:
-
-``` r
->  head(ToothGrowth$len)
-[1]  4.2 11.5  7.3  5.8  6.4 10.0
-```
-
-Like many R functions, **head** has an optional second argument,
-specifying how many elements to print:
-
-``` r
-> head(ToothGrowth$len,10)
- [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
-```
-
 <span style="color:red">Tip:</span>
 To avoid writing out the long words repeatedly, it's handy to
 make a copy with a shorter name.
@@ -428,15 +415,6 @@ make a copy with a shorter name.
 ``` r
 > tg <- ToothGrowth
 ```
-
-How large is the dataset?
-
-``` r
-> dim(tg)
-[1] 60  3
-```
-
-Ah, 60 rows and 3 columns (60 guinea pigs, 3 measurements each).
 
 Dollar signs are used to denote the individual columns.  E.g. we can
 print out the mean length; **tg$len** is the tooth length column, so
@@ -453,8 +431,8 @@ To get the element in row 3, column 1:
 > tg[3,1]
 [1] 7.3
 ```
-which matches what we saw above.  Or, use the fact that **tg$len** is a
-vector:
+which matches what we saw above in our **head** example.  Or, use the 
+fact that **tg$len** is a vector:
 
 ``` r
 > tg$len[3]
@@ -477,8 +455,8 @@ we are talking about column 1.  And since the first position, before the
 comma, is empty, no rows are specified -- so *all* rows are included.
 That boils down to: all of column 1.
 
-One can extract subsets of data frames, using either some of the rows or
-some of the columns, e.g.:
+A key feature of R is that one can extract subsets of data frames, using
+either some of the rows or some of the columns, e.g.:
 
 ``` r
 > z <- tg[2:5,c(1,3)]
@@ -499,13 +477,54 @@ result to **z**.  To extract those columns but keep all rows, do
 
 i.e. leave the row specification field empty.
 
+By the way, note that the three columns are all of the same length, a
+requirement for data frames.  And what is that common length in this
+case?  R **nrow** function tells us the number of rows in any data
+frame:
+
+``` r
+> nrow(ToothGrowth)
+[1] 60
+```
+
+Ah, 60 rows (60 guinea pigs, 3 measurements each).
+
+Or:
+
+``` r
+> tg <- ToothGrowth
+> length(tg$len)
+[1] 60
+> length(tg$supp)
+[1] 60
+> length(tg$dose)
+[1] 60
+```
+
+The **head** function works on vectors too:
+
+``` r
+>  head(ToothGrowth$len)
+[1]  4.2 11.5  7.3  5.8  6.4 10.0
+```
+
+Like many R functions, **head** has an optional second argument,
+specifying how many elements to print:
+
+``` r
+> head(ToothGrowth$len,10)
+ [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
+```
+
 > **Your Turn:** Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
 > the length was less than 16.  Also, try some examples with another
 > built-in R dataset, **faithful**.  This one involves the Old Faithful
 > geyser in Yellowstone National Park in the US.  The first column gives
 > duration of the eruption, and the second has the waiting time since the
-> last eruption.
+> last eruption.  As mentioned, these operations are key features of R,
+> so devise and run as many examples as possible; err on the side of
+> doing too many!
 
 ## <a name="less4"> </a> Lesson 4:  R Factor Class
 
@@ -516,6 +535,17 @@ quotation marks.) Note that vectors of numbers are of  **'numeric'**
 class too; actually, a single number is considered to be a vector of
 length 1.  So, **c('abc','xw')**, for instance, is  **'character'**
 as well.
+
+<span style="color:red">Tip:</span>
+Computers require one to be very, very careful and very, very precise.
+In that expression **c('abc','xw')** above, one might wonder why it does
+not evaluate to 'abcxw'.  After all, didn't I say that the 'c' stands
+for "concatenate"?  Yes, but the **c** function concatenates *vectors*.
+Here 'abc' is a vector of length 1 -- we have *one* character string,
+and the fact that it consists of 3 characters is irrelevant -- and
+likewise 'xw' is one character string.  So, we are concatenating a
+1-element vector with another 1-element vector, resulting in a 2-element
+vector.
 
 What about **tg** and **tg$supp**?
 
@@ -536,13 +566,17 @@ list of categories for **tg$supp** as follows:
 [1] "OJ" "VC"
 ```
 
-The supplements were either orange juice or Vitamin C.
+The categorical variable here is **supp**, the name the creator of this 
+dataset chose for the supplement.  We see that there are two categories
+(*levels*), either orange juice or Vitamin C.
 
 Factors can sometimes be a bit tricky to work with, but the above is
 enough for now.  Let's see how to apply the notion in the current
 dataset.
 
-Let's compare mean tooth length for the two types of supplements:
+Let's compare mean tooth length for the two types of supplements.
+(The reader should take the next few lines slowly.  You'll get it, but
+there is a quite a bit going on here.)
 
 ``` r
 > tgoj <- tg[tg$supp == 'OJ',]
@@ -553,16 +587,24 @@ Let's compare mean tooth length for the two types of supplements:
 [1] 16.96333
 ```
 
-What did that first line do?  First, **tg$supp == 'OJ'** produces a
-vector of TRUEs and FALSEs.  The lines in which supplement = OJ produce
-TRUE, the rest FALSE.  We saw above that TRUEs and FALSEs can be
-interpreted as 1s and 0s in a context like that of the **sum** function,
-but here they are used to select indices.  
+Let's take apart that first line:
 
-In the context here, **tg$supp == 'OJ'** appeared in a row-indices
-context.  R takes this to mean that we want just those rows of **tg** that
-produced the TRUEs. (The column-index field, after the comma, was blank,
-so we want all columns of those rows.)
+1.  **tg$supp == 'OJ'** produces a vector of TRUEs and FALSEs.  The lines of **tg** in which supplement = OJ produce TRUE, the rest FALSE.  
+
+2.  The expression **tg[tg$supp == 'OJ',]** says, "Extract from **tg**
+the rows in which the supplement was OJ."  (Since the field following the
+comma is blank, we are placing no restriction on the columns, just
+taking them all.)
+
+3.  For convenience, we assigned that result to **tgoj**.  The latter
+now consists of all rows of **tg** with the OJ supplement. 
+
+We saw earlier that TRUEs and FALSEs can be interpreted as 1s and 0s in
+a context like that of the **sum** function, but they can also be used
+to select indices.  In the context here, **tg$supp == 'OJ'** appeared in
+a row-indices context.  R takes this to mean that we want just those
+rows of **tg** that produced the TRUEs. (The column-index field, after
+the comma, was blank, so we want all columns of those rows.)
 
 So **tgoj** does become those rows of **tg**.  In other words, we
 extracted the rows of **tg** for which the supplement was orange juice,
@@ -1533,7 +1575,7 @@ required but is considered good for clear code.
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
 
-## <a name="ifelse"> </a> If-Else
+## <a name="ifelse"> </a> Lesson 12: If-Else
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -1621,7 +1663,7 @@ coming lessons.
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
 
-## <a name="keepfit"> </a> Do Professional Athletes Keep Fit?
+## <a name="keepfit"> </a> Lesson 13: Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -1732,7 +1774,7 @@ was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg1"> </a> Linear Regression Analysis, I
+## <a name="linreg1"> </a> Lesson 14: Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -1773,7 +1815,7 @@ superimposed on our scatter plot:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
-## <a name="s3"> </a> S3 classes
+## <a name="s3"> </a> Lesson 15: S3 classes
 
 <span style="color:red">Tip:</span>
 Remember, the point of computers is to alleviate us of work.  We should
@@ -1865,7 +1907,7 @@ players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
 weight; taller players are indeed heavier, as we surmised.
 
-## <a name="less15"> </a> Baseball Player Analysis (cont'd.)
+## <a name="less15"> </a> Lesson 15: Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer, but it will give you more practice
 on a number of earlier topics, and will also bring in some new R
