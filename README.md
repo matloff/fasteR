@@ -61,7 +61,6 @@ you should cook up your own variants to try.
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
-More lessons coming soon!
 
 ## <a name="overview"> </a> Getting Started
 
@@ -2024,12 +2023,19 @@ course, though we'll cover it briefly in a future lesson.
 
 ## <a name="forMore"> </a> To Learn More 
 
-These are books and other resources that I myself consult a lot. (Yes, I
-do consult my own books; can't keep it all in my head. :-) )
+These are books and other resources that I myself consult a lot (yes, I
+do consult my own books; can't keep it all in my head :-) ), plus others
+I recommend.
 
 **R Programming and Language**
 
 * John Chambers, *Software for Data Analysis: Programming with R*, Springer
+
+* Dirk Eddelbuettel, *Seamless R and C++ Integration with Rcpp*,
+  Springer
+
+* Colin Gillespie and Robin Lovelace, *Efficient R Programming: A
+  Practical Guide to Smarter Programming*
 
 * Norm Matloff, *The Art of R Programming*, NSP
 
@@ -2077,6 +2083,18 @@ Practical Approach for Predictive Models*, CRC
 
 * Norm Matloff, *Statistical Regression and Classification: from Linear
 Models to Machine Learning*, CRC
+
+**Other**
+
+Rob Hyndman and George Athanasopoulos, *Forecasting: Principles and Practice*, 
+OTexts 
+
+Norm Matloff, *Probability and Statistics for Data Science: Math + R +
+Data*, CRC
+
+Yihui Xie *et al*, *R Markdown: The Definitive Guide*, CRC 
+
+**Web**
 
 I also would recommend various Web tutorials:
 
