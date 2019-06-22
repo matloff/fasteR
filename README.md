@@ -46,7 +46,7 @@ you should cook up your own variants to try.
 * [Lesson 2:  More on Vectors](#less2)
 * [Lesson 3:  On to Data Frames!](#less3)
 * [Lesson 4:  R Factor Class](#less4)
-* [Lesson 5:  tapply](#tapply)
+* [Lesson 5:  The tapply Function](#tapply)
 * [Lesson 6:  Data Cleaning](#less5)
 * [Lesson 7:  R List Class](#less6)
 * [Lesson 8:  Another Look at the Nile Data](#less7)
@@ -617,8 +617,9 @@ what we put into that variable.)
 ## <a name="tapply"> </a> Lesson 5:  The tapply Function
 
 <span style="color:red">Tip:</span>
-Often in R there is a shorter, more compact way of doing things.  That's
-the case here; we can use the magical **tapply** function:
+Often in R there is a shorter, more compact way of doing things.  That's 
+the case here; we can use the magical **tapply** 
+function in the above example.
 
 ``` r
 > tapply(tg$len,tg$supp,mean)
@@ -641,8 +642,41 @@ say **z**:
 16.96333 
 ```
 
-That can be quite handy, because we can use that result in subsequent
+Saving can be quite handy, because we can use that result in subsequent
 code.
+
+To make sure it is clear how this works, let's look at a small
+artificial example:
+
+``` r
+> x <- c(8,5,12,13)
+> g <- c('M',"F",'M','M')
+```
+
+Suppose **x** ages of some kids, who are a boy, a girl, then two more
+boys, as indicated in **g**.  Let's call **tapply**:
+
+``` r
+> tapply(x,g,mean)
+ F  M 
+ 5 11 
+``` 
+
+That call said, "Split **x** into two piles, according to the
+corresponding elements of **g**, and then find the mean in each pile.
+
+Note that it is no accident that **x** and **g** had the same number of
+elements above, 4 each.  If on the contrary, **g** had 5 elements, that
+fifth element would be useless -- the gender of a nonexistent fifth
+child age in **x**.  Similarly, it wouldn't be right if **g** had had
+only 3 elements, apparently leaving the fourth child without a specified
+gender.
+
+<span style="color:red">Tip:</span>
+If **g** had been of the wrong length, we would have gotten an error,
+"Arguments must be of the same length."  This is a common error in R
+code, so watch out for it, keeping in mind WHY the lengths must be the
+same.
 
 Instead of **mean**, we can use any function as that third argument in
 **tapply**.  Here is another example, using the built-in dataset
@@ -722,12 +756,24 @@ You can even assign to that vector:
 [1] "Dustpan"
 ```
 
+Inside joke, by the way.  Yes, the example is real and significant, but
+the "Dustpan" thing came from a funny TV commercial at the time.
+
 (If you have some background in programming, it may appear odd to you to
 have a function call on the *left* side of an assignment.  This is
-actually common in R.)
+actually common in R.  It stems from the fact that '<-' is actually a
+function!  But this is not the place to go into that.)
 
 > **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
 > finding the mean MPG for 6-cylinder cars.
+
+<span style="color:red">Tip:</span>
+As a beginner (and for that matter later on), you should NOT be obsessed
+with always writing code in the "optimal" way.  It's much more important
+to write something that works and is clear; one can always tweak it
+later.  In this case, though, **tapply** actually aids clarity, and it
+is so ubiquitously useful that we have introduced it early in this
+tutorial.  We'll be using it more in later lessons.
 
 ## <a name="less5"> </a> Lesson 6:  Data Cleaning
 
@@ -842,9 +888,9 @@ one object:
 ```
 
 <span style="color:red">Tip:</span>
-That's pretty complicated.  It's clearer to break things up
-into smaller steps (I recommend this especially for
-beginners):
+That's pretty complicated.  It's clearer to **break things up
+into smaller steps** (I recommend this especially for
+beginners), as follows:
 
 ``` r
 > z <- pima$glucose == 0 
@@ -916,7 +962,7 @@ one for 4-cylinder cars, one for 6 and one for 8.  We *could* do
 > mt4 <- mtmpg[mtcars$cyl == 4]
 ```
 
-and so on for **mt6** and **mt8**..  
+and so on for **mt6** and **mt8**.
 
 > **Your Turn:**  In order to keep up, make sure you understand how that
 > line of code works, with the TRUEs and FALSEs etc.  First print out the
@@ -941,7 +987,8 @@ $`8`
 ```
 
 In English, the call to **split** said, "Split **mtmpg** into multiple
-vectors, with the splitting criterion being the values in **mtcars$cyl**."
+vectors, with the splitting criterion being the correspond
+values in **mtcars$cyl**."
 
 
 Now **mtl**, an object of R class **"list"**, contains the 3 vectors.
@@ -992,7 +1039,11 @@ $b
 
 Note that here we can names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
-according to the values of the vector beiing split.  If we don't like
+according to the values of the vector beiing split.  (In that earlier
+case, we also needed backquotes `   `, since the names were numebers.)
+
+
+If we don't like
 those default names, we can change them:
 
 ``` r
@@ -1009,6 +1060,23 @@ $eight
 15.0
 ```
 
+What if we want, say, the MPG for the third car in the 6-cylinder
+category?
+
+``` r
+> mtl[[2]][3]
+[1] 21.4
+```
+
+The point is that **mtl[[2]]** is a vector, so if we want element 3 of
+that vector, we tack on [3].
+
+Or,
+
+``` r
+> mtl$six[3]
+[1] 21.4
+``` 
 
 By the way, it's no coincidence that a dollar sign is used for
 delineation in both data frames and lists; data frames *are* lists.
