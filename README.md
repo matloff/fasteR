@@ -1092,6 +1092,9 @@ Each column is one element of the list.  So for instance,
 Here we used the double-brackets list notation to get the first element
 of the list, which is the first column of the data frame.
 
+> **Your Turn** Try using **split** on the ToothGrowth data, say splitting
+> into groups according to the supplement, and finding various quantities.
+
 ## <a name="less7"> </a> Lesson 8:  Another Look at the Nile Data
 
 Here we'll learn several new concepts, using the **Nile** data as our
@@ -1107,10 +1110,10 @@ those really low values occur?  Let's plot the data:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/NileOverTime.png)
 
-Looks like maybe 1912 or so.  Is this an error?  Or was there some big
-historical event then?  This would require more than R to track down,
-but at least R can tell us which year or years correspond to the
-unusually low flow.  Here is how:
+Looks like maybe 1912 or so was much lower than the rest.  Is this an
+error?  Or was there some big historical event then?  This would require
+more than R to track down, but at least R can tell us which year or
+years correspond to the unusually low flow.  Here is how:
 
 We see from the graph that the unusually low value was below 600.  We
 can use R's **which** function to see when that occurred:
@@ -1124,9 +1127,10 @@ As before, make sure to understand what happened in this code.  The
 expression "Nile < 600" yields 100 TRUEs and FALSEs.  The **which**
 then tells us which of those were TRUEs.
 
-So, element 43 is the culprit here, corresponding to year 1871+42=1913.  Again, 
-we would have to find supplementary information in order
-to decide whether this is a genuine value or an error.
+So, element 43 is the culprit here, corresponding to year 1871+42=1913.
+Again, we would have to find supplementary information in order to
+decide whether this is a genuine value or an error, but at least now we
+know the exact year.
 
 Of course, since this is a small dataset, we could have just printed out the
 entire data and visually scanned it for a low number.  But what if the
@@ -1204,10 +1208,11 @@ programming.
 ## <a name="pause1"> </a> Pause to Reflect
 
 <span style="color:red">Tip:</span>
-Repeating n earlier point:
+Repeating an earlier point:
 How does one build a house?  There of course is no set formula.  One has
 various tools and materials, and the goal is to put these together in a
 creative way to produce the end result, the house.
+
 It's the same with R.  The tools here are the various functions, e.g.
 **mean** and **which**, and the materials are one's data.  One then must
 creatively put them together to achieve one's goal, say ferreting out
@@ -1231,7 +1236,9 @@ programmers and engineers, from the US 2000 census.  Let's read
 in the data and take a look at the first records:
 
 ``` r
-> pe <- read.table('https://raw.githubusercontent.com/matloff/polyreg/master/data/prgeng.txt',header=TRUE)
+> pe <- 
+   read.table('https://raw.githubusercontent.com/matloff/polyreg/master/data/prgeng.txt',
+   header=TRUE)
 > head(pe)
        age educ occ sex wageinc wkswrkd
 1 50.30082   13 102   2   75000      52
@@ -1249,7 +1256,7 @@ Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
 codes.  (You can find them in the
 [Census Bureau document](https://www.census.gov/prod/cen2000/doc/pums.pdf).
-For instance, search for "Educational Attainment for the **educ**
+For instance, search for "Educational Attainmenti" for the **educ**
 variable.)
 
 Let's start with a scatter plot of wage vs. age:
@@ -1270,8 +1277,8 @@ say with smaller dots or *alpha blending*.)
 > pe2500 <- pe[indxs,]
 ```
 
-The **nrow()** function returns the number of rows in the argument,
-which in this case is 20090, the number of rows in **pe**.
+Recall that the **nrow()** function returns the number of rows in the
+argument, which in this case is 20090, the number of rows in **pe**.
 
 R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
@@ -1350,8 +1357,8 @@ Here 'xlab' meant "X label" and similarly for 'ylab'.  The argument 'cex
 
 Now, how did the men's dots come out black and the women's red?  The
 first record in the data was for a man, so black was assigned to men.
-And why black and red?  They are chosen from a list of default colors;
-again, details in a future lesson.
+And why black and red?  They are chosen from a list of default colors,
+in which black precedes red.
 
 There are many, many other features.  More in a future lesson.
 
@@ -1379,9 +1386,9 @@ First we use **split** to separate the data by gender:
 Remember, **wageByGender[[1]]** will now be the vector of men's wages,
 and similarly **wageByGender[[1]]** will have the women's wages.
 
-The **density** function does not automatically plot; it has the plot in
-a return value, which we've assigned to **dm** and **dw** here.  We can
-now plot the graph:
+The **density** function does not automatically draw a plot; it has the
+plot information in a return value, which we've assigned to **dm** and
+**dw** here.  We can now plot the graph:
 
 ``` r
 > plot(dw,col='red')
@@ -1401,12 +1408,12 @@ but graphics often is a matter of trial-and-error to get to the picture
 we really want.  (In the case of **ggplot2**, this is handled
 automatically by the software.)
 
-Well, then, what does the graph tell us?  The peak for women, a little
-less than $50,000, seems to be at a lower wage than that for men, at
-something like $60,000.  At salaries around, say, $125,000, there seem
-to be more men than women.  (Black curve higher than red curve. 
-Remember, the curves are just smoothed histograms, so, if a curve is
-really high at, say 168.0, that means that 168.0 is very
+Well, then, what does the graph tell us?  The peak for women, occurring
+at a little less than $50,000, seems to be at a lower wage than that for
+men, at something like $60,000.  At salaries around, say, $125,000,
+there seem to be more men than women.  (Black curve higher than red
+curve.  Remember, the curves are just smoothed histograms, so, if a
+curve is really high at, say 168.0, that means that 168.0 is very
 frequently-occurring value..)
 
 > **Your Turn:**  Try plotting multiple such curves on the same graph, for other
