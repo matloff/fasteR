@@ -46,18 +46,20 @@ you should cook up your own variants to try.
 * [Lesson 2:  More on Vectors](#less2)
 * [Lesson 3:  On to Data Frames!](#less3)
 * [Lesson 4:  R Factor Class](#less4)
-* [Lesson 5:  Data Cleaning](#less5)
-* [Lesson 6:  R List Class](#less6)
-* [Lesson 7:  Another Look at the Nile Data](#less7)
+* [Lesson 5:  tapply](#tapply)
+* [Lesson 6:  Data Cleaning](#less5)
+* [Lesson 7:  R List Class](#less6)
+* [Lesson 8:  Another Look at the Nile Data](#less7)
 * [Pause to Reflect](#pause1)
-* [Lesson 8: Introduction to Base R Graphics ](#less8)
-* [Lesson 9: More on Base Graphics ](#less9)
-* [Lesson 10: Writing Your Own Functions](#less10)
-* [Lesson 11: 'For' Loops](#less11)
-* [Lesson 12: If-Else](#ifelse)
-* [Lesson 13: Do Pro Athletes Keep Fit?](#keepfit)
-* [Lesson 14: Linear Regression Analysis, I](#linreg1)
-* [Lesson 15: Baseball Player Analysis (cont'd.) ](#less15)
+* [Lesson 9: Introduction to Base R Graphics ](#less8)
+* [Lesson 10: More on Base Graphics ](#less9)
+* [Lesson 11: Writing Your Own Functions](#less10)
+* [Lesson 12: 'For' Loops](#less11)
+* [Lesson 13: If-Else](#ifelse)
+* [Lesson 14: Do Pro Athletes Keep Fit?](#keepfit)
+* [Lesson 15: Linear Regression Analysis, I](#linreg1)
+* [Lesson 16: S3 Classes](#s3)
+* [Lesson 17: Baseball Player Analysis (cont'd.) ](#less15)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -612,6 +614,8 @@ with no restriction on columns, and assigned the result to **tgoj**.
 (Once again, we can choose any name; we chose this one to help remember
 what we put into that variable.)
 
+## <a name="tapply"> </a> Lesson 5:  The tapply Function
+
 <span style="color:red">Tip:</span>
 Often in R there is a shorter, more compact way of doing things.  That's
 the case here; we can use the magical **tapply** function:
@@ -725,7 +729,7 @@ actually common in R.)
 > **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
 > finding the mean MPG for 6-cylinder cars.
 
-## <a name="less5"> </a> Lesson 5:  Data cleaning
+## <a name="less5"> </a> Lesson 6:  Data Cleaning
 
 Most real-world data is "dirty," i.e. filled with errors.  The famous
 [New York taxi trip
@@ -892,7 +896,7 @@ the function to skip the NAs:
 > What years did these correspond to?  Find the mean of the data,
 > excluding these cases.
 
-## <a name="less6"> </a> Lesson 6:  R List Class
+## <a name="less6"> </a> Lesson 7:  R List Class
 
 We saw earlier how handy the **tapply** function can be.  Let's look at
 a related one, **split**.
@@ -1020,7 +1024,7 @@ Each column is one element of the list.  So for instance,
 Here we used the double-brackets list notation to get the first element
 of the list, which is the first column of the data frame.
 
-## <a name="less7"> </a> Lesson 7:  Another Look at the Nile Data
+## <a name="less7"> </a> Lesson 8:  Another Look at the Nile Data
 
 Here we'll learn several new concepts, using the **Nile** data as our
 starting point.
@@ -1146,7 +1150,7 @@ makes it fun, like solving a puzzle.
 And...we can combine various functions in order to build *our own*
 functions.  This will come in future lessons.
 
-## <a name="less8"> </a> Lesson 8:  Introduction to Base R Graphics
+## <a name="less8"> </a> Lesson 9:  Introduction to Base R Graphics
 
 One of the greatest things about R is its graphics capabilities.  There
 are excellent graphics features in base R, and then many contributed
@@ -1289,7 +1293,7 @@ There are many, many other features.  More in a future lesson.
 > 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
 > professional degree and 16 is a doctorate.)
 
-## <a name="less9"> </a> Lesson 9:  More on Graphics
+## <a name="less9"> </a> Lesson 10:  More on Base Graphics
 
 We can also plot multiple histograms on the same graph.  But the
 pictures are more effective using a smoothed version of histograms,
@@ -1340,7 +1344,7 @@ frequently-occurring value..)
 > **Your Turn:**  Try plotting multiple such curves on the same graph, for other
 > data.
 
-## <a name="less10"> </a> Lesson 10:  Writing Your Own Functions
+## <a name="less10"> </a> Lesson 11:  Writing Your Own Functions
 
 Recall a line we had in Lesson 2:
 
@@ -1450,7 +1454,7 @@ and then **mgd** will be restored, ready for us to use again.
 > function **hld(x,d)**, which draws a histogram for those elements in the
 > vector ***x*** that are less than ***d***.
 
-## <a name="less11"> </a> Lesson 11:  'For' Loops
+## <a name="less11"> </a> Lesson 12:  'For' Loops
 
 Recall that in Lesson 5, we found that there were several columns in the
 Pima dataset that contained values of 0, which were physiologically
@@ -1575,7 +1579,7 @@ required but is considered good for clear code.
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
 
-## <a name="ifelse"> </a> Lesson 12: If-Else
+## <a name="ifelse"> </a> Lesson 13: If-Else
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -1663,7 +1667,7 @@ coming lessons.
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
 
-## <a name="keepfit"> </a> Lesson 13: Do Professional Athletes Keep Fit?
+## <a name="keepfit"> </a> Lesson 14: Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -1774,7 +1778,7 @@ was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg1"> </a> Lesson 14: Linear Regression Analysis, I
+## <a name="linreg1"> </a> Lesson 15: Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -1815,7 +1819,7 @@ superimposed on our scatter plot:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
-## <a name="s3"> </a> Lesson 15: S3 classes
+## <a name="s3"> </a> Lesson 16: S3 classes
 
 <span style="color:red">Tip:</span>
 Remember, the point of computers is to alleviate us of work.  We should
@@ -1907,7 +1911,7 @@ players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
 weight; taller players are indeed heavier, as we surmised.
 
-## <a name="less15"> </a> Lesson 15: Baseball Player Analysis (cont'd.)
+## <a name="less15"> </a> Lesson 17: Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer, but it will give you more practice
 on a number of earlier topics, and will also bring in some new R
