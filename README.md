@@ -1054,11 +1054,10 @@ $b
 Note that here we can names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
 according to the values of the vector beiing split.  (In that earlier
-case, we also needed backquotes `   `, since the names were numebers.)
+case, we also needed backquotes `   `, since the names were numbers.)
 
 
-If we don't like
-those default names, we can change them:
+If we don't like those default names, we can change them:
 
 ``` r
 > names(mtl) <- c('four','six','eight')
@@ -1300,7 +1299,7 @@ rows of **pe**, in a new data frame **pe2500**.
 
 <span style="color:red">Tip:</span>
 Note again that it's clearer to break complex operations into simpler,
-smaller ones.  I could have written the more companct
+smaller ones.  I could have written the more compact
 
 ``` r
 > pe2500 <- pe[sample(1:nrow(pe),2500),]
@@ -1872,7 +1871,7 @@ all of whose means were based on at least 30 players.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
 
-There does indeed seem to be an upward trend in time.  These players
+There does indeed seem to be an upward trend in time.  Ballplayers
 should be more careful!
 
 Note again that the **plot** function noticed that we supplied it with
@@ -1904,7 +1903,9 @@ but it will be helpful to at least get a good definition set:
 > line.
 
 So, we need to use the data to estimate the slope and intercept of that
-straight line, which R's **lm** ("linear model") function does for us:
+straight line, which R's **lm** ("linear model") function does for us.
+We'll use the original dataset, since the one with rounded ages was jut
+to guide our intuition.
 
 ``` r
 > lm(Weight ~ Age,data=mlb)
@@ -1920,14 +1921,19 @@ Here the call instructed R to estimate the regression line of weight
 against age, based on the **mlb** data.
 
 So the estimated slope and intercept are 0.6936 and 181.4366,
-respectively.  R has a provision by which we can draw the line,
-superimposed on our scatter plot:
+respectively.  (Remember, these are just sample estimates.  We don't
+know the population values.) R has a provision by which we can draw the
+line, superimposed on our scatter plot:
 
 ``` r
 > abline(181.4366,0.6936)
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
+
+> **Your Turn:** In the **mtcars** data, fit a linear model regression MPG
+> against horsepower and weight; what is the estimated effect of 100
+> pounds of extra weight, for fixed horespower?
 
 ## <a name="s3"> </a> Lesson 16: S3 classes
 
@@ -2009,6 +2015,11 @@ Coefficients:
 (Intercept)       Height          Age  
   -187.6382       4.9236       0.9115  
 ```
+
+Here we instruct R to find the estimated regression function of weight,
+using height and age as predictors.  The '+' doesn't mean addition; it
+is simply a delimiter between the predictions in our regression
+specification.
 
 This says:
 
