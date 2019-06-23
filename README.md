@@ -55,7 +55,7 @@ you should cook up your own variants to try.
 * [Lesson 10: More on Base Graphics ](#less9)
 * [Lesson 11: Writing Your Own Functions](#less10)
 * [Lesson 12: 'For' Loops](#less11)
-* [Lesson 13: If-Else](#ifelse)
+* [Lesson 13: If, Else, Ifelse](#ifelse)
 * [Lesson 14: Do Pro Athletes Keep Fit?](#keepfit)
 * [Lesson 15: Linear Regression Analysis, I](#linreg1)
 * [Lesson 16: S3 Classes](#s3)
@@ -1675,7 +1675,7 @@ required but is considered good for clear code.
 > above by a well-chosen call to the **sum** function.  Test it on a small
 > artificial dataset that you create.
 
-## <a name="ifelse"> </a> Lesson 13: If-Else
+## <a name="ifelse"> </a> Lesson 13: If, Else, Ifelse
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -1687,7 +1687,7 @@ extracted from the general data.)  13 means a bachelor's degree.
 Suppose we wish to color-code the wage-age graph by educational
 attainment, and amalgamate all codes under 13, giving them the code 12.
 
-The straightforward but overly complicated potentiall slower way would
+The straightforward but overly complicated, potentially slower way would
 be this:
 
 ``` r
@@ -1704,14 +1704,15 @@ For pedagogical clarity, I've inserted "before and after" code, to show
 the **educ** did indeed change where it should.
 
 The **if** statement works pretty much like the word "if" in English.
-First **i** will be set to 1, so R will test whether **pe$educ[1]** is
-less than 13.  If so, it will reset that element to 12; otherwise, do
-nothing.  Then it will do the same for **i** equal to 2, and so on.  You
-can see above that, for instance, **pe$educ[2]** did indeed change from
-9 to 12.
+First **i** will be set to 1 in the loop, so R will test whether
+**pe$educ[1]** is less than 13.  If so, it will reset that element to
+12; otherwise, do nothing.  Then it will do the same for **i** equal to
+2, and so on.  You can see above that, for instance, **pe$educ[2]** did
+indeed change from 9 to 12.
 
-But there is a slicker way to do this (re-read the data file before
-running this, so as to be sure the code worked):
+But there is a slicker (and actually more standard) way to do this
+(re-read the data file before running this, so as to be sure the code
+worked):
 
 ``` r
 > edu <- pe$educ
@@ -1730,21 +1731,21 @@ the output to 12; for each FALSE, we set the corresponding element of
 the output to the corresponding element of **edu**.  That's exactly what
 we want to happen.
 
-The **if** can be paired with **else** (not **ifelse**).  For example,
-say we need to set **y** to either -1 or 1, depending on whether **x**
-is less than 3.  We could write
+So, we can now produce the desired graph:
+
+``` r
+> plot(pe$age,pe$wageinc,col=edu)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageAgeEdu.png)
+
+By the way, an ordinary **if** can be paired with **else** too.  For
+example, say we need to set **y** to either -1 or 1, depending on
+whether **x** is less than 3.  We could write
 
 ``` r
 if (x < 3) y <- -1 else y <- 1
 ```
-
-So, we can now produce the desired graph:
-
-``` r
-> plot(pe$age,pe$wageinc,col=edu1)
-```
-
-![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageAgeEdu.png)
 
 One more important point:  Using **ifelse** instead of a loop in the
 above example is termed *vectorization*.  The name comes from the fact
@@ -1753,7 +1754,20 @@ individual element at a time.
 
 Vectorized code is typically much more compact than loop-based code, as
 was the case here.  In some cases, though certainly not all, the
-vectorized will be much faster.
+vectorized version will be much faster.
+
+By the way, noe the remark above, "**ifelse** operates on vectors."
+Apply that to
+
+``` r
+> pe$educ <- ifelse(edu < 13,12,edu)
+```
+
+It would be helpful to keep in mind that both the 13 and the 12 will be
+recycled, as expained before.  The **edu** vector is 20090 elements
+long, so in order to be compared on an element-to-element basis, the 13
+has to be recycled to a vector consisting of 20090 elements that are
+each 13.  The same holds for the 12.
 
 Well, congratulations!  With **for** and now **ifelse**, you've really
 gotten into the programming business.  We'll be using them a lot in the
