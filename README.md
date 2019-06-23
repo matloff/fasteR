@@ -1,5 +1,5 @@
 
-# fasteR: Fast Lane to Learning R!
+# fasteR: Fast Lane to Learning R! 
 
 ![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
 
@@ -2032,6 +2032,19 @@ players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
 weight; taller players are indeed heavier, as we surmised.
 
+<span style="color:red">Warning:</span>
+Though this is not a statistics tutorial *per se*, an important point
+should be noted.  Regression analysis has two goals, Description and
+Prediction.  Our above analysis was aimed at the former -- we want to
+*describe* the nature of fitness issues in pro baseball players. As we
+saw, a coefficient can change quite a lot when another predictor is
+added to the model, and in fact can even change sign ("Simpson's
+Paradox").  Suppose for instance the shorter players tend to have longer
+careers.  If we do *not* include height in our model, that omission
+might bias the age coefficient downward.  Thus great care must be taken
+in interpreting coefficients in the Description setting.  For
+Prediction, it is not much of an issue.
+
 ## <a name="less15"> </a> Lesson 17: Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer, but it will give you more practice
@@ -2070,7 +2083,7 @@ tutorial:
 So we need to think creatively here.  One solution is this:
 
 We need to determine the row numbers of the catchers, the row numbers of
-the infielders and so on.  So we can take the row numbers,
+the infielders and so on.  So we can take all the row numbers,
 **1:nrow(mlb)**, and apply **split** to that vector!
 
 ``` r
@@ -2125,11 +2138,11 @@ to iterate through the four position types, but it will be clearer if we
 use the names:
 
 ``` r
-for (pos in c('Catcher','Infielder','Outfielder','Pitcher')
+for (pos in c('Catcher','Infielder','Outfielder','Pitcher'))
 ```
 
-And we could have a **print** call in the body of the loop.  But let's
-be a little fancier, building up a matrix with the output:
+And we could have **lm** and **print** calls in the body of the loop.  But let's
+be a little fancier, building up a data frame with the output:
 
 ``` r
 > posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
@@ -2147,16 +2160,18 @@ be a little fancier, building up a matrix with the output:
 4          185.5994          0.6543904
 ```
 
-Two key things to note here.  First, in the call to **lm**, we used
-**mlb[rownums[[pos]],]** instead of **mlb** as previously, since here we
-wanted to fit a regression line on each subgroup.  So, we restricted
-attention to only those rows of **mlb**.
+Some key things to note here.  
 
-Second, we used R's **rbind** ("row bind") function.  The expression 
+1.  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
+**mlb** as previously, since here we wanted to fit a regression line
+on each subgroup.  So, we restricted attention to only those rows of
+**mlb**.
+
+2.  We used R's **rbind** ("row bind") function.  The expression 
 **rbind(m,newrow)** forms a new data frame, by adding **newrow** onto
-**m**.
+**m**.  Here we reassign the result back to **m**, a common operation.
 
-Good, with the two columns aligned nicely.  But those column names are
+Nice output, with the two columns aligned.  But those column names are
 awful, and the row labels should be nicer than 1,2,3,4.  We can fix
 these things:
 
@@ -2171,11 +2186,11 @@ Outfielder  176.2884 0.7883343
 Pitcher     185.5994 0.6543904
 ```
 
-What happened here?  R has a built-in **row.names** function, so that
-setting row names was easy.  But what about the column names?  Recall
-that a data frame is actually an R list, consisting of several vectors
-of the same length.  We have two vectors here, so we need to supply two
-items to **names**.
+What happened here?  We earlier saw the built-in **row.names**
+function, so that setting row names was easy.  But what about the column
+names?  Recall that a data frame is actually an R list, consisting of
+several vectors of the same length.  We have two vectors here, so we
+need to supply two items to **names**.
 
 So with a little finessing here, we got some nicely-formatted output.
 Moreover, we now have our results in a data frame for further use.  For
