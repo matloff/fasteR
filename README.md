@@ -518,6 +518,20 @@ specifying how many elements to print:
  [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
 ```
 
+You can create your own data frames -- good for devising little tests of
+your understanding -- as follows:
+
+``` r
+> x <- c(5,12,13)
+> y <- c('abc','de','z')
+> d <- data.frame(x,y)
+> d
+   x   y
+1  5 abc
+2 12  de
+3 13   z
+```
+
 > **Your Turn:** Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
 > the length was less than 16.  Also, try some examples with another
@@ -1531,7 +1545,7 @@ and then **mgd** will be restored, ready for us to use again.
 
 ## <a name="less11"> </a> Lesson 12:  'For' Loops
 
-Recall that in Lesson 5, we found that there were several columns in the
+Recall that in Lesson 6, we found that there were several columns in the
 Pima dataset that contained values of 0, which were physiologically
 impossible.  These should be coded NA.  We saw how to do that recoding
 for the glucose variable:
@@ -1588,9 +1602,12 @@ total number of 1s -- which is a count of the number of elements in that
 column that are 0.
 
 A technical point:  Why did we need the explicit call to **print**?
-Didn't we see earlier that just typing an expression 
+Didn't we say earlier that just typing an expression 
 at the R '>' prompt will automatically print out the value of the
-expression?  Ah yes -- but we are not at the R prompt here!
+expression?  Ah yes -- but we are not at the R prompt here!  Yes, in the
+expanded form above, that would be at the prompt, but inside the **for**
+loop we are not at the prompt, even though **for** call had been made at
+the prompt.
 
 We probably have forgotten which column is which, so let's see:
 
@@ -1630,7 +1647,8 @@ Here I intended the body of the loop to consist of a *block* of two
 statements, not one, so I needed to tell R that, by typing '{' before
 writing my two statements, then letting R know I was finished with the
 block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt to
-remind me that I was still in the midst of typing the block.
+remind me that I was still in the midst of typing the block. (After the
+'}' I simply hit Enter.)
 
 So, the block (two lines here) will be executed with **i = 2**, then 3,
 4, 5 and 6.  The line 
@@ -1653,6 +1671,9 @@ required but is considered good for clear code.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
+> You can do this by replacing the second line in the **for** block
+> above by a well-chosen call to the **sum** function.  Test it on a small
+> artificial dataset that you create.
 
 ## <a name="ifelse"> </a> Lesson 13: If-Else
 
