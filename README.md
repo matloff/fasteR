@@ -2217,7 +2217,7 @@ operation in R, it may well be in there.
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
 functions, and rather abstract, but quite powerful.  We will touch on it
-at various points in this tutorial, which staying with base-R graphics
+at various points in this tutorial, while staying with base-R graphics
 when it is easier to go that route.
 
 You'll need to install the package from CRAN, by typing
@@ -2227,18 +2227,24 @@ You'll need to install the package from CRAN, by typing
 ```
 
 You'll be prompted to supply a directory/folder at which you'll store
-packages.  I use 'R' in my home directory, and will assume you do too;
-you'll have to adjust some things below if not.  
+packages.  I use 'R' in my home directory, and will assume you do too.
+You'll need to create that directory first.
 
 Also, you need to tell R to look there for packages that you request.
 In my case, I can do this with
 
 ``` r
-> .libPaths("/home/nm/R")
+> .libPaths("~/R")
 ```
 
 (I actually place this in my R *startup file*, but let's leave that for
 advanced topics later on.)
+
+Load the package:
+
+``` r
+> library(ggplot2)
+```
 
 Now to build up to using **ggplot2**, let's do a bit more with base-R
 graphics first, continuing with our weight/age investigation of the
@@ -2260,9 +2266,46 @@ the point size while we are at it):
 
 Here is how we can do it in **ggplot2**:
 
+First, I make an empty plot, based on the data frame **mlb**:
 
+``` r
+> p <- ggplot(mlb)
+```
 
+Nothing will appear on the screen.  The package displays when you
+"print" the plot:
 
+``` r
+> p
+```
+
+This will just display an empty plot.  (Try it.)  By the way, recall
+that any expression you type, even 1 + 1, will be evaluated and printed
+to the screen.  Here the plot (albeit) empty is printed to the screen.
+
+Now let's do something useful:
+
+``` r
+> p + geom_point(aes(x = Age, y = Weight, col = PosCategory),cex=0.8)
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WtAgePosGG.png)
+
+What happened here?  We took our existing (blank) plot, **p**, and told
+R to add to the plot ("add" symbolized by the '+'), with Age on the x
+axis, Weight on the y axis, with color coded by PosCategory.  We didn't
+specify the data frame, since we had already done that in **p**.
+Finally, after R computed **p + geom_point(aes(x = Age, y = Weight, col
+= PosCategory),cex=0.8)**, that was printed to the screen -- since we
+had typed it at th '>' prompt.
+
+The 'aes' stands for "aesthetic."  This is rather abstract, and in a
+rare exception to our rule of explaining all, will just have to leave
+this as something that must be done.
+
+One nice thing is that we automatically got a legend printed to the
+right of the graph, so we know which color corresponds to which
+position.
 
 ## <a name="linreg2"> </a> Linear Regression Analysis, II
 
