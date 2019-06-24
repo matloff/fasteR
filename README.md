@@ -62,8 +62,9 @@ you should cook up your own variants to try.
 * [Lesson 15: Linear Regression Analysis, I](#linreg1)
 * [Lesson 16: S3 Classes](#s3)
 * [Lesson 17: Baseball Player Analysis (cont'd.)](#less15)
-* [Lesson 18: A First Look at ggplot2](#gg2first)
-* [Lesson 19: Linear Regression Analysis, II](#linreg2)
+* [Lesson 18: R Packages, CRAN, Etc.](#cran)
+* [Lesson 19: A First Look at ggplot2](#gg2first)
+* [Lesson 20: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2207,44 +2208,67 @@ question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course, though we'll cover it briefly in a future lesson.
 
-## <a name="gg2first"> </a> A First Look at ggplot2
+## <a name="cran"> </a> R Packages and CRAN
 
-We'll now bring in **ggplot2**, a user-contributed package, stored in
+We'll soon bring in **ggplot2**, a user-contributed package, stored in
 the [CRAN repository](https://cran.r-project.org).  As of June 2019,
 there are over 14,000 packages there.  If you need to do some special
-operation in R, it may well be in there.  
+operation in R, say spatial data analysis, it may well be in there. 
+You might take the [CRAN Task
+Views](https://cran.r-project.org/web/views/) as your starting point, or
+simply use Google, e.g. plugging in the search term "CRAN spatial data." 
+
+Other good sources of public R packages are
+[Bioconductor](https://www.bioconductor.org/) and useRs' personal GitHub
+pages.  More on this in a later lesson.
+
+UseRs usually designate a special folder/directory for their packages
+(both those they download and ones they write themselves).  I use 'R' in
+my home directory for that purpose, and will assume here that you do
+too.  You'll need to create that directory first, e.g. by typing
+
+``` 
+mkdir ~/R
+``` 
+
+in a terminal window.
+
+When you want to use one of your installed packages, you need to tell R
+to load it, e.g. by typing at the R prompt,
+
+``` r
+> library(ggplot2)
+```
+
+But R needs to know where to look for the package!
+I can do this with
+
+``` r
+> .libPaths("~/R")
+```
+
+prior to calling **library**.  But instead, I actually place this in my
+R *startup file*, **~/.Rprofile**, which is executed automatically
+whenever I start R.
+
+You'll need to install the package from CRAN, by typing
+
+``` r
+> install.packages('ggplot2', lib='~)
+```
+
+You'll be prompted to supply the location of the library
+directory/folder, **~/R** (or not, if you use **~/.Rprofile** as above). 
+
+Later, you'll write your own R packages, a future lesson.
+
+## <a name="gg2"> </a> A First Look at ggplot2
 
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
 functions, and rather abstract, but quite powerful.  We will touch on it
 at various points in this tutorial, while staying with base-R graphics
 when it is easier to go that route.
-
-You'll need to install the package from CRAN, by typing
-
-``` r
-> install.packages('ggplot2')
-```
-
-You'll be prompted to supply a directory/folder at which you'll store
-packages.  I use 'R' in my home directory, and will assume you do too.
-You'll need to create that directory first.
-
-Also, you need to tell R to look there for packages that you request.
-In my case, I can do this with
-
-``` r
-> .libPaths("~/R")
-```
-
-(I actually place this in my R *startup file*, but let's leave that for
-advanced topics later on.)
-
-Load the package:
-
-``` r
-> library(ggplot2)
-```
 
 Now to build up to using **ggplot2**, let's do a bit more with base-R
 graphics first, continuing with our weight/age investigation of the
