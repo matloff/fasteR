@@ -2227,7 +2227,18 @@ You'll need to install the package from CRAN, by typing
 ```
 
 You'll be prompted to supply a directory/folder at which you'll store
-packages.  I use 'R' in my home directory.
+packages.  I use 'R' in my home directory, and will assume you do too;
+you'll have to adjust some things below if not.  
+
+Also, you need to tell R to look there for packages that you request.
+In my case, I can do this with
+
+``` r
+> .libPaths("/home/nm/R")
+```
+
+(I actually place this in my R *startup file*, but let's leave that for
+advanced topics later on.)
 
 Now to build up to using **ggplot2**, let's do a bit more with base-R
 graphics first, continuing with our weight/age investigation of the
@@ -2245,7 +2256,10 @@ the point size while we are at it):
 > with(mlb,plot(Age,Weight,col=PosCategory,cex=0.6))
 ```
 
-![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WtAgePosBase.png)
+
+Here is how we can do it in **ggplot2**:
+
 
 
 
