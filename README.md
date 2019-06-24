@@ -24,7 +24,9 @@ conversational, story-telling manner.
 
     - Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
-learning an IDE at the same time.  This can come later, optionally.
+learning an IDE at the same time.  Eventually you'll need either an IDE
+or an external text editor, which will be presented in a later lesson,
+but for now, we'll stick to the basics.
 
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
@@ -59,7 +61,9 @@ you should cook up your own variants to try.
 * [Lesson 14: Do Pro Athletes Keep Fit?](#keepfit)
 * [Lesson 15: Linear Regression Analysis, I](#linreg1)
 * [Lesson 16: S3 Classes](#s3)
-* [Lesson 17: Baseball Player Analysis (cont'd.) ](#less15)
+* [Lesson 17: Baseball Player Analysis (cont'd.)](#less15)
+* [Lesson 18: A First Look at ggplot2](#gg2first)
+* [Lesson 19: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -191,8 +195,8 @@ here, so the second row starts with the 16th, indicated by '[16]'.
 
 R has great graphics, not only in base R but also in wonderful
 user-contributed packages, such as **ggplot2** and **lattice**.  But
-we'll stick with base-R graphics for now, and save **ggplot2** and
-**lattice** for a later lesson.
+we'll stick with base-R graphics for now, and save the more powerful yet
+more complex **ggplot2** for a later lesson.
 
 We'll start with a very simple, non-dazzling one, a no-frills histogram:
 
@@ -1241,7 +1245,7 @@ functions.  This will come in future lessons.
 One of the greatest things about R is its graphics capabilities.  There
 are excellent graphics features in base R, and then many contributed
 packages, with the best known being **ggplot2** and **lattice**.  These
-latter two are extremely powerful, and will be the subjects of future
+latter two are quite powerful, and will be the subjects of future
 lessons, but for now we'll concentrate on the base.
 
 As our example here, we'll use a dataset I compiled on Silicon Valley 
@@ -2203,6 +2207,51 @@ question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course, though we'll cover it briefly in a future lesson.
 
+## <a name="gg2first"> </a> A First Look at ggplot2
+
+We'll now bring in **ggplot2**, a user-contributed package, stored in
+the [CRAN repository](https://cran.r-project.org).  As of June 2019,
+there are over 14,000 packages there.  If you need to do some special
+operation in R, it may well be in there.  
+
+The **ggplot2** package was written by Hadley Wickham, who later became
+Chief Scientist at RStudio.  It's highly complex, with well over 400
+functions, and rather abstract, but quite powerful.  We will touch on it
+at various points in this tutorial, which staying with base-R graphics
+when it is easier to go that route.
+
+You'll need to install the package from CRAN, by typing
+
+``` r
+> install.packages('ggplot2')
+```
+
+You'll be prompted to supply a directory/folder at which you'll store
+packages.  I use 'R' in my home directory.
+
+Now to build up to using **ggplot2**, let's do a bit more with base-R
+graphics first, continuing with our weight/age investigation of the
+ballplayers.  To begin, let's do a scatter plot of weight against age,
+color-coded by position.  We could type
+
+``` r
+> plot(mlb$Age,mlb$Weight,col=mlb$PosCategory)
+```
+
+but to save some typing, let's use R's **with** function (we'll change
+the point size while we are at it):
+
+``` r
+> with(mlb,plot(Age,Weight,col=PosCategory,cex=0.6))
+```
+
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
+
+
+
+
+## <a name="linreg2"> </a> Linear Regression Analysis, II
+
 ## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot (yes, I
@@ -2268,13 +2317,18 @@ Models to Machine Learning*, CRC
 
 **Other**
 
-Rob Hyndman and George Athanasopoulos, *Forecasting: Principles and Practice*, 
+* Rob Hyndman and George Athanasopoulos, *Forecasting: Principles and Practice*,
 OTexts 
 
-Norm Matloff, *Probability and Statistics for Data Science: Math + R +
+* Ted Kwartler, *Text Mining in Practice with R*
+
+* Norm Matloff, *Probability and Statistics for Data Science: Math + R +
 Data*, CRC
 
-Yihui Xie *et al*, *R Markdown: The Definitive Guide*, CRC 
+* Julia Silge and David Robinson, *Text Mining with R: A Tidy Approach*,
+O'Reilly
+
+* Yihui Xie *et al*, *R Markdown: The Definitive Guide*, CRC 
 
 **Web**
 
