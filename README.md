@@ -2466,7 +2466,7 @@ Recall too that the **rownums** list had come from the output of R's
 
 Loops make some in the R community nervous.  First, there is the concern
 that the operation might be vectorized upon further thought, thus making
-it faster.  Second, some people loop code is prone to bugs, and a
+it faster.  Second, some people believe loop code is prone to bugs, and a
 *functional programming* (FP) approach is safer.
 
 Those points may be valid, but in my view avoidance of loops has been an
@@ -2542,8 +2542,36 @@ $Pitcher
 185.5993689   0.6543904 
 ```
 
+Another central function in the **apply** family is, not surprisingly,
+named **apply**.  It is used on **matrix** objects (like data frames,
+but with the contents being all of the same type, e.g. all numerical),
+on either rows or columnṡ, and on data frames, where it is used only on
+columns.
+
+The call form is
+
+``` r
+apply(d,rc,g)
+```
+
+Here R will apply the function **g** to each row (**rc** = 1) or column
+(**rc** = 2) of the data **d**.  If the function **g** returns a number,
+then **apply** will return a vector.
+
+Let's find the max values for the variables in the **pima** data:
+
+``` r
+> apply(pima,2,max)
+ pregnant   glucose diastolic   triceps   insulin       bmi  diabetes
+age 
+    17.00    199.00    122.00     99.00    846.00     67.10      2.42
+81.00 
+     test 
+     1.00 
+```
+
 The R **apply** family includes other functions as well,  They are quite
-useful, but don't use them solely for the sake of writing a loop.
+useful, but don't use them solely for the sake of avoiding writing a loop.
 Simpler may not be easier.
 
 
