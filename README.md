@@ -11,8 +11,8 @@ seek a quick, painless entree to the world of R.
 * **FAST**:  You'll already be doing good stuff in R -- useful data analysis
 --- in your very first lesson.
 
-* **No prerequisites:**  If you're comfortable with navigating the Web,
-you're fine.  This tutorial is aimed at you, not experienced
+* **For nonprogrammers:**  If you're comfortable with navigating
+the Web, you're fine.  This tutorial is aimed at you, not experienced
 C or Python coders.
 
 * **Motivating:**  Every lesson centers around a *real problem* to be
