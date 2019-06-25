@@ -25,7 +25,8 @@ conversational, story-telling manner.
     - Notably, no Integrated Development Environments (IDEs).  RStudio, ESS
 etc. are great, but you shouldn't be burdened with learning R *and*
 learning an IDE at the same time.  Eventually you'll need either an IDE
-or an external text editor, which will be presented in a later lesson,
+or an external text editor (some readers of this tutorial may already be
+using RStudio), which will be presented in a later lesson,
 but for now, we'll stick to the basics.
 
     - Coverage is mainly limited to base R. So for instance the 
@@ -1678,7 +1679,7 @@ required but is considered good for clear code.
 
 ## <a name="edt"> </a> Lesson 13: Text Editing
 
-In trying out our function **zeroIndices** above, you probably use your
+In trying out our function **zeroIndices** above, you probably used your
 computer's mouse to copy-and-paste from this tutorial into your machine.
 Your screen would then look like this:
 
@@ -1692,13 +1693,14 @@ Your screen would then look like this:
 ```
 
 But this is unwieldy.  And what if we were to change the code?  Typing
-it in line by line would be laborious and error-prone.  We really need a
+it in line by line is laborious and error-prone.  We really need a
 *text editor* for this.  Just as we edit, say, reports, we do the same
 for code.
 
 As mentioned earlier, many useRs use IDEs for this purpose, such as
-RStudio or ESS.  But again, in order to make you proficient in R as fast
-as possible, covering those at this point would be a distraction; both
+RStudio or ESS.  Indeed, some of you probably already use RStudio.
+That's fine, but again, in order to make readers proficient in R as fast
+as possible, covering IDEs at this point would be a distraction; both
 are quite elaborate.
 
 So for now, we'll just use R's built-in **edit** function.  To explain
@@ -1723,7 +1725,8 @@ To create **f** using **edit**, we would do the following:
 ```
 
 This would invoke the text editor, which will depend on your machine.
-On Macs and Linux, the default is the Vim editor; on Windows, it's
+On Macs and Linux, the default is the 
+[Vim editor](http://heather.cs.ucdavis.edu/~matloff/vim.html); on Windows, it's
 Notepad.  The above would open an empty file.  You would type the
 function code, then save it, using the editor's Save command.  
 
@@ -1754,9 +1757,9 @@ is reassigned to **f**.
 
 ## <a name="ftnbl"> </a> Lesson 14: Functions with Blocks 
 
-Blocks come in naturally in defining functions too.  Let's generalize
-the above, writing a function that replaces 0s by NAs for general data
-frames.
+Blocks are usually key in defining functions too.  Let's generalize the
+above code in the Loops lesson, writing a function that replaces 0s by
+NAs for general data frames.
 
 ``` r
 zerosToNAs <- function(d,cols) 
