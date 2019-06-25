@@ -1757,7 +1757,7 @@ is reassigned to **f**.
 
 ## <a name="ftnbl"> </a> Lesson 14: Functions with Blocks 
 
-Blocks are usually key in defining functions too.  Let's generalize the
+Blocks are usually key in defining functions.  Let's generalize the
 above code in the Loops lesson, writing a function that replaces 0s by
 NAs for general data frames.
 
