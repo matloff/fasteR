@@ -44,7 +44,7 @@ you should cook up your own variants to try.
 ## Table of Contents
 
 * [Overview and Getting Started](#overview)
-* [First R Steps](#firstr)
+* [Lesson 1:  First R Steps](#firstr)
 * [Lesson 2:  More on Vectors](#less2)
 * [Lesson 3:  On to Data Frames!](#less3)
 * [Lesson 4:  R Factor Class](#less4)
@@ -64,7 +64,8 @@ you should cook up your own variants to try.
 * [Lesson 17: Baseball Player Analysis (cont'd.)](#less15)
 * [Lesson 18: R Packages, CRAN, Etc.](#cran)
 * [Lesson 19: A First Look at ggplot2](#gg2first)
-* [Lesson 20: Linear Regression Analysis, II](#linreg2)
+* [Lesson 20: More on the apply Family](#appfam)
+* [Lesson 21: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -132,7 +133,7 @@ sure to enable Allow Access to File URLs).
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
 
-## <a name="firstr"> </a> First R Steps
+## <a name="firstr"> </a> Lesson 1:  First R Steps
 
 The R command prompt is '>'.  It will be shown here, but you don't type
 it.
@@ -2146,8 +2147,9 @@ use the names:
 for (pos in c('Catcher','Infielder','Outfielder','Pitcher'))
 ```
 
-And we could have **lm** and **print** calls in the body of the loop.  But let's
-be a little fancier, building up a data frame with the output:
+And we could have **lm** and **print** calls in the body of the loop.
+But let's be a little fancier, building up a data frame with the output.
+We'll start with an empty frame, and keep adding rows to it.
 
 ``` r
 > posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
@@ -2208,7 +2210,7 @@ question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course, though we'll cover it briefly in a future lesson.
 
-## <a name="cran"> </a> R Packages and CRAN
+## <a name="cran"> </a> Lesson 18:  R Packages, CRAN, Etc.
 
 We'll soon bring in **ggplot2**, a user-contributed package, stored in
 the [CRAN repository](https://cran.r-project.org).  As of June 2019,
@@ -2262,7 +2264,7 @@ directory/folder, **~/R** (or not, if you use **~/.Rprofile** as above).
 
 Later, you'll write your own R packages, a future lesson.
 
-## <a name="gg2"> </a> A First Look at ggplot2
+## <a name="gg2"> </a> Lesson 19:  A First Look at ggplot2
 
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
@@ -2331,7 +2333,108 @@ One nice thing is that we automatically got a legend printed to the
 right of the graph, so we know which color corresponds to which
 position.
 
-## <a name="linreg2"> </a> Linear Regression Analysis, II
+## <a name="appfam"> </a> Lesson 20:  More on the apply Family
+
+Recall our earlier example, in which we wanted to fit separate
+regression lines to each of the four player position categories.  We
+used a loop, which for convenience I'll duplicate here:
+``` r
+> posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
+> m <- data.frame()
+> for (pos in posNames) {
++   lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
++   newrow <- lmo$coefficients
++   m <- rbind(m,newrow)w <- lapply(rownums,zlm)
++ }
+```
+
+Recall too that the **rownums** list had come from the output of R's
+**split** function.
+
+Loops make some in the R community nervous.  First, there is the concern
+that the operation might be vectorized upon further thought, thus making
+it faster.  Second, some people loop code is prone to bugs, and a
+*functional programming* (FP) approach is safer.
+
+Those points may be valid, but in my view avoidance of loops has been an
+unhealthy obsession in some quarters.  Nevertheless, let's see what the
+FP approach might be here.  (We are, as usual, sticking to base-R.
+There are various FP packages, e.g. **purrr**.)
+
+We've seen the **tapply** function a couple of times already.  Now let's
+turn to **lapply** ("list apply").  The call form is
+
+``` r
+lapply(someList,someFunction)
+```
+
+This calls **someFunction** on each element of **someList**, placing the
+results in a new list that is the return value.
+
+How might be use that here?  As noted before, programming is a creative
+process, and solutions may not come immediately.  The following solution
+is nature to experienced R coders, but you may find that it "came out of
+the blue," of unclear provenance.
+
+``` r
+> zlm <- function(rws) lm(Weight ~ Age, data=mlb[rws,])$coefficients
+> w <- lapply(rownums,zlm)
+```
+
+Recall that the first element of **rownums** was **rownums[['catcher']]**.
+So, first **lapply** will make the call
+
+``` r
+zlm(rownums[['Catcher']])
+```
+
+which will fit the desired regression model on the catcher data.  Then
+**lapply** will do
+
+``` r
+zlm(rownums[['Infielder']])
+```
+
+and so on.  The outputs of the four **lm** calls will be returned in an
+R list, which we have assigned to **w** above.  Let's check the first
+one:
+
+``` r
+> w[[1]]
+(Intercept)         Age 
+180.8280290   0.7949252 
+``` 
+jibing with **m[1,]** in our data-frame/loop appraoch above.
+
+Well, then, what did we accomplish?  Certainly the **lapply** version
+made for more compact code.  But we had to think a little harder to come
+up with the idea.  And worse, printing it out is less compact:
+
+``` r
+> w
+$Catcher
+(Intercept)         Age 
+180.8280290   0.7949252 
+
+$Infielder
+(Intercept)         Age 
+170.2465739   0.8589593 
+
+$Outfielder
+(Intercept)         Age 
+176.2884016   0.7883343 
+
+$Pitcher
+(Intercept)         Age 
+185.5993689   0.6543904 
+```
+
+The R **apply** family includes other functions as well,  They are quite
+useful, but don't use them solely for the sake of writing a loop.
+Simpler may not be easier.
+
+
+## <a name="linreg2"> </a> Lesson 21:  Linear Regression Analysis, II
 
 ## <a name="forMore"> </a> To Learn More 
 
