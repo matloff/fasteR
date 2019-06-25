@@ -57,15 +57,17 @@ you should cook up your own variants to try.
 * [Lesson 10: More on Base Graphics ](#less9)
 * [Lesson 11: Writing Your Own Functions](#less10)
 * [Lesson 12: 'For' Loops](#less11)
-* [Lesson 13: If, Else, Ifelse](#ifelse)
-* [Lesson 14: Do Pro Athletes Keep Fit?](#keepfit)
-* [Lesson 15: Linear Regression Analysis, I](#linreg1)
-* [Lesson 16: S3 Classes](#s3)
-* [Lesson 17: Baseball Player Analysis (cont'd.)](#less15)
-* [Lesson 18: R Packages, CRAN, Etc.](#cran)
-* [Lesson 19: A First Look at ggplot2](#gg2first)
-* [Lesson 20: More on the apply Family](#appfam)
-* [Lesson 21: Linear Regression Analysis, II](#linreg2)
+* [Lesson 13: Functions with Blocks](#ftnbl)
+* [Lesson 14: Text Editing](#edt)
+* [Lesson 15: If, Else, Ifelse](#ifelse)
+* [Lesson 16: Do Pro Athletes Keep Fit?](#keepfit)
+* [Lesson 17: Linear Regression Analysis, I](#linreg1)
+* [Lesson 18: S3 Classes](#s3)
+* [Lesson 19: Baseball Player Analysis (cont'd.)](#less15)
+* [Lesson 20: R Packages, CRAN, Etc.](#cran)
+* [Lesson 21: A First Look at ggplot2](#gg2first)
+* [Lesson 22: More on the apply Family](#appfam)
+* [Lesson 23: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -1674,13 +1676,121 @@ replaces those 0s by NAs.
 Note that I have indented the two lines in the block.  This is not
 required but is considered good for clear code. 
 
+## <a name="edt"> </a> Lesson 13: Text Editing
+
+In trying out our function **zeroIndices** above, you probably use your
+computer's mouse to copy-and-paste from this tutorial into your machine.
+Your screen would then look like this:
+
+```
+> zerosToNAs <- function(d,cols) 
++ {
++    zeroIndices <- which(d[,cols] == 0)
++    d[zeroIndices,cols] <- NA
++    d
++ }
+```
+
+But this is unwieldy.  And what if we were to change the code?  Typing
+it in line by line would be laborious and error-prone.  We really need a
+*text editor* for this.  Just as we edit, say, reports, we do the same
+for code.
+
+As mentioned earlier, many useRs use IDEs for this purpose, such as
+RStudio or ESS.  But again, in order to make you proficient in R as fast
+as possible, covering those at this point would be a distraction; both
+are quite elaborate.
+
+So for now, we'll just use R's built-in **edit** function.  To explain
+it, consider the following toy example:
+
+``` r
+f <- function(x,y)
+{
+   s <- x + y
+   d <- x - y
+   c(s,d)
+}
+```
+
+It finds the sum and difference of the inputs, and returns them as a
+two-element vector.
+
+To create **f** using **edit**, we would do the following:
+
+``` r
+> f <- edit()
+```
+
+This would invoke the text editor, which will depend on your machine.
+On Macs and Linux, the default is the Vim editor; on Windows, it's
+Notepad.  The above would open an empty file.  You would type the
+function code, then save it, using the editor's Save command.  
+
+Note:  **edit** itself is a function.  It's return value is the code you
+typed in!  That is then assigned to **f**, which you can now call
+
+Functions are R objects, so you can print them:
+
+``` r
+> f
+function(x,y)
+{  
+   s <- x + y
+   d <- x - y
+   c(s,d)
+}
+```
+
+If you want to change the function, type
+
+``` r
+> f <- edit(f)
+```
+
+This again opens the text editor, but this time with the current **f**
+code showing.  You edit the code as desired, then as before, the result
+is reassigned to **f**.
+
+## <a name="ftnbl"> </a> Lesson 14: Functions with Blocks 
+
+Blocks come in naturally in defining functions too.  Let's generalize
+the above, writing a function that replaces 0s by NAs for general data
+frames.
+
+``` r
+zerosToNAs <- function(d,cols) 
+{
+   zeroIndices <- which(d[,cols] == 0)
+   d[zeroIndices,cols] <- NA
+   d
+}
+```
+
+Since we had three statements in the body of the function, rather than
+one as in our previous examples, we needed to write them as a block.
+
+Here the formal argument **d** is the data frame to be worked on, and
+**cols** specifiees the columns in which 0s are to be replaced.
+
+We could use this in the Pima data"
+
+``` r
+> pima <- zeroIndices(pima,2:6)
+```
+
+There is an important subtlety here.  The function **zeroIndices** will
+produce a new data frame, rather than changing **pima** itself.  So, if
+we want **pima** to change, we must reassign the output of the function
+back to **pima**.
+
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
 > You can do this by replacing the second line in the **for** block
 > above by a well-chosen call to the **sum** function.  Test it on a small
 > artificial dataset that you create.
 
-## <a name="ifelse"> </a> Lesson 13: If, Else, Ifelse
+## <a name="ifelse"> </a> Lesson 15: If, Else, Ifelse
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -1782,7 +1892,7 @@ coming lessons.
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
 
-## <a name="keepfit"> </a> Lesson 14: Do Professional Athletes Keep Fit?
+## <a name="keepfit"> </a> Lesson 16: Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -1893,7 +2003,7 @@ was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg1"> </a> Lesson 15: Linear Regression Analysis, I
+## <a name="linreg1"> </a> Lesson 17: Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -1941,7 +2051,7 @@ line, superimposed on our scatter plot:
 > against horsepower and weight; what is the estimated effect of 100
 > pounds of extra weight, for fixed horespower?
 
-## <a name="s3"> </a> Lesson 16: S3 classes
+## <a name="s3"> </a> Lesson 18: S3 classes
 
 <span style="color:red">Tip:</span>
 Remember, the point of computers is to alleviate us of work.  We should
@@ -2051,7 +2161,7 @@ might bias the age coefficient downward.  Thus great care must be taken
 in interpreting coefficients in the Description setting.  For
 Prediction, it is not much of an issue.
 
-## <a name="less15"> </a> Lesson 17: Baseball Player Analysis (cont'd.)
+## <a name="less15"> </a> Lesson 19: Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer, but it will give you more practice
 on a number of earlier topics, and will also bring in some new R
@@ -2210,7 +2320,7 @@ question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course, though we'll cover it briefly in a future lesson.
 
-## <a name="cran"> </a> Lesson 18:  R Packages, CRAN, Etc.
+## <a name="cran"> </a> Lesson 20:  R Packages, CRAN, Etc.
 
 We'll soon bring in **ggplot2**, a user-contributed package, stored in
 the [CRAN repository](https://cran.r-project.org).  As of June 2019,
@@ -2264,7 +2374,7 @@ directory/folder, **~/R** (or not, if you use **~/.Rprofile** as above).
 
 Later, you'll write your own R packages, a future lesson.
 
-## <a name="gg2"> </a> Lesson 19:  A First Look at ggplot2
+## <a name="gg2"> </a> Lesson 21:  A First Look at ggplot2
 
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
@@ -2333,7 +2443,7 @@ One nice thing is that we automatically got a legend printed to the
 right of the graph, so we know which color corresponds to which
 position.
 
-## <a name="appfam"> </a> Lesson 20:  More on the apply Family
+## <a name="appfam"> </a> Lesson 22:  More on the apply Family
 
 Recall our earlier example, in which we wanted to fit separate
 regression lines to each of the four player position categories.  We
@@ -2434,7 +2544,7 @@ useful, but don't use them solely for the sake of writing a loop.
 Simpler may not be easier.
 
 
-## <a name="linreg2"> </a> Lesson 21:  Linear Regression Analysis, II
+## <a name="linreg2"> </a> Lesson 23:  Linear Regression Analysis, II
 
 ## <a name="forMore"> </a> To Learn More 
 
