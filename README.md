@@ -22,20 +22,17 @@ conversational, story-telling manner.
 
 * **Just the basics, no frills or polemics:** 
 
-    - Notably, no Integrated Development Environments (IDEs).  RStudio,
-ESS etc. are great, but you shouldn't be burdened with learning R
-*and* learning an IDE at the same time, a distraction from the goal of
-becoming productive in R as fast as possible.  Note that even the
-excellent course by [R-Ladies
+    - Notably, we do not use Integrated Development Environments (IDEs).
+      RStudio, ESS etc. are great, but you shouldn't be burdened with
+learning R *and* learning an IDE at the same time, a distraction from
+the goal of becoming productive in R as fast as possible.  Note that
+even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio,  laments that RStudio can be
 "overwhelming."  Here we stick to the R command line, and focus on data
-analysis, not advanced tools.  At some point in your evolution as a
-programmer, you'll need to Eventually you'll need either an IDE or an
-external text editor, but for now we will stick to the basic R command
-line.  (Some readers of this tutorial may already be using RStudio, and
-the treatment here will sometimes include special instructions for
-them.)
+analysis, not tools, which we treat as an advanced topic.  (Some readers
+of this tutorial may already be using RStudio, and the treatment here
+will sometimes include special instructions for them.)
 
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
@@ -136,7 +133,8 @@ matloff@cs.ucdavis.edu
 ## <a name="firstr"> </a> Lesson 1:  First R Steps
 
 The R command prompt is '>'.  It will be shown here, but you don't type
-it.
+it.  (If you are using RStudio, you'll see it in the Console pane at the
+lower left of the RStudio window.)
 
 So, just type '1+1' then hit Enter.  Sure enough, it prints out 2 (you
 were expecting maybe 12108?):
@@ -1604,7 +1602,7 @@ again, **pima[,1] == 0** yields a vector of TRUEs and FALSEs, each
 indicating whether the corresponding element of column 1 is 0.  When we
 call **sum**, TRUEs and FALSEs are treated as 1s and 0s, so we get the
 total number of 1s -- which is a count of the number of elements in that
-column that are 0.
+column that are 0, exactly what we wanted.
 
 A technical point:  Why did we need the explicit call to **print**?
 Didn't we say earlier that just typing an expression 
@@ -1651,11 +1649,25 @@ involved) form:
 Here I intended the body of the loop to consist of a *block* of two
 statements, not one, so I needed to tell R that, by typing '{' before
 writing my two statements, then letting R know I was finished with the
-block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt to
-remind me that I was still in the midst of typing the block. (After the
-'}' I simply hit Enter.)
+block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt
+(which I did *not* type) to remind me that I was still in the midst of
+typing the block. (After the '}' I simply hit Enter.)
 
-So, the block (two lines here) will be executed with **i = 2**, then 3,
+For your convenience, below is the code itself, no '+' symbols.  You can
+copy-and-paste into R, with the result as above.
+
+```
+for (i in 2:6) {
+   zeroIndices <- which(pima[,i] == 0)
+   pima[zeroIndices,i] <- NA
+}
+```
+
+(If you are using RStudio, set up some work space, by selecting File |
+New File | RScript. Copy-and-paste the above into the empty pane that
+is created, and run it, via Code | Run Region | Run All.)
+
+So, the block (two lines here) will be executed with **i** = 2, then 3,
 4, 5 and 6.  The line 
 
 ``` r
@@ -1689,18 +1701,15 @@ Your screen would then look like this:
 + }
 ```
 
-But this is unwieldy.  And what if we were to change the code?  Typing
-it in line by line is laborious and error-prone.  We really need a
-*text editor* for this.  Just as we edit, say, reports, we do the same
-for code.
+But this is unwieldy.  Typing it in line by line is laborious and
+error-prone.  And what if we were to change the code?  Must we type in
+the whole thing again?  We really need a *text editor* for this.  Just
+as we edit, say, reports, we do the same for code.
 
 As mentioned earlier, many useRs use IDEs for this purpose, such as
 RStudio or ESS.  Indeed, some of you probably already use RStudio.
-That's fine, but again, in order to make readers proficient in R as fast
-as possible, covering IDEs at this point would be a distraction; both
-are quite elaborate.
-
-So for now, we'll just use R's built-in **edit** function.  To explain
+If so, you simply edit in the upper-left pane.  For those not using
+RStudio, we'll just use R's built-in **edit** function.  To explain
 it, consider the following toy example:
 
 ``` r
