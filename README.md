@@ -31,8 +31,9 @@ Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio,  laments that RStudio can be
 "overwhelming."  Here we stick to the R command line, and focus on data
 analysis, not tools, which we treat as an advanced topic.  (Some readers
-of this tutorial may already be using RStudio, and the treatment here
-will sometimes include special instructions for them.)
+of this tutorial may already be using RStudio or an external editor, and
+the treatment here will include special instructions for
+them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
@@ -1664,8 +1665,10 @@ for (i in 2:6) {
 ```
 
 (If you are using RStudio, set up some work space, by selecting File |
-New File | RScript. Copy-and-paste the above into the empty pane that
-is created, and run it, via Code | Run Region | Run All.)
+New File | RScript. Copy-and-paste the above into the empty pane that is
+created, and run it, via Code | Run Region | Run All.  If you are using
+an external text editor, type the code into the editor, save to a file,
+say **x.R**, then at the R '>' prompt, type **source(x.R)**.)
 
 So, the block (two lines here) will be executed with **i** = 2, then 3,
 4, 5 and 6.  The line 
@@ -1707,10 +1710,11 @@ the whole thing again?  We really need a *text editor* for this.  Just
 as we edit, say, reports, we do the same for code.
 
 As mentioned earlier, many useRs use IDEs for this purpose, such as
-RStudio or ESS.  Indeed, some of you probably already use RStudio.
-If so, you simply edit in the upper-left pane.  For those not using
-RStudio, we'll just use R's built-in **edit** function.  To explain
-it, consider the following toy example:
+RStudio or ESS.  Indeed, some of you probably already use RStudio.  If
+so, you simply edit in the upper-left pane.  Similarly if you are using
+an external editor.  For those not using these, we'll just use R's
+built-in **edit** function.  To explain it, consider the following toy
+example:
 
 ``` r
 f <- function(x,y)
