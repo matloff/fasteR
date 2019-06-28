@@ -74,7 +74,8 @@ you should cook up your own variants to try.
 * [Lesson 20: R Packages, CRAN, Etc.](#cran)
 * [Lesson 21: A First Look at ggplot2](#gg2first)
 * [Lesson 22: More on the apply Family](#appfam)
-* [Lesson 23: Linear Regression Analysis, II](#linreg2)
+* [Lesson 23: Simple Text Processing](#txt)
+* [Lesson 24: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2454,7 +2455,8 @@ this as something that must be done.
 
 One nice thing is that we automatically got a legend printed to the
 right of the graph, so we know which color corresponds to which
-position.
+position.  We can do this in base-R graphics too, but need to set an
+argument for it in **plot**.
 
 ## <a name="appfam"> </a> Lesson 22:  More on the apply Family
 
@@ -2584,8 +2586,112 @@ The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
 Simpler may not be easier.
 
+## <a name="txt"> </a> Lesson 23:  Simple Text Processing
 
-## <a name="linreg2"> </a> Lesson 23:  Linear Regression Analysis, II
+These days, text processing is big in the Data Science field, e.g. in
+Natural Language Processing applications.  In this lesson, we'll do a
+simple yet practical example, in order to illustrate some key functions
+in base-R.  (R has many packages for advanced text work.)
+
+Our example will cover reading in a file of text, and compiling a word
+count, i.e. calculating the number of times each word appears.
+
+The file is
+[here]('https://raw.githubusercontent.com/matloff/fasteR/master/data/aboutR.txt').  It's basically the About section of the R Project home page.  Here 
+are the first few lines:
+
+```
+
+What is R?
+
+Introduction to R
+
+   R is a language and environment for statistical computing and graphics.
+```
+
+Now, how can we read the file?  For instance, **read.table** won't work,
+as it expects the same number of nonblank fields on each line.  As you
+can see above, our file has a variable number of such fields per line.
+
+Instead, we read the lines of the file via a function named, not
+surprisingly, **readLines**:
+
+``` r
+> abt <- readLines('https://raw.githubusercontent.com/matloff/fasteR/master/data/aboutR.txt')
+```
+
+So, what exactly is in **abt** now?  Let's turn to our usual inspection
+tools:
+
+``` r
+> str(abt)
+ chr [1:70] "" "What is R?" "" "Introduction to R" "" ...
+```
+
+So, **abt** is a vector, or type character.  Each element of this vector
+is one line from the file:
+
+```
+> head(abt)
+[1] ""                                                                          
+[2] "What is R?"                                                                
+[3] ""                                                                          
+[4] "Introduction to R"                                                         
+[5] ""                                                                          
+[6] "   R is a language and environment for statistical computing and graphics."
+```
+
+The first line in the file was empty, so **abt[1]** is '', and so on.
+
+Now, to count the number of words in the file, we'll need a way to count
+the number in each line, which we will then sum.  R's **strsplit**
+function will serve us well here, e.g. for line 4:`
+
+``` r
+> y <- strsplit(abt[4],' ')
+> y
+[[1]]
+[1] "Introduction" "to"           "R"   
+```
+
+(That second argument, ' ', means we want the blank character to be our
+splitting delimiter.
+
+Good, it split the line into the three words on that line,
+"Introduction" "to", "R".  But be careful!  What is that [[1]] doing
+there?  Remember, the double bracket notation is for R lists.  So,
+**strsplit** has split **abt[4]** a list with one element, and that
+element is the three-element character vector **c("Introduction","to","R")**.
+So for instance,
+
+``` r
+> y[[1]][2]
+[1] "to"
+> y[[1]][3]
+[1] "R"
+```
+
+Why the R list form?  Well, **strsplit** can be applied to the entire
+character vector **abt**, yielding a list of 70 elements; the i-th such
+element will contain the split form of the i-th line in the file:
+
+``` r
+> w <- strsplit(abt,' ')
+> w[[6]]
+ [1] ""            ""            ""            "R"           "is"         
+ [6] "a"           "language"    "and"         "environment" "for"        
+[11] "statistical" "computing"   "and"         "graphics."  
+```
+
+Yep, that's the split form of line 6.
+
+<!--
+empty strings; empty lines; 'for' loop to get tot number of words;
+fancier, Reduce()
+-->
+
+
+## <a name="linreg2"> </a> Lesson 24:  Linear Regression Analysis, II
 
 ## <a name="forMore"> </a> To Learn More 
 
