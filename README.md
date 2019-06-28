@@ -74,8 +74,9 @@ you should cook up your own variants to try.
 * [Lesson 20: R Packages, CRAN, Etc.](#cran)
 * [Lesson 21: A First Look at ggplot2](#gg2first)
 * [Lesson 22: More on the apply Family](#appfam)
-* [Lesson 23: Simple Text Processing](#txt)
-* [Lesson 24: Linear Regression Analysis, II](#linreg2)
+* [Lesson 23: Simple Text Processing, I](#txt)
+* [Lesson 24: Simple Text Processing, II](#txt1)
+* [Lesson 25: Linear Regression Analysis, II](#linreg2)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2586,7 +2587,7 @@ The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
 Simpler may not be easier.
 
-## <a name="txt"> </a> Lesson 23:  Simple Text Processing
+## <a name="txt"> </a> Lesson 23:  Simple Text Processing, I
 
 These days, text processing is big in the Data Science field, e.g. in
 Natural Language Processing applications.  In this lesson, we'll do a
@@ -2680,13 +2681,16 @@ line 6:
 
 ``` r
 > w <- strsplit(abt,' ')
-> w[[6]]
+> w[[6]]  # example
  [1] ""            ""            ""            "R"           "is"         
  [6] "a"           "language"    "and"         "environment" "for"        
 [11] "statistical" "computing"   "and"         "graphics."  
 ```
 
 Yep, that's the split form of line 6.
+
+The material beginning with the # sign is what is called a *comment* in
+the programming world.  W
 
 But we also see another snag.  The above output tells us that R took
 line 6, which has 11 words, and split into 14 words -- the first 3 of
@@ -2724,7 +2728,7 @@ let's write it in function form:
 ``` r
 extractWords <- function(s) 
 {
-   z <- strsplit(s,' ')
+   z <- strsplit(s,' ')[[1]]
    z[z != ""]
 }
 ```
@@ -2732,13 +2736,66 @@ extractWords <- function(s)
 (Recall that in R functions, the last computed value is automatically
 returned.)
 
+<span style="color:red">Tip:</span> 
+As mentioned, we should probably save that function for future use.
+We could save it using **save** as discussed earlier, but it
+would be better to save our "home grown" functions in one or more
+packages, maybe even submitting them to CRAN.  More on this in a later
+lesson.
+
+**Your Turn:** That [[1]] expression in the body of **extractWords** was
+crucial!  Try the code without it, and see if you can explain the
+result, which is not what we desire.
+
+We can then call our **extractWords** function on each line of the file,
+say in a loop.  We'll do this in the next section.
+
+> **Your Turn:** Write a function with call form **delNAs(x)**, that
+> returns **x** with NAs deleted.  
+
+## <a name="txt1"> </a> Lesson 24:  Simple Text Processing, II
+
+So, let's use our **extractWords** function on our **abt** vector.
+Here's a loop way to do it:
+
+``` r
+abt.save <- abt
+allWords <- NULL  # empty vector
+for (i in 1:70) {
+   thisLine <- extractWords(abt[i])
+   allWords <- c(allWords,thisLine)
+}
+```
+
+Note that the result (again, the result of the last computation, which
+will be the final value of **allWords**), will be one long vector,
+consisting of all the words in the file.
+
+As usual, it is a must to inspect the result, say the first 25 elements:
+
+``` r
+> head(lineWords,25)
+ [1] "What"         "is"           "R?"          
+ [4] "Introduction" "to"           "R"           
+ [7] "R"            "is"           "a"           
+[10] "language"     "and"          "environment" 
+[13] "for"          "statistical"  "computing"   
+[16] "and"          "graphics."    "It"          
+[19] "is"           "a"            "GNU"         
+[22] "project"      "which"        "is"          
+[25] "similar"     
+```
+
+Good, all the words seem to be there, and the "" are NOT there, just as
+desired.  But how to get the word counts?
+
 <!--
 empty strings; empty lines; 'for' loop to get tot number of words;
 fancier, Reduce()
 -->
 
 
-## <a name="linreg2"> </a> Lesson 24:  Linear Regression Analysis, II
+## <a name="linreg2"> </a> Lesson 25:  Linear Regression Analysis, II
 
 ## <a name="forMore"> </a> To Learn More 
 
