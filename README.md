@@ -2597,8 +2597,9 @@ Our example will cover reading in a file of text, and compiling a word
 count, i.e. calculating the number of times each word appears.
 
 The file is
-[here]('https://raw.githubusercontent.com/matloff/fasteR/master/data/aboutR.txt').  It's basically the About section of the R Project home page.  Here 
-are the first few lines:
+[here](https://raw.githubusercontent.com/matloff/fasteR/master/data/aboutR.txt).
+It's basically the About section of the [R Project home
+page](https://www.r-project.org/).  Here are the first few lines:
 
 ```
 
@@ -2621,15 +2622,15 @@ surprisingly, **readLines**:
 ```
 
 So, what exactly is in **abt** now?  Let's turn to our usual inspection
-tools:
+tools, **str** and **head**.
 
 ``` r
 > str(abt)
  chr [1:70] "" "What is R?" "" "Introduction to R" "" ...
 ```
 
-So, **abt** is a vector, or type character.  Each element of this vector
-is one line from the file:
+So, **abt** is a vector of 70 elements, of type character.  Each element
+of this vector is one line from the file:
 
 ```
 > head(abt)
@@ -2641,11 +2642,11 @@ is one line from the file:
 [6] "   R is a language and environment for statistical computing and graphics."
 ```
 
-The first line in the file was empty, so **abt[1]** is '', and so on.
+The first line in the file was empty, so **abt[1]** is "", and so on.
 
 Now, to count the number of words in the file, we'll need a way to count
 the number in each line, which we will then sum.  R's **strsplit**
-function will serve us well here, e.g. for line 4:`
+function will serve us well here, e.g. for line 4:
 
 ``` r
 > y <- strsplit(abt[4],' ')
@@ -2658,11 +2659,12 @@ function will serve us well here, e.g. for line 4:`
 splitting delimiter.
 
 Good, it split the line into the three words on that line,
-"Introduction" "to", "R".  But be careful!  What is that [[1]] doing
-there?  Remember, the double bracket notation is for R lists.  So,
-**strsplit** has split **abt[4]** a list with one element, and that
-element is the three-element character vector **c("Introduction","to","R")**.
-So for instance,
+"Introduction", "to", and "R".  
+
+But be careful!  What is that [[1]] doing there?  Remember, the double
+bracket notation is for R lists.  So, **strsplit** has split **abt[4]**
+a list with one element, and that element is in turn the three-element
+character vector **c("Introduction","to","R")**.  So for instance,
 
 ``` r
 > y[[1]][2]
@@ -2673,7 +2675,8 @@ So for instance,
 
 Why the R list form?  Well, **strsplit** can be applied to the entire
 character vector **abt**, yielding a list of 70 elements; the i-th such
-element will contain the split form of the i-th line in the file:
+element will contain the split form of the i-th line in the file, e.g.
+line 6:
 
 ``` r
 > w <- strsplit(abt,' ')
@@ -2684,6 +2687,50 @@ element will contain the split form of the i-th line in the file:
 ```
 
 Yep, that's the split form of line 6.
+
+But we also see another snag.  The above output tells us that R took
+line 6, which has 11 words, and split into 14 words -- the first 3 of
+which are empty words "".  This is because the first three characters in
+line 6 are blanks.  When there is more than one consecutive blank, 
+the **strsplit** function works, R treats some of the blanks as
+"words."  (By the way, Python's analogous function doesn't do this.)
+
+So, how to fix it?  For that particular line, we could do, say,
+
+``` r
+> z <- w[[6]]
+> z <- z[z != ""]
+> z
+ [1] "R"           "is"          "a"           "language"    "and"        
+ [6] "environment" "for"         "statistical" "computing"   "and"        
+[11] "graphics."  
+```
+
+R's '!=' means "not equal to."  So what we did to **z** above followed
+our usual pattern: 
+
+1.  The expression **z != ""** yields a bunch of TRUEs and FALSEs.
+
+2.  The operation **z[bunch of TRUEs and FALSEs]** extracts those
+    elements of **z** at which there are TRUEs, which are exactly the
+ones we want to keep here.
+
+* <span style="color:red">Tip:</span> 
+When you write some code that looks like it will be generally useful,
+make a function out of it, and save it for future use.  The above code
+to delete the empty "words" sounds like something worth keeping.  So,
+let's write it in function form:
+
+``` r
+extractWords <- function(s) 
+{
+   z <- strsplit(s,' ')
+   z[z != ""]
+}
+```
+
+(Recall that in R functions, the last computed value is automatically
+returned.)
 
 <!--
 empty strings; empty lines; 'for' loop to get tot number of words;
