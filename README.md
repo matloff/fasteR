@@ -2690,7 +2690,11 @@ line 6:
 Yep, that's the split form of line 6.
 
 The material beginning with the # sign is what is called a *comment* in
-the programming world.  W
+the programming world.  It does not get executed by R, but it is a memo
+to us, the programmer, a note to help us remember what we did.  When we
+read our code six months from now, we will have forgotten most of it, so
+comments help us reorient.  The same holds if someone else reads our
+code.  Comments -- *meaninful* comments -- are key to good coding.
 
 But we also see another snag.  The above output tells us that R took
 line 6, which has 11 words, and split into 14 words -- the first 3 of
@@ -2743,9 +2747,9 @@ would be better to save our "home grown" functions in one or more
 packages, maybe even submitting them to CRAN.  More on this in a later
 lesson.
 
-**Your Turn:** That [[1]] expression in the body of **extractWords** was
-crucial!  Try the code without it, and see if you can explain the
-result, which is not what we desire.
+> **Your Turn:** That [[1]] expression in the body of **extractWords** was
+> crucial!  Try the code without it, and see if you can explain the
+> result, which is not what we desire.
 
 We can then call our **extractWords** function on each line of the file,
 say in a loop.  We'll do this in the next section.
@@ -2759,8 +2763,7 @@ So, let's use our **extractWords** function on our **abt** vector.
 Here's a loop way to do it:
 
 ``` r
-abt.save <- abt
-allWords <- NULL  # empty vector
+allWords <- NULL  # start with empty vector
 for (i in 1:70) {
    thisLine <- extractWords(abt[i])
    allWords <- c(allWords,thisLine)
@@ -2787,13 +2790,47 @@ As usual, it is a must to inspect the result, say the first 25 elements:
 ```
 
 Good, all the words seem to be there, and the "" are NOT there, just as
-desired.  But how to get the word counts?
+desired.  But how to get the word counts?  Why, it's our old friend,
+**tapply**!
+
+``` r
+> head(q,25)
+            ;            …) “environment”      (easily)     (formerly 
+            1             1             1             1             1 
+   (including       (linear             *             ©             a 
+            1             1             5             1            13 
+        about     accretion     activity.           add    additional 
+            3             1             1             1             1 
+     Advanced   algorithmic        allows            an      analysis 
+            1             1             1             5             2 
+    analysis,           and           are        around       arrays, 
+            2            27             4             1             1 
+```
+
+Actually, this really the same pattern we saw before, with the
+**length** function as our third argument.  It may look a little odd
+that the first two arguments are identical, but it makes sense:
+
+1.  We split up the **allWords** vector into piles, according to the
+    second argument, which happens to be the same vector.
+
+2.  We apply the **length** function to each pile, giving us the count
+    in each pile, exactly what we needed.
+
+<span style="color:red">Tip:</span>  In coding, certain patterns do
+arise often, one did here. In fact, there are coding books with "design
+patterns" in their titles.  Take note when you see the same pattern a
+lot.
+
+We're not fully done yet.  For instance, we have a punctuation problem,
+where commas are considered parts of words.  Again, for major usage, we
+should consider using one of the advanced R packages in text processing.
+But this was a good learning example.
 
 <!--
 empty strings; empty lines; 'for' loop to get tot number of words;
 fancier, Reduce()
 -->
-
 
 ## <a name="linreg2"> </a> Lesson 25:  Linear Regression Analysis, II
 
