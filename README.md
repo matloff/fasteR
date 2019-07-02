@@ -38,8 +38,7 @@ them when needed.)
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
 treated, partly due to its controversial nature (I am a 
-[skeptic](http://github.com/matloff/TidyverseSkeptic)),
-but mainly because it would be a burden on the user
+skeptic), but mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
