@@ -30,9 +30,10 @@ even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio,  laments that RStudio can be
 "overwhelming."  Here we stick to the R command line, and focus on data
-analysis, not tools, which we treat as an advanced topic.  (Some readers
-of this tutorial may already be using RStudio or an external editor, and
-the treatment here will include special instructions for
+analysis, not tools such as IDEs, which we treat as an 
+advanced topic.  (Some readers of this tutorial may already be using RStudio or 
+an external editor, and the treatment here will include 
+special instructions for
 them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the 
@@ -2591,7 +2592,7 @@ Simpler may not be easier.
 These days, text processing is big in the Data Science field, e.g. in
 Natural Language Processing applications.  In this lesson, we'll do a
 simple yet practical example, in order to illustrate some key functions
-in base-R.  (R has many packages for advanced text work.)
+in base-R.  (R has many packages for advanced text work, such as **tm**.)
 
 Our example will cover reading in a file of text, and compiling a word
 count, i.e. calculating the number of times each word appears.
@@ -2776,7 +2777,7 @@ consisting of all the words in the file.
 As usual, it is a must to inspect the result, say the first 25 elements:
 
 ``` r
-> head(lineWords,25)
+> head(allWords,25)
  [1] "What"         "is"           "R?"          
  [4] "Introduction" "to"           "R"           
  [7] "R"            "is"           "a"           
@@ -2822,9 +2823,39 @@ patterns" in their titles.  Take note when you see the same pattern a
 lot.
 
 We're not fully done yet.  For instance, we have a punctuation problem,
-where commas are considered parts of words.  Again, for major usage, we
-should consider using one of the advanced R packages in text processing.
-But this was a good learning example.
+where periods, commas and so on are considered parts of words, such as
+the period in **allWords[17]** seen above, 'graphics.'  
+
+For major usage, we should consider using one of the advanced R packages
+in text processing.  For instance, the **tm** package has a
+**removePunctuation** function.  But let's see how we can do this with
+the basics.
+
+We'll use R's **gsub** function.  It's call form, as we'll use it, is
+
+``` r
+gsub(string_to_change,replacement,input_vector,fixed=TRUE)
+```
+
+E.g.
+
+``` r
+> a <- c('abc','de.')
+> gsub('.','',a,fixed=TRUE)  # replace '.' by empty stringW
+[1] "abc" "de" 
+```
+
+(The **fixed** argument is complex, and pops up in all the R string
+manipulation packages.  This again is something you should use for now,
+and look into when you become more skilled at R.)
+
+So, to remove all periods in **allWords**, we can do:
+
+``` r
+> awNoPers <- gsub('.','',allWords,fixed=TRUE) 
+> awNoPers[17]  # check that it worked
+[1] "graphics"
+```
 
 <!--
 empty strings; empty lines; 'for' loop to get tot number of words;
