@@ -25,7 +25,9 @@ conversational, story-telling manner.
     - Notably, we do not use Integrated Development Environments (IDEs).
       RStudio, ESS etc. are great, but you shouldn't be burdened with
 learning R *and* learning an IDE at the same time, a distraction from
-the goal of becoming productive in R as fast as possible.  Note that
+the goal of becoming productive in R as fast as possible.  
+
+     Note that
 even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio,  laments that RStudio can be
@@ -39,7 +41,7 @@ them when needed.)
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
 treated, partly due to its controversial nature (I am a 
-skeptic), but mainly because it would be a burden on the user
+skeptic), but again mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
@@ -136,8 +138,7 @@ matloff@cs.ucdavis.edu
 ## <a name="firstr"> </a> Lesson 1:  First R Steps
 
 The R command prompt is '>'.  It will be shown here, but you don't type
-it.  (If you are using RStudio, you'll see it in the Console pane at the
-lower left of the RStudio window.)
+it.  (If you are using RStudio, you'll see it in the Console pane.) 
 
 So, just type '1+1' then hit Enter.  Sure enough, it prints out 2 (you
 were expecting maybe 12108?):
@@ -1549,6 +1550,15 @@ and then **mgd** will be restored, ready for us to use again.
 > function **hld(x,d)**, which draws a histogram for those elements in the
 > vector ***x*** that are less than ***d***.
 
+Functions are R objects, just as are vectors, lists and so on.  Thus, we
+can print them by just typing their names!
+
+``` r
+> mgd <- function(x,d) mean(x[x > d])
+> mgd
+function(x,d) mean(x[x > d])
+```
+
 ## <a name="less11"> </a> Lesson 12:  'For' Loops
 
 Recall that in Lesson 6, we found that there were several columns in the
@@ -1667,10 +1677,11 @@ for (i in 2:6) {
 ```
 
 (If you are using RStudio, set up some work space, by selecting File |
-New File | RScript. Copy-and-paste the above into the empty pane that is
-created, and run it, via Code | Run Region | Run All.  If you are using
-an external text editor, type the code into the editor, save to a file,
-say **x.R**, then at the R '>' prompt, type **source(x.R)**.)
+New File | RScript. Copy-and-paste the above into the empty pane (named
+SOURCE) that is created, and run it, via Code | Run Region | Run All.
+If you are using an external text editor, type the code into the editor,
+save to a file, say **x.R**, then at the R '>' prompt, type
+**source(x.R)**.)
 
 So, the block (two lines here) will be executed with **i** = 2, then 3,
 4, 5 and 6.  The line 
@@ -1709,14 +1720,24 @@ Your screen would then look like this:
 But this is unwieldy.  Typing it in line by line is laborious and
 error-prone.  And what if we were to change the code?  Must we type in
 the whole thing again?  We really need a *text editor* for this.  Just
-as we edit, say, reports, we do the same for code.
+as we edit, say, reports, we do the same for code.  
 
-As mentioned earlier, many useRs use IDEs for this purpose, such as
-RStudio or ESS.  Indeed, some of you probably already use RStudio.  If
-so, you simply edit in the upper-left pane.  Similarly if you are using
-an external editor.  For those not using these, we'll just use R's
-built-in **edit** function.  To explain it, consider the following toy
-example:
+### Creating/editing code
+
+Here are your choices:
+
+1. If you are already using RStudio, you simply edit in the SOURCE pane.  
+
+2.  If you are using an external editor, say
+    [Vim](http://heather.cs.ucdavis.edu/~matloff/vim.html) (Macs, Linux)
+or Notepad (Windows), just open a new file and use that workspace.
+
+3.  For  those not using these, we'll just use R's built-in **edit**
+    function.  
+
+Plan to eventually routinely do either 1 or 2 above, but 3 is fine for now.
+
+Consider the following toy example:
 
 ``` r
 f <- function(x,y)
@@ -1730,34 +1751,29 @@ f <- function(x,y)
 It finds the sum and difference of the inputs, and returns them as a
 two-element vector.
 
-To create **f** using **edit**, we would do the following:
+If you are using RStudio or an external editor, copy-and-paste the above
+code into the workspace of an empty file.  
+
+Or, to create **f** using **edit**, we would do the following:
 
 ``` r
 > f <- edit()
 ```
 
 This would invoke the text editor, which will depend on your machine.
-On Macs and Linux, the default is the 
-[Vim editor](http://heather.cs.ucdavis.edu/~matloff/vim.html); on Windows, it's
-Notepad.  The above would open an empty file.  You would type the
+It will open your text editor right there in your R window.  Type the
 function code, then save it, using the editor's Save command.  
 
-Note:  **edit** itself is a function.  It's return value is the code you
-typed in!  That is then assigned to **f**, which you can now call
+**IMPORTANT:** Even if you are not using **edit**, it's important to
+know what is happening in that command above.
 
-Functions are R objects, so you can print them:
+a.  **edit** itself is a function.  Its return value is the code you
+typed in!  
 
-``` r
-> f
-function(x,y)
-{  
-   s <- x + y
-   d <- x - y
-   c(s,d)
-}
-```
+b.  That code is then assigned to **f**, which you can now call
 
-If you want to change the function, type
+If you want to change the function, in the RStudio/external editor case,
+just edit it there.  In the **edit** case, type
 
 ``` r
 > f <- edit(f)
@@ -2750,6 +2766,11 @@ lesson.
 > **Your Turn:** That [[1]] expression in the body of **extractWords** was
 > crucial!  Try the code without it, and see if you can explain the
 > result, which is not what we desire.
+> 
+> <span style="color:red">Tip:</span>  This illustrates a common error
+> for beginners and veterans alike.  The error message probably won't be
+> helpful!  So keep this frequent error in mind, both when you're
+> writing code and viewing cryptic error messages.
 
 We can then call our **extractWords** function on each line of the file,
 say in a loop.  We'll do this in the next section.
