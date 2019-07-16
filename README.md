@@ -2971,4 +2971,4 @@ I also would recommend various Web tutorials:
 [CEU Business Analytics program: Use Case Seminar 2 with Szilard Pafka (2019- 05-08)](https://t.co/kbhw44Tbbn) 
 
 * Hadley Wickham, 
-[the Tidyverse](https://www.tidyverse.or) 
+[the Tidyverse](https://www.tidyverse.org) 
