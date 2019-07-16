@@ -430,7 +430,8 @@ make a copy with a shorter name.
 ```
 
 Dollar signs are used to denote the individual columns.  E.g. we can
-print out the mean length; **tg$len** is the tooth length column, so
+print out the mean tooth length; **tg$len** is the tooth length column
+(the dollar sign is the deliminter, separating 'tg' and 'len'), so
 
 ``` r
 > mean(tg$len)
@@ -454,6 +455,10 @@ fact that **tg$len** is a vector:
 
 The element in row 3, column 1 in the *data frame* **tg** is element 3 in
 the *vector* **tg$len**.
+
+> **Your Turn:**  The above examples are fundamental to R, so you should
+> conduct a few small experiments on your at this time, little variants
+> of the above.
 
 Some data frames don't have column names, but that is no obstacle.  We
 can use column numbers, e.g.
@@ -545,7 +550,7 @@ your understanding -- as follows:
 
 > **Your Turn:** Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
-> the length was less than 16.  Also, try some examples with another
+> the tooth length was less than 16.  Also, try some examples with another
 > built-in R dataset, **faithful**.  This one involves the Old Faithful
 > geyser in Yellowstone National Park in the US.  The first column gives
 > duration of the eruption, and the second has the waiting time since the
@@ -594,7 +599,7 @@ list of categories for **tg$supp** as follows:
 ```
 
 The categorical variable here is **supp**, the name the creator of this 
-dataset chose for the supplement.  We see that there are two categories
+dataset chose for the supplement column.  We see that there are two categories
 (*levels*), either orange juice or Vitamin C.
 
 Factors can sometimes be a bit tricky to work with, but the above is
@@ -623,8 +628,10 @@ the rows in which the supplement was OJ."  (Since the field following the
 comma is blank, we are placing no restriction on the columns, just
 taking them all.)
 
-3.  For convenience, we assigned that result to **tgoj**.  The latter
-now consists of all rows of **tg** with the OJ supplement. 
+3.  For convenience, we assigned that result to **tgoj**, in case we
+    need it later.  The latter
+now consists of all rows of **tg** with the OJ supplement.  And it's a
+new data frame!
 
 We saw earlier that TRUEs and FALSEs can be interpreted as 1s and 0s in
 a context like that of the **sum** function, but they can also be used
