@@ -5,8 +5,8 @@
 
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
-The site is for those who know nothing of R or even of programming, and
-seek a quick, painless entree to the world of R.
+The site is for those who know nothing of R, or maybe even nothing of
+programming, and seek *QUICK*, painless entree to the world of R.
 
 * **FAST**:  You'll already be doing good stuff in R -- useful data analysis
 --- in your very first lesson.
@@ -32,7 +32,7 @@ even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio,  laments that RStudio can be
 "overwhelming."  Here we stick to the R command line, and focus on data
-analysis, not tools such as IDEs, which we treat as an 
+analysis, not tools such as IDEs, which we will cover as an 
 advanced topic.  (Some readers of this tutorial may already be using RStudio or 
 an external editor, and the treatment here will include 
 special instructions for
@@ -138,7 +138,9 @@ matloff@cs.ucdavis.edu
 ## <a name="firstr"> </a> Lesson 1:  First R Steps
 
 The R command prompt is '>'.  It will be shown here, but you don't type
-it.  (If you are using RStudio, you'll see it in the Console pane.) 
+it.  It is just there in your R window to let you know R is inviting you
+to submit a command.  (If you are using RStudio, you'll see it in the
+Console pane.) 
 
 So, just type '1+1' then hit Enter.  Sure enough, it prints out 2 (you
 were expecting maybe 12108?):
@@ -148,7 +150,7 @@ were expecting maybe 12108?):
 [1] 2
 ```
 But what is that '[1]' here?  It's just a row label.  We'll go into that
-later, not needed yet.
+later, not needed quite yet.
 
 R includes a number of built-in datasets, mainly for illustration
 purposes.  One of them is **Nile**, 100 years of annual flow data on the
@@ -194,7 +196,7 @@ Frequency = 1
  [91] 1020  906  901 1170  912  746  919  718  714  740
 ```
 
-Now you can see how the row labels work.  There are 15 numbers per row,
+Now you can see how the row labels work.  There are 15 numbers per row
 here, so the second row starts with the 16th, indicated by '[16]'.
 
 R has great graphics, not only in base R but also in wonderful
@@ -228,8 +230,8 @@ graph.
 > 
 > **Note:**  The **hist** function, as with many R functions, has many
 > different options, specifiable via various arguments.  For now, we'll
-> just keep things simple.
-
+> just keep things simple, and resist the temptation to explore them
+> all.
 
 R has lots of online help, which you can access via '?'.  E.g. typing
 
@@ -238,7 +240,7 @@ R has lots of online help, which you can access via '?'.  E.g. typing
 ```
 
 will tell you to full story on all the options available for the
-**hist** function.  Note, there are far too many for you to digest for
+**hist** function.  Again, there are far too many for you to digest for
 now (most users don't ever find a need for the more esoteric ones), but
 it's a vital resource to know.
 
@@ -259,7 +261,6 @@ Individual elements can be accessed using *subscripts* or *indices*
 ```
 
 for the second element (which we see above is indeed 1160).
-
 The value 2 here is the index.
 
 The **c** ("concatenate") function builds a vector, stringing several
@@ -357,6 +358,8 @@ We can now use this to answer our question on the **Nile** data:
 > sum(Nile > 1200)
 [1] 7
 ```
+
+The river level exceeded 1200 in 7 years.
 
 But how in the world did that work?  Bear with me a bit here.  Let's
 look at a small example first:
