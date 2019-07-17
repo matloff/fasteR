@@ -651,10 +651,10 @@ what we put into that variable.)
 
 ## <a name="tapply"> </a> Lesson 5:  The tapply Function
 
-<span style="color:red">Tip:</span>
-Often in R there is a shorter, more compact way of doing things.  That's 
-the case here; we can use the magical **tapply** 
-function in the above example.
+<span style="color:red">Tip:</span> Often in R there is a shorter, more
+compact way of doing things.  That's the case here; we can use the
+magical **tapply** function in the above example.  In fact, we can do it
+in just one line.
 
 ``` r
 > tapply(tg$len,tg$supp,mean)
@@ -662,10 +662,10 @@ function in the above example.
 20.66333 16.96333 
 ```
 
-In English:  "Split **tg$len** into two groups, according to the value
-of **tg$supp**, then apply **mean** to each group."  Note that the
-result was returned as a vector, which we could save by assigning it to,
-say **z**:
+In English:  "Split the vector **tg$len** into two groups, according to
+the value of **tg$supp**, then apply **mean** to each group."  Note that
+the result was returned as a vector, which we could save by assigning it
+to, say **z**:
 
 ``` r
 > z <- tapply(tg$len,tg$supp,mean)
@@ -688,8 +688,10 @@ artificial example:
 > g <- c('M',"F",'M','M')
 ```
 
-Suppose **x** ages of some kids, who are a boy, a girl, then two more
-boys, as indicated in **g**.  Let's call **tapply**:
+Suppose **x** is the ages of some kids, who are a boy, a girl, then two more
+boys, as indicated in **g**.  For instance, the 5-year-old is a girl.
+
+Let's call **tapply**:
 
 ``` r
 > tapply(x,g,mean)
@@ -703,7 +705,7 @@ corresponding elements of **g**, and then find the mean in each pile.
 Note that it is no accident that **x** and **g** had the same number of
 elements above, 4 each.  If on the contrary, **g** had 5 elements, that
 fifth element would be useless -- the gender of a nonexistent fifth
-child age in **x**.  Similarly, it wouldn't be right if **g** had had
+child's age in **x**.  Similarly, it wouldn't be right if **g** had had
 only 3 elements, apparently leaving the fourth child without a specified
 gender.
 
@@ -778,7 +780,7 @@ frame:
 ```
 
 As with everything else, **row.names** is a function, and as you can see
-above, its return value is a 32-element vector.  The elements of that
+above, its return value here is a 32-element vector.  The elements of that
 vector are of type **character**.
 
 You can even assign to that vector:
@@ -800,11 +802,12 @@ actually common in R.  It stems from the fact that '<-' is actually a
 function!  But this is not the place to go into that.)
 
 > **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
-> finding the mean MPG for 6-cylinder cars.
+> finding the mean horsepower for 6-cylinder cars.
 
 <span style="color:red">Tip:</span>
 As a beginner (and for that matter later on), you should NOT be obsessed
-with always writing code in the "optimal" way.  It's much more important
+with always writing code in the "optimal" way, including in terms of
+compactness of the code.  It's much more important
 to write something that works and is clear; one can always tweak it
 later.  In this case, though, **tapply** actually aids clarity, and it
 is so ubiquitously useful that we have introduced it early in this
