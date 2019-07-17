@@ -621,7 +621,10 @@ there is a quite a bit going on here.)
 
 Let's take apart that first line:
 
-1.  **tg$supp == 'OJ'** produces a vector of TRUEs and FALSEs.  The lines of **tg** in which supplement = OJ produce TRUE, the rest FALSE.  
+1.  **tg$supp == 'OJ'** produces a vector of TRUEs and FALSEs.  The
+    lines of **tg** in which supplement = OJ produce TRUE, the rest
+FALSE.  (Note the double-equal sign, which is needed for comparisons, as
+opposed to the single-equal used in setting function arguments.)
 
 2.  The expression **tg[tg$supp == 'OJ',]** says, "Extract from **tg**
 the rows in which the supplement was OJ."  (Since the field following the
