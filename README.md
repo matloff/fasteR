@@ -1529,7 +1529,10 @@ placeholders.  For example, in
 
 we said, "R, please execute **mgd** with **Nile** playing the role of
 ***x***, and 1200 playing the role of ***d***.  (Here **Nile** and 1200 are
-known as the *actual* arguments.)
+known as the *actual* arguments.)  
+
+As with variables, we can pretty much name functions and their arguments
+as we please.
 
 As you have seen with R's built-in functions, a function will typically
 have a return value.  In our case here, we could arrange that by writing
@@ -1538,8 +1541,8 @@ have a return value.  In our case here, we could arrange that by writing
 > mgd <- function(x,d) return(mean(x[x > d]))
 ```
 
-But it's not needed, because in any function, R will return the last
-value computed, in this case the requested mean.
+But it's not needed here, because in any function, R will return the
+last value computed, in this case the requested mean.
 
 
 And we can save the function for later use, by using R's **save**
@@ -1560,11 +1563,28 @@ run
 
 and then **mgd** will be restored, ready for us to use again.
 
-> **Your Turn:**  Try your hand at writing some simple functions along the
-> lines seen here.  You might start with a function **n0(x)**, that returns
-> the number of 0s in the vector ***x***.  Another suggestion would be a
-> function **hld(x,d)**, which draws a histogram for those elements in the
-> vector ***x*** that are less than ***d***.
+Let's write another function, this one to find the range of a vector,
+i.e. the difference between the minimal and maximal values:
+
+``` r
+> rng <- function(y) max(y) - min(y)
+> rng(Nile)
+[1] 914
+```
+
+Here we made use of the built-in R functions **max** and **min**.
+Again, the last item computed is the subtraction, so it will be
+automatically returned, just what we want.  As before, I chose to name
+the argument **y**, but it could be anything.  However, I did not name
+the function 'range', as there is already a built-in R function of that
+name.
+
+> **Your Turn:**  Try your hand at writing some simple functions along
+> the lines seen here.  You might start by writing a function **n0(x)**,
+> that returns the number of 0s in the vector ***x***.  (Hint:  Make use
+> of R's **==** and **sum**.) Another suggestion would be a function
+> **hld(x,d)**, which draws a histogram for those elements in the vector
+> ***x*** that are less than ***d***.
 
 Functions are R objects, just as are vectors, lists and so on.  Thus, we
 can print them by just typing their names!
@@ -1818,7 +1838,7 @@ Since we had three statements in the body of the function, rather than
 one as in our previous examples, we needed to write them as a block.
 
 Here the formal argument **d** is the data frame to be worked on, and
-**cols** specifiees the columns in which 0s are to be replaced.
+**cols** specifies the columns in which 0s are to be replaced.
 
 We could use this in the Pima data"
 
@@ -1847,7 +1867,7 @@ educational attainment level below college, but this dataset was
 extracted from the general data.)  13 means a bachelor's degree.
 
 Suppose we wish to color-code the wage-age graph by educational
-attainment, and amalgamate all codes under 13, giving them the code 12.
+attainment. Let's amalgamate all codes under 13, giving them the code 12.
 
 The straightforward but overly complicated, potentially slower way would
 be this:
@@ -1862,8 +1882,8 @@ be this:
  [1] 13 12 12 12 12 12 12 12 14 12 12 13 12 13 12
 ```
 
-For pedagogical clarity, I've inserted "before and after" code, to show
-the **educ** did indeed change where it should.
+For pedagogical clarity, I've inserted "before and after" code, using
+**head**, to show the **educ** did indeed change where it should.
 
 The **if** statement works pretty much like the word "if" in English.
 First **i** will be set to 1 in the loop, so R will test whether
@@ -1918,7 +1938,7 @@ Vectorized code is typically much more compact than loop-based code, as
 was the case here.  In some cases, though certainly not all, the
 vectorized version will be much faster.
 
-By the way, noe the remark above, "**ifelse** operates on vectors."
+By the way, note the remark above, "**ifelse** operates on vectors."
 Apply that to
 
 ``` r
@@ -1938,6 +1958,8 @@ coming lessons.
 > **Your Turn:** Recode the **Nile** data to a new vector **nile**, with
 > the values 1, 2 and 3, according to whether the corresponding number in
 > **Nile** is less than 800, between 800 and 1150, or greater than 1150.
+> You'll probably want to do this using two separate calls to
+> **ifelse**.
 
 ## <a name="keepfit"> </a> Lesson 16: Do Professional Athletes Keep Fit?
 
