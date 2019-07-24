@@ -27,16 +27,14 @@ conversational, story-telling manner.
 learning R *and* learning an IDE at the same time, a distraction from
 the goal of becoming productive in R as fast as possible.  
 
-     Note that
-even the excellent course by [R-Ladies
+     Note that even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
-which does start with RStudio,  laments that RStudio can be
-"overwhelming."  Here we stick to the R command line, and focus on data
-analysis, not tools such as IDEs, which we will cover as an 
-advanced topic.  (Some readers of this tutorial may already be using RStudio or 
-an external editor, and the treatment here will include 
-special instructions for
-them when needed.)
+which does start with RStudio, laments that **RStudio can be
+"overwhelming."**  Here we stick to the R command line, and focus on data
+analysis, not tools such as IDEs, which we will cover as an advanced
+topic.  (Some readers of this tutorial may already be using RStudio or
+an external editor, and the treatment here will include special
+instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
@@ -1993,6 +1991,8 @@ let's look at the mean weight for each age group.  In order to have
 groups, we'll round the ages to the nearest integer first, using the R
 function, **round**, so that e.g.  21.8 becomes 22 and 35.1 becomes 35.
 
+Let's explore the data using R's **table** function.
+
 ``` r
 > age <- round(mlb$Age)
 > table(age)
@@ -2036,8 +2036,8 @@ baseball players, past, present and future.)  That said, it does seem
 there is a slight upward trend; older players tend to be heavier!
 
 By the way, note that **taout** is vector, but with additional
-information, in that the elements have names.  In fact, we can extract
-the names into its own vector if needed:
+information, in that the elements have names, in this case the ages.  In
+fact, we can extract the names into its own vector if needed:
 
 ``` r
 > names(taout)
@@ -2046,23 +2046,23 @@ the names into its own vector if needed:
 [16] "36" "37" "38" "39" "40" "41" "42" "43" "44" "49"
 ```
 
-Let's plot it.  We'll just plot the means that are based on larger
-amounts of data.  So we'll restrict it to, say, ages 23 through 35,
-all of whose means were based on at least 30 players.
+Let's plot the means against age.  We'll just plot the means that are
+based on larger amounts of data.  So we'll restrict it to, say, ages 23
+through 35, all of whose means were based on at least 30 players.
 
 ``` r
 > plot(23:35,taout[3:15])
 ```
 
-![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
+!gainst[alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
 
 There does indeed seem to be an upward trend in time.  Ballplayers
 should be more careful!
 
 Note again that the **plot** function noticed that we supplied it with
-two arguments instead of one, and thus drew a scatter plot.  For
-instance, in **taout** we see that for age group 25, the mean weight
-was 200.2427, so there is a dot in the graph for the point
+two arguments instead of one, and thus drew a two-dimensional scatter
+plot.  For instance, in **taout** we see that for age group 25, the mean
+weight was 200.2427, so there is a dot in the graph for the point
 (25,200.2427).
 
 > **Your Turn:** There are lots of little experiments you can do on this
@@ -2089,7 +2089,7 @@ but it will be helpful to at least get a good definition set:
 
 So, we need to use the data to estimate the slope and intercept of that
 straight line, which R's **lm** ("linear model") function does for us.
-We'll use the original dataset, since the one with rounded ages was jut
+We'll use the original dataset, since the one with rounded ages was just
 to guide our intuition.
 
 ``` r
@@ -2116,9 +2116,9 @@ line, superimposed on our scatter plot:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
-> **Your Turn:** In the **mtcars** data, fit a linear model regression MPG
-> against horsepower and weight; what is the estimated effect of 100
-> pounds of extra weight, for fixed horespower?
+> **Your Turn:** In the **mtcars** data, fit a linear model of the
+> regression of MPG against weight; what is the estimated
+> effect of 100 pounds of extra weight?
 
 ## <a name="s3"> </a> Lesson 18: S3 classes
 
@@ -2208,9 +2208,7 @@ specification.
 
 This says:
 
-<pre>
-estimated mean weight = -187.6382 + 4.9236 height + 0.9115 age
-</pre>
+    estimated mean weight = -187.6382 + 4.9236 height + 0.9115 age
 
 So, under this more refined analysis, things are even more pessimistic;
 players on average gain about 0.9 pounds per year.  And by the way, an
@@ -2229,6 +2227,10 @@ careers.  If we do *not* include height in our model, that omission
 might bias the age coefficient downward.  Thus great care must be taken
 in interpreting coefficients in the Description setting.  For
 Prediction, it is not much of an issue.
+
+> **Your Turn:** In the **mtcars** data, fit a linear model of the
+> regression of MPG against weight and horsepower; what is the estimated
+> effect of 100 pounds of extra weight, for fixed horsepower?
 
 ## <a name="less15"> </a> Lesson 19: Baseball Player Analysis (cont'd.)
 
