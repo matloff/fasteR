@@ -429,7 +429,7 @@ make a copy with a shorter name.
 
 Dollar signs are used to denote the individual columns.  E.g. we can
 print out the mean tooth length; **tg$len** is the tooth length column
-(the dollar sign is the deliminter, separating 'tg' and 'len'), so
+(the dollar sign is the delimiter, separating 'tg' and 'len'), so
 
 ``` r
 > mean(tg$len)
@@ -2203,7 +2203,7 @@ Coefficients:
 
 Here we instruct R to find the estimated regression function of weight,
 using height and age as predictors.  The '+' doesn't mean addition; it
-is simply a delimiter between the predictions in our regression
+is simply a delimiter between the predictors height and age in our regression
 specification.
 
 This says:
@@ -2257,17 +2257,8 @@ is easily done using the **split** function, but that doesn't work,
 since that function is for splitting vectors.  Here we wish to split a
 data frame.
 
-So what can be done instead?  Recall the statement at the outset of this
-tutorial:
-
-> I cannot *teach* you how to program.  I can merely
-> give you the tools, e.g. R vectors, and some examples.  For a given
-> desired programming task, then, you must creatively put these tools
-> together to attain the goal.  Treat it like a puzzle!  I think you'll
-> find that if you stick with it, you'll find you're pretty good at it.
-> After all, we can all work puzzles.
-
-So we need to think creatively here.  One solution is this:
+So what can be done instead?  We need to think creatively here.  One
+solution is this:
 
 We need to determine the row numbers of the catchers, the row numbers of
 the infielders and so on.  So we can take all the row numbers,
@@ -2336,7 +2327,8 @@ We'll start with an empty frame, and keep adding rows to it.
 > posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
 > m <- data.frame()
 > for (pos in posNames) {
-+   lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
++   posRows <- rownums[[pos]]
++   lmo <- lm(Weight ~ Age, data = mlb[posRows,])
 +   newrow <- lmo$coefficients
 +   m <- rbind(m,newrow)
 + }
@@ -2350,14 +2342,28 @@ We'll start with an empty frame, and keep adding rows to it.
 
 Some key things to note here.  
 
-1.  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
-**mlb** as previously, since here we wanted to fit a regression line
-on each subgroup.  So, we restricted attention to only those rows of
-**mlb**.
+*  The overall strategy is to start with an empty data frame, then keep
+   adding rows to it, one row per playing position.
 
-2.  We used R's **rbind** ("row bind") function.  The expression 
-**rbind(m,newrow)** forms a new data frame, by adding **newrow** onto
-**m**.  Here we reassign the result back to **m**, a common operation.
+*  In order to add rows to **m**, we used R's **rbind** ("row bind")
+   function.  The expression **rbind(m,newrow)** forms a new data frame,
+by tacking **newrow** onto **m**.  Here we reassign the result back to
+**m**, also a common operation.
+   
+*  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
+   **mlb** as previously, since here we wanted to fit a regression line
+on each position subgroup.  So, we restricted attention to only those
+rows of **mlb**.
+
+So, what happens is:  **m** is initially an empty data frame.  Then the
+loop, for its first iteration, sets **pos** to 'Catcher'.  Then a line
+will be fit to the rows of **mlb** that are for catchers.  That line is
+returned to us from **lm**, and we assign it to **lmo**.  (Once again,
+the name is arbitrary; I chose this one to symbolize "lm output.")  We
+extract the coefficients and tack them on at the end of **m**.
+
+<span style="color:red">Tip:</span> This is a very common *design
+pattern* in R (and most other languages)
 
 Nice output, with the two columns aligned.  But those column names are
 awful, and the row labels should be nicer than 1,2,3,4.  We can fix
@@ -2374,11 +2380,11 @@ Outfielder  176.2884 0.7883343
 Pitcher     185.5994 0.6543904
 ```
 
-What happened here?  We earlier saw the built-in **row.names**
-function, so that setting row names was easy.  But what about the column
-names?  Recall that a data frame is actually an R list, consisting of
-several vectors of the same length.  We have two vectors here, so we
-need to supply two items to **names**.
+What happened here?  We earlier saw the built-in **row.names** function,
+so that setting row names was easy.  But what about the column names?
+Recall that a data frame is actually an R list, consisting of several
+vectors of the same length, which form the columns.  So, **names(m)** is
+the names of the columns.
 
 So with a little finessing here, we got some nicely-formatted output.
 Moreover, we now have our results in a data frame for further use.  For
@@ -2437,7 +2443,7 @@ whenever I start R.
 You'll need to install the package from CRAN, by typing
 
 ``` r
-> install.packages('ggplot2', lib='~)
+> install.packages('ggplot2', lib='~/R')
 ```
 
 You'll be prompted to supply the location of the library
@@ -2468,6 +2474,9 @@ the point size while we are at it):
 ``` r
 > with(mlb,plot(Age,Weight,col=PosCategory,cex=0.6))
 ```
+
+By writing **with**, we tell R to take Age, Weight and PosCategory in
+the context of **mlb**.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WtAgePosBase.png)
 
@@ -2930,6 +2939,11 @@ fancier, Reduce()
 These are books and other resources that I myself consult a lot (yes, I
 do consult my own books; can't keep it all in my head :-) ), plus others
 I recommend.
+
+**Nonprogramming Coverage of R**
+
+* Jaren Lander,  *R for Everyone: Advanced Analytics and Graphics*
+  (second ed.), Addison-Wesley
 
 **R Programming and Language**
 
