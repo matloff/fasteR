@@ -2560,11 +2560,11 @@ lapply(someList,someFunction)
 ```
 
 This calls **someFunction** on each element of **someList**, placing the
-results in a new list that is the return value.
+return values in a new list.
 
 How might be use that here?  As noted before, programming is a creative
 process, and solutions may not come immediately.  The following solution
-is nature to experienced R coders, but you may find that it "came out of
+is natural to experienced R coders, but you may find that it "came out of
 the blue," of unclear provenance.
 
 ``` r
@@ -2650,7 +2650,7 @@ age
 
 The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
-Simpler may not be easier.
+More compact code may not be easier.
 
 ## <a name="txt"> </a> Lesson 23:  Simple Text Processing, I
 
