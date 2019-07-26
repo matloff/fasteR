@@ -2942,6 +2942,9 @@ I recommend.
 
 **Nonprogramming Coverage of R**
 
+* Andrie de Vries and Joris Meys, *R For Dummies* (second edition), For
+  Dummies
+
 * Jaren Lander,  *R for Everyone: Advanced Analytics and Graphics*
   (second ed.), Addison-Wesley
 
