@@ -81,7 +81,7 @@ you should cook up your own variants to try.
 * [Lesson 24: Simple Text Processing, II](#txt1)
 * [Lesson 25: Linear Regression Analysis, II](#linreg2)
 * [Lesson 26: Working with the R Date Class](#dates)
-* [Lesson 27: Tips on R Coding Style](#dates)
+* [Lesson 27: Tips on R Coding Style](#style)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -3140,6 +3140,55 @@ even bettery, in POSIX form:
 
 There are many operations that can be done on R dates.  The above is
 just a little sample.
+
+## <a name="style"> </a> Tips on R Coding Style
+
+Programming is a creative activity, and thus different programmers will
+have different coding styles.  Some people feel so strongly that they
+will publish there own particular style guides, such as 
+[this one](https://google.github.io/styleguide/Rguide.xml) 
+by the R community at Google.
+
+Needless to say, style is a matter of personal taste.  But:
+
+**Style IS important for any code you intend to use again, for two reasons:**
+
+1. You will quickly forget how your code works.
+
+2.  If you share your code with others, you need to make its workings
+    clear to them.
+
+In spite of great individual variation, there are comment aspects that
+everyone agrees with, which we'll discuss in this lesson.
+
+**Comment your code:**
+
+In any programming course for Computer Science students, this
+is absolutely central.  If a student turns in a programming assignment
+with few or no comments, it will get a failing grade.  If comments are
+needed for clarity and readability for CS students, who are presumably
+strong programmers, then R users who are not expert programmers need
+comments even more.
+
+*Don't be under the illusion that your code is self-documenting; it
+  isn't!  A typical comment might look like this:*
+
+``` r
+w <- f(w)
+# at this point, the data frame w will consist of the original rows for
+# people over age 65 and who are homeowners
+```
+
+*At the top of each source file, insert comments giving the reader n
+overview of the contents.*
+
+This will typically an overview of the roles of each major function, how
+the functions interact with each other, what the main data structures
+are, and so on.
+
+I strongly recommend that you write these comments at the top of a file
+BEFORE you start coding (and of course modifying it as you do write
+code).  This will really help you focus during the coding process.
 
 ## <a name="forMore"> </a> To Learn More 
 
