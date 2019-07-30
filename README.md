@@ -5,6 +5,8 @@
 
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
+(See notice at the end of this document regarding copyright.)
+
 The site is for those who know nothing of R, or maybe even nothing of
 programming, and seek *QUICK*, painless entree to the world of R.
 
@@ -39,7 +41,8 @@ instructions for them when needed.)
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
 treated, partly due to its controversial nature (I am a 
-skeptic), but again mainly because it would be a burden on the user
+[skeptic](http://github.com/matloff/TidyverseSkeptic)),
+but again mainly because it would be a burden on the user
 to learn both base R and the Tidyverse at the same time.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
@@ -77,6 +80,8 @@ you should cook up your own variants to try.
 * [Lesson 23: Simple Text Processing, I](#txt)
 * [Lesson 24: Simple Text Processing, II](#txt1)
 * [Lesson 25: Linear Regression Analysis, II](#linreg2)
+* [Lesson 26: Working with the R Date Class](#dates)
+* [Lesson 27: Tips on R Coding Style](#dates)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2083,9 +2088,16 @@ but it will be helpful to at least get a good definition set:
 
 > As mentioned, we treat the data as a sample from the (conceptual)
 > population of all players, past, present and future.  Accordingly,
-> there is a population mean for each age group.  It is assumed that
-> those population means, when plotted against age, lie on some straight
-> line.
+> there is a population mean weight for each age group.  It is assumed
+> that those population means, when plotted against age, lie on some
+> straight line.
+
+In other words, our model is 
+
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height
+
+where &beta;<sub>0</sub> and &beta;<sub>1</sub> are the 
+intercept and slope of the population regression line.
 
 So, we need to use the data to estimate the slope and intercept of that
 straight line, which R's **lm** ("linear model") function does for us.
@@ -2164,9 +2176,11 @@ output.  But a couple of things stand out even in this excerpt:
 
 1. An S3 object is actually an R list.
 
-2. But it has an extra *attribute*, which is the class name.
+2. But it has an extra *attribute*, which is the class name, in this
+   case **'lm'**.  (So the designers of R simply chose to name the class
+after the function, which is not always the case.)
 
-3. One of the components of the list is named **coefficients**, and it
+3. One of the components of this list is named **coefficients**, and it
    is a vector containing the slope and intercept.
 
 So, we don't have to type the slope and intercept in by hand after all.
@@ -2181,9 +2195,11 @@ as they age?  The answer appears to be yes; for each additional year of
 age, the estimated mean age increases by about 0.7 pound.  That's about
 7 pounds in 10 years, rather remarkable.
 
-Again, this is only an estimate, generated from sample data.  We can get
-an idea of the accuracy of this estimate by calculating a *confidence
-interval*, but we'll leave that for a future lesson.
+Again, this is only an estimate -- 181.437 and 0.694 are estimates of
+the unknown population values &beta;<sub>0</sub> and &beta;<sub>1</sub>.
+-- generated from sample data.  We can get an idea of the accuracy of
+this estimate by calculating a *confidence interval*, but we'll leave
+that for statistics courses.
 
 But we can do more right now.  One might ask, Shouldn't we also account
 for a player's height, not just his age?  After all, taller people tend
@@ -2202,9 +2218,14 @@ Coefficients:
 ```
 
 Here we instruct R to find the estimated regression function of weight,
-using height and age as predictors.  The '+' doesn't mean addition; it
+using both height and age as predictors.  The '+' doesn't mean addition; it
 is simply a delimiter between the predictors height and age in our regression
 specification.
+
+So the new model is 
+
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height  + &beta;<sub>2</sub> age
+
 
 This says:
 
@@ -2934,6 +2955,192 @@ fancier, Reduce()
 
 ## <a name="linreg2"> </a> Lesson 25:  Linear Regression Analysis, II
 
+Continuing our look at linear regression analysis using R, let's look at
+the famous [bike sharing
+data](ttps://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset).
+(See the latter site for the documentation; e.g. temperature has been
+scaled, rather than measured in degrees.)
+It's in a **.zip** file, so it will need a little extra preprocessing:
+
+``` r
+# fetch from Web, and store the downloaded data to the file 'bike.sip'
+> download.file('https://archive.ics.uci.edu/ml/machine-learning-databases/00275/Bike-Sharing-Dataset.zip','bike.zip')
+> unzip('bike.zip')  # out come the files 'day.csv' and 'hour.csv'
+> day <- read.csv('day.csv',header=TRUE)
+> head(day)  # always take a look around!
+  instant     dteday season yr mnth holiday weekday workingday weathersit
+1       1 2011-01-01      1  0    1       0       6          0          2
+2       2 2011-01-02      1  0    1       0       0          0          2
+3       3 2011-01-03      1  0    1       0       1          1          1
+4       4 2011-01-04      1  0    1       0       2          1          1
+5       5 2011-01-05      1  0    1       0       3          1          1
+6       6 2011-01-06      1  0    1       0       4          1          1
+      temp    atemp      hum windspeed casual registered  cnt
+1 0.344167 0.363625 0.805833 0.1604460    331        654  985
+2 0.363478 0.353739 0.696087 0.2485390    131        670  801
+3 0.196364 0.189405 0.437273 0.2483090    120       1229 1349
+4 0.200000 0.212122 0.590435 0.1602960    108       1454 1562
+5 0.226957 0.229270 0.436957 0.1869000     82       1518 1600
+6 0.204348 0.233209 0.518261 0.0895652     88       1518 1606
+```
+
+One new concept here is the presence of *indicator* variables, more
+informally known as *dummy variables*.  These are variables taking only
+the values 0 and 1, with a 1 "indicating" that some trait is present.
+For instance, the **holiday** variable is either 1 or 0, depending on
+whether that day was a holiday (which might affect the demand for bikes
+that day).
+
+Those who manage this bike sharing service may wish to predict future
+demand for bikes, say the next day, to aid in their planning.  As an
+example, let's try to predict the number of casual riders from some
+weather variables and the dummy variable **workingday**.
+
+``` r
+> day1 <- day[,c(8,10,12:14)]
+> head(day1)
+  workingday     temp      hum windspeed casual
+1          0 0.344167 0.805833 0.1604460    331
+2          0 0.363478 0.696087 0.2485390    131
+3          1 0.196364 0.437273 0.2483090    120
+4          1 0.200000 0.590435 0.1602960    108
+5          1 0.226957 0.436957 0.1869000     82
+6          1 0.204348 0.518261 0.0895652     88
+> lmout <- lm(casual ~ .,data=day1)
+> lmout
+...
+Coefficients:
+(Intercept)   workingday         temp          hum    windspeed  
+     1063.6       -806.6       2149.5       -812.7      -1145.3  
+ 
+```
+
+The expression "casual ~ ." means, "regress **casual** against all the
+other variables in this dataset.
+
+These numbers make sense.  The negative coefficient for **workingday**
+says that, all else equal, there tend to be fewer casual riders on a
+work day. By the way, we probably should expect fewer riders on very
+cold or very hot days, so we may wish to add a quadratic term to the
+model, say by doing
+
+``` r
+day1$temp2 <- temp^2  # the caret symbol means exponentiation, i.e. 2nd power here
+```
+
+This would add the indicated column to **day1**.  But we will not pursue
+this for now.
+
+One of the very important features of R is *generic functions*.  These
+are functions that take on different roles for objects of different
+classes.  One such example is the **plot** function we saw earlier.
+
+Try typing "plot(lmout)" at the R prompt.  You will be shown several
+plots desribing the fitted regression model.  What happened was that the
+function **plot** is just a placeholder.  When we type "plot(lmout)" R
+says, "Hmm, what kind of object is **lmout**?  Oh, it's of class
+**'lm'**.  So I'm going to transfer (*dispatch*) this call to one
+involving a special plot function for that class, **plot.lm**."  This is
+in contrast to our previous calls to **plot**, which were invoked on
+vectors; those calls were dispatched to **plot.default**.
+
+Another generic function is **summary**:
+
+``` r
+> summary(Nile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  456.0   798.5   893.5   919.4  1032.5  1370.0 
+> summary(lmout)
+...
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1063.55     101.37  10.492  < 2e-16 ***
+workingday   -806.63      33.41 -24.143  < 2e-16 ***
+temp         2149.52      86.32  24.901  < 2e-16 ***
+hum          -812.74     112.98  -7.194 1.57e-12 ***
+windspeed   -1145.31     208.55  -5.492 5.51e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+...
+```
+
+In the first case, the call to **summary**, invoked on a vector, was
+dispatched to **summary.default**, while in the second the transfer was
+to **summary.lm**.  In both cases, whoever it was in the R development
+team who wrote these functions decided what summary information should
+be printed out.
+
+Again, the purpose of this tutorial is to present R, not statistics.
+The interested reader should consult a statistics book regarding
+*p-values* and *confidence intervals.*  The former are show in the last
+column of the above summary.  An approximate 95% confidence interval
+for, say, the population coefficient of humidity is -812.74 plus or
+minus 1.96 times the *standard error*, 112.98.  Note carefully that
+p-values have long been considered to be poor methodology; see 
+the [ASA statement](https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108).
+
+## <a name="dates"> </a> Lesson 26:  Work with the R Date Class
+
+In the bike sharing data, dates were included, in **day$dteday**.  As
+noted, some of those were holidays, indicated in the **holiday** column.
+Let's see how many holidays there were:
+
+``` r
+> hds <- day$dteday[day$holiday == 1]
+> hds
+ [1] 2011-01-17 2011-02-21 2011-04-15 2011-05-30 2011-07-04 2011-09-05
+ [7] 2011-10-10 2011-11-11 2011-11-24 2011-12-26 2012-01-02 2012-01-16
+[13] 2012-02-20 2012-04-16 2012-05-28 2012-07-04 2012-09-03 2012-10-08
+[19] 2012-11-12 2012-11-22 2012-12-25
+```
+
+Once again, let's review how the above code works.  The expression "[day$holiday == 1]" yields a bunch of TRUEs and FALSEs.  Using them as indices in the vecotr **day$dteday** gives us exactly the dates that are holidays. 
+
+We see above that there were 21 holidays during the time period of the
+data.  But we can do more.  First, what kind of object is **hds** above?
+
+``` r
+> class(hds)
+[1] "factor"
+```
+
+Fine, but R has a special class for date data, not surprisingly called
+**'Date'**.  Let's convert to that class:
+
+``` r
+> hd <- as.Date(hds)
+> class(hd)
+[1] "Date"
+> hd
+ [1] "2011-01-17" "2011-02-21" "2011-04-15" "2011-05-30" "2011-07-04"
+ [6] "2011-09-05" "2011-10-10" "2011-11-11" "2011-11-24" "2011-12-26"
+[11] "2012-01-02" "2012-01-16" "2012-02-20" "2012-04-16" "2012-05-28"
+[16] "2012-07-04" "2012-09-03" "2012-10-08" "2012-11-12" "2012-11-22"
+[21] "2012-12-25"
+```
+
+Though it prints out just as before, there are extra properties now, and
+even bettery, in POSIX form:
+
+``` r
+> hp <- as.POSIXlt(hd)
+> hp
+ [1] "2011-01-17 UTC" "2011-02-21 UTC" "2011-04-15 UTC" "2011-05-30 UTC"
+ [5] "2011-07-04 UTC" "2011-09-05 UTC" "2011-10-10 UTC" "2011-11-11 UTC"
+ [9] "2011-11-24 UTC" "2011-12-26 UTC" "2012-01-02 UTC" "2012-01-16 UTC"
+[13] "2012-02-20 UTC" "2012-04-16 UTC" "2012-05-28 UTC" "2012-07-04 UTC"
+[17] "2012-09-03 UTC" "2012-10-08 UTC" "2012-11-12 UTC" "2012-11-22 UTC"
+[21] "2012-12-25 UTC"
+> hp[16]$wday  # what day of the week was July 4, 2012?
+[1] 3
+# ah, Wednesday (code 3)
+```
+
+(The UTC parts are the times of day, which we had not supplied.)
+
+There are many operations that can be done on R dates.  The above is
+just a little sample.
+
 ## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot (yes, I
@@ -3029,3 +3236,19 @@ I also would recommend various Web tutorials:
 
 * Hadley Wickham, 
 [the Tidyverse](https://www.tidyverse.org) 
+
+**LICENSING**
+
+The document is covered by a [Creative
+Commons](http://creativecommons.org/licenses/by-nd/3.0/us/) license,
+Creative Commons Attribution-No Derivative Works 3.0 United States 
+![alt text](http://i.creativecommons.org/l/by-nd/3.0/us/88x31.png).  I have
+written the document to be *used*, so readers, teachers and so on are
+very welcome and encouraged to copy it verbatim.  Copyright is retained
+by N. Matloff in all non-U.S. jurisdictions, but permission to use these
+materials in teaching is still granted, provided the authorship and
+licensing information here is displayed.  I would appreciate being
+notified if you use this book for teaching, just so that I know the
+materials are being put to use, but this is not required.  information
+displayed.  
+
