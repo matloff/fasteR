@@ -81,7 +81,7 @@ you should cook up your own variants to try.
 * [Lesson 24: Simple Text Processing, II](#txt1)
 * [Lesson 25: Linear Regression Analysis, II](#linreg2)
 * [Lesson 26: Working with the R Date Class](#dates)
-* [Lesson 27: Tips on R Coding Style](#style)
+* [Lesson 27: Tips on R Coding Style and Strategy](#style)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -3141,7 +3141,7 @@ even bettery, in POSIX form:
 There are many operations that can be done on R dates.  The above is
 just a little sample.
 
-## <a name="style"> </a> Tips on R Coding Style
+## <a name="style"> </a> Tips on R Coding Style and Strategy
 
 Programming is a creative activity, and thus different programmers will
 have different coding styles.  Some people feel so strongly that they
@@ -3158,7 +3158,18 @@ Needless to say, style is a matter of personal taste.  But:
 2.  If you share your code with others, you need to make its workings
     clear to them.
 
-In spite of great individual variation, there are comment aspects that
+**Equally important is strategy, the way you approach a coding project.**
+
+There is no magic formula on how to write code.  As noted earlier, I
+cannot *teach* yow how to code.  I can only show you how the
+ingredients work -- loops, variables, functions, if/else etc. -- and you
+must creatively put them together into code that achieves goals.  It's
+like solving a big puzzle, and like many big puzzles, you may need to
+ponder the problem for quite a while, gaining insights here and there
+until it's finally done.  Yet, as with coding style, there are strategies
+that we all agree on.
+
+So in spite of great individual variation, there are common aspects that
 everyone agrees with, which we'll discuss in this lesson.
 
 **Comment your code:**
@@ -3189,6 +3200,71 @@ are, and so on.
 I strongly recommend that you write these comments at the top of a file
 BEFORE you start coding (and of course modifying it as you do write
 code).  This will really help you focus during the coding process.
+
+**Indent your code:**
+
+``` r
+if (x < y) {
+   x <- y^2
+   z <- x + y
+}
+```
+
+is much easier to read than
+
+``` r
+if (x < y) {
+x <- y^2
+z <- x + y
+}
+```
+
+**Write your code in top-down fashion:**
+
+If you have a function **f** that is more than, say, a dozen lines long,
+break its code into calls to smaller functions, say **g** and **h**.
+Then **f** will consist of those calls, plus some "glue" lines to deal
+with the return values and so on.  Of course, it's a matter of taste as
+to break things up that way, but the point is that it makes your code
+both easier to *read* (by others, or by yourself later), and even more
+important, easier to *write*.  Breaking up the code like this makes it
+read like an outline.
+
+**Don't skimp on attending to the "corner cases":**
+
+Computer Science people talk about "corner cases," meaning special
+situations in which code may fail in spite of being generally sound.
+
+For instance, consider this code:
+
+``` r
+> i <- 5
+> 1:i
+[1] 1 2 3 4 5
+```
+
+But what about the special case in which **i = 0**?
+
+``` r
+> i <- 0
+> 1:i
+[1] 1 0
+```
+
+This may not be what you wanted.  You probably should insert a check,
+say
+
+``` r
+if (i >= 1) i:5
+```
+
+and maybe also code to handle the erroneous case.  This will depend on
+the situation, but the main point is to be aware of possible corner
+cases.
+
+**Use a debugging tool:**
+
+More on this in a later lesson!
 
 ## <a name="forMore"> </a> To Learn More 
 
