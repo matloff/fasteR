@@ -2777,10 +2777,12 @@ Yep, that's the split form of line 6.
 
 The material beginning with the # sign is what is called a *comment* in
 the programming world.  It does not get executed by R, but it is a memo
-to us, the programmer, a note to help us remember what we did.  When we
-read our code six months from now, we will have forgotten most of it, so
-comments help us reorient.  The same holds if someone else reads our
-code.  Comments -- *meaninful* comments -- are key to good coding.
+to us, the programmer, a note to help us remember what we did.  
+
+Comments are extremely important.  When we read our code six months from
+now, we will have forgotten most of it, so comments help us reorient.
+The same holds if someone else reads our code.  Comments -- *meaninful*
+comments -- are key to good coding.  More on this in a future lesson.
 
 But we also see another snag.  The above output tells us that R took
 line 6, which has 11 words, and split into 14 words -- the first 3 of
@@ -3180,6 +3182,19 @@ with few or no comments, it will get a failing grade.  If comments are
 needed for clarity and readability for CS students, who are presumably
 strong programmers, then R users who are not expert programmers need
 comments even more.
+
+A [style
+guide](https://www.cs.utah.edu/~germain/PPS/Topics/commenting.html)
+at a top university computer science department puts it well:
+
+> Commenting involves placing Human Readable Descriptions inside of
+> computer programs detailing what the Code is doing. Proper use of
+> commenting can make code maintenance much easier, as well as helping
+> make finding bugs faster. Further, commenting is very important when
+> writing functions that other people will use. Remember, well
+> documented code is as important as correctly working code.
+
+(Also see specific tips on commenting, later in that document.)
 
 *Don't be under the illusion that your code is self-documenting; it
   isn't!  A typical comment might look like this:*
