@@ -82,6 +82,7 @@ you should cook up your own variants to try.
 * [Lesson 25: Linear Regression Analysis, II](#linreg2)
 * [Lesson 26: Working with the R Date Class](#dates)
 * [Lesson 27: Tips on R Coding Style and Strategy](#style)
+* [Lesson 28: The Logistic Model](#logit)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -3022,7 +3023,9 @@ other variables in this dataset.
 
 These numbers make sense.  The negative coefficient for **workingday**
 says that, all else equal, there tend to be fewer casual riders on a
-work day. By the way, we probably should expect fewer riders on very
+work day. 
+
+By the way, we probably should expect fewer riders on very
 cold or very hot days, so we may wish to add a quadratic term to the
 model, say by doing
 
@@ -3080,6 +3083,10 @@ for, say, the population coefficient of humidity is -812.74 plus or
 minus 1.96 times the *standard error*, 112.98.  Note carefully that
 p-values have long been considered to be poor methodology; see 
 the [ASA statement](https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108).
+
+Another important generic function is **predict**.  Say we want to
+predict **casual** for a work day in which **temp**, **hum** and
+**windspeed** are 0.26, 0.55, 0.18, respectively.
 
 ## <a name="dates"> </a> Lesson 26:  Work with the R Date Class
 
@@ -3280,6 +3287,61 @@ cases.
 **Use a debugging tool:**
 
 More on this in a later lesson!
+
+## <a name="logit"> </a> The Logistic Model
+
+In our earlier examples of regression analysis, we were predicting a
+continuous variable such as human weight.  But what if we wish to
+predict a *dichotomous* varible, i.e. one recording which of two
+outcomes occurs?
+
+Consider the Pima dataset from earlier examples.  Say we are predicting
+whether someone has -- or will later develop -- diabetes.  This is coded
+in the **test** column of the dataset, 1 for having the disease, 0 for
+not.
+
+As a simple example, say we try to predict **test** from the variables
+**bim** and **age**.  A linear model would be
+
+mean test = &beta;<sub>0</sub> + &beta;<sub>1</sub> bmi + &beta;<sub>2</sub> age
+
+Remember, **test** takes on the values 1 and 0.  What happens when we
+take the average of a bunch of 1s and 0s?  The answer is that we get the
+proportion of 1s.  For instance, the mean of the numbers 1,0,1,1 is 3/4,
+which is exactly the proportion of 1s in that data.
+
+In statististical terms, what the above equation is doing is expressing
+the probability of a 1 -- i.e. the probability of having diabetes --
+in terms of Body Mass Index and age.
+
+Not a bad model, but one troubling point is that the right-hand side
+could evaluate to a number less than 0 or greater than 1, which would be
+impossible for a probability.  In order to deal with that problem, we
+might use a *logistic* model, as follows.
+
+Define the logistic function to be 
+
+l(t) = 1 / (1 + e<sup>-t</sup>)
+
+We then modify the above equation to
+
+probability of diabetes = l(&beta;<sub>0</sub> + &beta;<sub>1</sub> bmi + &beta;<sub>2</sub> age)
+
+As before, the statistical details are beyond the scope of this
+R tutorial, but here is how you estimate that coefficients
+&beta;<sub>i</sub> using R:
+
+``` r
+> glout <- glm(test ~ diabetes + age, data=pima)
+> glout
+
+...
+Coefficients:
+(Intercept)     diabetes          age  
+  -0.077644     0.239004     0.009441  
+...
+```
+
 
 ## <a name="forMore"> </a> To Learn More 
 
