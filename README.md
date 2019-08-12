@@ -2987,6 +2987,10 @@ It's in a **.zip** file, so it will need a little extra preprocessing:
 6 0.204348 0.233209 0.518261 0.0895652     88       1518 1606
 ```
 
+By the way, the weather variables have been rescaled to the interval
+[0,1].  A value of 0.28, for instance, means 28% of the way from the
+minimum to the maximum value of this variable.
+
 One new concept here is the presence of *indicator* variables, more
 informally known as *dummy variables*.  These are variables taking only
 the values 0 and 1, with a 1 "indicating" that some trait is present.
@@ -3087,6 +3091,17 @@ the [ASA statement](https://amstat.tandfonline.com/doi/full/10.1080/00031305.201
 Another important generic function is **predict**.  Say we want to
 predict **casual** for a work day in which **temp**, **hum** and
 **windspeed** are 0.26, 0.55, 0.18, respectively.
+
+``` r
+> newCase <- data.frame(workingday=1, temp=0.26, hum=0.55, windspeed=0.18)
+> predict(lmout,newCase)
+       1 
+162.6296 
+```
+
+The **predict** function, which here is **predict.lm**, assumes that the
+new cases to be predicted are supplied as a data frame, with the same
+column names as with the original data.
 
 ## <a name="dates"> </a> Lesson 26:  Work with the R Date Class
 
@@ -3328,19 +3343,35 @@ We then modify the above equation to
 probability of diabetes = l(&beta;<sub>0</sub> + &beta;<sub>1</sub> bmi + &beta;<sub>2</sub> age)
 
 As before, the statistical details are beyond the scope of this
-R tutorial, but here is how you estimate that coefficients
+R tutorial, but here is how you estimate the coefficients
 &beta;<sub>i</sub> using R:
 
 ``` r
-> glout <- glm(test ~ diabetes + age, data=pima)
-> glout
-
+> glout <- glm(test ~ bmi + age, data=pima, family=binomial)
+> summary(glout)
 ...
 Coefficients:
-(Intercept)     diabetes          age  
-  -0.077644     0.239004     0.009441  
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -5.40378    0.51530 -10.487  < 2e-16 ***
+bmi          0.09825    0.01248   7.874 3.45e-15 ***
+age          0.04561    0.00694   6.571 4.98e-11 ***
 ...
 ```
+
+Let's explore those estimated &beta;<sub>i</sub> a bit.  Consider 
+women with about average BMI, say 32, and compare 30-year-olds to those
+of age 40.  
+
+``` r
+> l <- function(t) 1 / (1 + exp(-t))
+> l(-5.40378 + 32*0.09825 + 30*0.04561)
+[1] 0.2908045
+> l(-5.40378 + 32*0.09825 + 40*0.04561)
+[1] 0.3928424
+```
+
+So, the risk of diabetes increases substantial over that 10-year period,
+but this population and BMI level.
 
 
 ## <a name="forMore"> </a> To Learn More 
