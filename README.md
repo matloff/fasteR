@@ -83,6 +83,7 @@ you should cook up your own variants to try.
 * [Lesson 26: Working with the R Date Class](#dates)
 * [Lesson 27: Tips on R Coding Style and Strategy](#style)
 * [Lesson 28: The Logistic Model](#logit)
+* [Lesson 29: Files and Directories](#fd)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2444,6 +2445,10 @@ mkdir ~/R
 
 in a terminal window.
 
+Note:  The term *directory* is, as you can see above, synonymous with
+*folder* on Mac/Windows systems.  Actually, both of those OSs used to
+use this term too.  R retains that terminology.
+
 When you want to use one of your installed packages, you need to tell R
 to load it, e.g. by typing at the R prompt,
 
@@ -2803,8 +2808,16 @@ So, how to fix it?  For that particular line, we could do, say,
 [11] "graphics."  
 ```
 
-R's '!=' means "not equal to."  So what we did to **z** above followed
-our usual pattern: 
+R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
+
+``` r
+> 3 < 8
+[1] TRUE
+> !(3 < 8)
+[1] FALSE
+```
+
+So what we did to **z** above followed our usual pattern: 
 
 1.  The expression **z != ""** yields a bunch of TRUEs and FALSEs.
 
@@ -3373,6 +3386,121 @@ of age 40.
 So, the risk of diabetes increases substantial over that 10-year period,
 but this population and BMI level.
 
+## <a name="fd"> </a> Files and Directories
+
+In assmebling a dataset for my **regtools** package, I needed to collect
+the records of several of my course offerings.  I started in a directory
+that had one subdirectory for each offering.  In turn, there was a file
+named **Results**.  As an intermediate step, wanted to find all such
+files, placing the text for each one in an R list **gFiles**.  Only some
+specific columns of each file will be retained.  (The discussion here is
+a slightly adapted version.)
+
+The chief R functions I used were:
+
+* **list.dirs():**  Returns a character vector with the names of all the
+  directories (i.e. subdirectories) within the current directory.
+
+* **dir():**  Returns a character vector with the names of all files
+  within the current directory.
+
+* **%in%:**  Determines whether a specified object is an element in a
+  specified vector. 
+
+* **setwd():**  Changes to the specified directory.
+
+Here is the code:
+
+``` r
+getData <- function() {
+
+   currDir <- getwd()  # leave a trail of bread crumbs
+
+   dirs <- list.dirs(recursive=FALSE)
+   numCourseOfferings <- 0
+   # create empty R list, into which we'll store our course records
+   resultsFiles <- list()
+   for (d in dirs) {
+      setwd(d)  # descend into d directory
+      # check if there is a Results file there
+      fls <- dir()
+      if (!('Results' %in% fls)) {  # not there, skip this dir
+         setwd(currDir)
+         next
+      }
+      # ah, there is such a file; increment our count
+      numCourseOfferings <- numCourseOfferings + 1
+      # open it
+      resultsLines <- readLines('Results')
+      # delete the comment lines; look at 1st character in each line
+      resultsLines <- delComments(resultsLines)
+      resultsFiles[[numCourseOfferings]] <- extractCols(resultsLines)
+      setwd(currDir)
+   }
+   resultsFiles  # return all the grades records
+}
+```
+
+Before we go into the details, note the following:
+
+* The code is written in a top-down manner.  Much of the work of
+**getData()** is offloaded to other functions (code not shown),
+**delComments()** and **extractCols()**.
+
+* There are lots of comments!
+
+Now, consider the line
+
+``` r
+   dirs <- list.dirs(recursive=FALSE)
+```
+
+As mentioned, **list.dirs()** will determine all the subdirectories
+within the current directory.  But what about subdirectories of
+subdirectories, and subdirectories of subdirectories of subdirectories,
+and so on?  Setting **recursive** to FALSE means we want only
+first-level subdirectories.
+
+So, the line
+
+``` r
+   for (d in dirs) {
+```
+
+will then have us process each (first-level) directory, one by one.
+
+When we enter one of those subdirectories, the line
+
+``` r
+      fls <- dir()
+```
+
+will determine all the files there, storing the result as a character
+vector **fls**.
+
+Then, as the comment notes, the lines
+
+``` r
+      if (!('Results' %in% fls)) {  # not there, skip this dir
+         setwd(currDir)
+         next
+      }
+```
+
+will, in the event that there is no **Results** file in this
+subdirectory, skip this subdirectory.  The R keyword **next** says, "Go
+to the next iteration of this loop," which here means to process the
+next subdirectory.  Note that to prepare for that, we need to move back
+to the original directory:
+
+``` r
+         setwd(currDir)
+```
+
+On the other hand, if this subdirectory *does* contain a file named
+**Results**, the remaining code increments our count of such files,
+reads in the found file, and assigns its contents as a new element of
+our **resultsFiles** list.
 
 ## <a name="forMore"> </a> To Learn More 
 
