@@ -3534,7 +3534,7 @@ I recommend.
 
 **Data Science with R**
 
-* John Mount and Nina Zumel, *Practical Data Science with R*, Manning
+Nina Zumel and John Mount, *Practical Data Science with R*, Manning
 
 * Hadley Wickham and Garrett Grolemund, *R for Data Science: Import,
 Tidy, Transform, Visualize, and Model Data*, O'Reilly
