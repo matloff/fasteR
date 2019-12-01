@@ -1,9 +1,9 @@
 
 # fasteR: Fast Lane to Learning R! 
 
-![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
+![alt text](https://raw.githubusercontent.com/matloff/prVis/master/data/SwissRoll/SWwithY.png)
 
-"Becoming productive in R, as fast as possible"
+## *"Becoming productive in R, as fast as possible"*
 
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
