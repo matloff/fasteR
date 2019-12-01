@@ -13,7 +13,7 @@ This site is for those who know nothing of R, or maybe even nothing of
 programming, and seek *QUICK*, painless entree to the world of R.
 
 * **FAST**:  You'll already be doing good stuff in R -- useful data analysis
---- in your very first lesson.
+-- in your very first lesson.
 
 * **For nonprogrammers:**  If you're comfortable with navigating
 the Web and viewing charts, you're fine.  This tutorial is aimed 
@@ -1487,6 +1487,9 @@ frequently-occurring value..)
 
 ## <a name="less10"> </a> Lesson 11:  Writing Your Own Functions
 
+We've seen a number of R's built-in functions so far, but here comes the
+best part -- you can write your *own* functions.
+
 Recall a line we had in Lesson 2:
 
 ``` r
@@ -1536,7 +1539,9 @@ This saved me typing.  In the second call, I would have had to type
 mean(tg$len[tg$len > 10.2])
 ```
 
-considerably longer.
+considerably longer.  But even more importantly, I'd have to think about
+the operation each time I used it; by making a function out of it, I've
+got it ready to go, all debugged, whenever I need it.
 
 So, how does all this work?  Again, look at the code:
 
@@ -1544,11 +1549,25 @@ So, how does all this work?  Again, look at the code:
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
+Humor me for a moment, as I bring in a little of the "theory" of R:
+ 
 Odd to say, but there is a built-in function in R itself named 'function'!
-We're calling it here.  And its job is to build a function, which we
-assigned to **mgd**.  We can then call the latter, as we saw above.
+We're calling it here.  And its job is to build a function. Yes, as I
+like to say, 
 
-The above line of code says that **mgd** will have two arguments, ***x***
+> "The function of the function named **function** is to build functions!
+> And the class of object returned by **function** is 'function'!"
+
+Here we called **function** to build a 'function' object, and then
+assigned to **mgd**.  We can then call the latter, as we saw above,
+repeated here for convenience:
+
+``` r
+> mgd <- function(x,d) mean(x[x > d])
+```
+
+Now returning to our main goal of getting you readers proficient in R,
+the above line of code says that **mgd** will have two arguments, ***x***
 and ***d***.  These are known as *formal* arguments, as they are just
 placeholders.  For example, in 
 
@@ -1570,7 +1589,8 @@ have a return value.  In our case here, we could arrange that by writing
 > mgd <- function(x,d) return(mean(x[x > d]))
 ```
 
-But it's not needed here, because in any function, R will return the
+a bit more complicated than the above version.  But the call to
+**return** is not needed here, because in any function, R will return the
 last value computed, in this case the requested mean.
 
 
@@ -1590,7 +1610,8 @@ run
 > load('mean_greater_than_d')
 ```
 
-and then **mgd** will be restored, ready for us to use again.
+and then **mgd** will be restored, ready for us to use again.  (A more
+advanced way is to form an R package, subject of a later lesson.)
 
 Let's write another function, this one to find the range of a vector,
 i.e. the difference between the minimal and maximal values:
@@ -1602,6 +1623,10 @@ i.e. the difference between the minimal and maximal values:
 ```
 
 Here we made use of the built-in R functions **max** and **min**.
+
+> <span style="color:red">Tip:</span>  Build new functions from old
+> ones (which may in turn depend on other old ones, etc.).
+
 Again, the last item computed is the subtraction, so it will be
 automatically returned, just what we want.  As before, I chose to name
 the argument **y**, but it could be anything.  However, I did not name
@@ -1640,7 +1665,8 @@ this all repeatedly by hand.  (What if there were several *hundred* such
 columns?) Instead, we'd like to do this *programmatically*.  This can be
 done with R's **for** loop construct.  
 
-Let's first check which columns seem appropriate for recoding.
+Let's first check which columns seem appropriate for recoding.  Recall
+that there are 9 columns in this data frame.
 
 ``` r
 > for (i in 1:9) print(sum(pima[,i] == 0))
@@ -1690,8 +1716,10 @@ expanded form above, that would be at the prompt, but inside the **for**
 loop we are not at the prompt, even though **for** call had been made at
 the prompt.
 
-We probably have forgotten which column is which, so let's see:
-
+So there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
+column 3.  We probably have forgotten which column is which, so let's
+see, using yet another built-R function:
+ 
 ``` r
 > colnames(pima)
 [1] "pregnant"  "glucose"   "diastolic" "triceps"   "insulin"   "bmi"      
@@ -1765,7 +1793,8 @@ replaces those 0s by NAs.
 
 > <span style="color:red">Tip:</span>
 > Note that I have indented the two lines in the block.  This is not
-> required but is considered good for clear code. 
+> required but is considered good for clear code, in order to easily
+> spot the block when you or others read the code. 
 
 ## <a name="edt"> </a> Lesson 13: Text Editing
 
@@ -1852,7 +1881,7 @@ is reassigned to **f**.
 
 Blocks are usually key in defining functions.  Let's generalize the
 above code in the Loops lesson, writing a function that replaces 0s by
-NAs for general data frames.
+NAs for general data frames, not just **pima** as before.
 
 ``` r
 zerosToNAs <- function(d,cols) 
@@ -1863,8 +1892,8 @@ zerosToNAs <- function(d,cols)
 }
 ```
 
-Since we had three statements in the body of the function, rather than
-one as in our previous examples, we needed to write them as a block.
+Since we had three statements in the body of the function rather than
+one, we again needed to write them as a block.
 
 Here the formal argument **d** is the data frame to be worked on, and
 **cols** specifies the columns in which 0s are to be replaced.
@@ -1872,7 +1901,7 @@ Here the formal argument **d** is the data frame to be worked on, and
 We could use this in the Pima data"
 
 ``` r
-> pima <- zeroIndices(pima,2:6)
+> pima <- zerosToNAs(pima,2:6)
 ```
 
 There is an important subtlety here.  The function **zeroIndices** will
@@ -1895,8 +1924,9 @@ grade.  (Of course, few if any programmers and engineers have
 educational attainment level below college, but this dataset was
 extracted from the general data.)  13 means a bachelor's degree.
 
-Suppose we wish to color-code the wage-age graph by educational
-attainment. Let's amalgamate all codes under 13, giving them the code 12.
+Suppose we wish to color-code the wage-age graph in an earlier lesson by
+educational attainment. Let's amalgamate all codes under 13, giving them
+the code 12.
 
 The straightforward but overly complicated, potentially slower way would
 be this:
@@ -1968,7 +1998,7 @@ was the case here.  In some cases, though certainly not all, the
 vectorized version will be much faster.
 
 By the way, note the remark above, "**ifelse** operates on vectors."
-Apply that to
+Let's revisit the above statement with this point in mind.
 
 ``` r
 > pe$educ <- ifelse(edu < 13,12,edu)
@@ -1985,8 +2015,10 @@ gotten into the programming business.  We'll be using them a lot in the
 coming lessons.
 
 > **Your Turn:** Recode the **Nile** data to a new vector **nile**, with
-> the values 1, 2 and 3, according to whether the corresponding number in
-> **Nile** is less than 800, between 800 and 1150, or greater than 1150.
+> the values 1 and 2 and 3, according to whether the corresponding number in
+> **Nile** is less than 800 or not.  Then (a bit harder), recode the
+> original **Nile** into values 1, 2 and 3, for the cases in which the
+> value is less than 800, between 800 and 1150, or greater than 1150.
 > You'll probably want to do this using two separate calls to
 > **ifelse**.
 
