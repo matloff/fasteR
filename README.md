@@ -2111,13 +2111,15 @@ fact, we can extract the names into its own vector if needed:
 
 Let's plot the means against age.  We'll just plot the means that are
 based on larger amounts of data.  So we'll restrict it to, say, ages 23
-through 35, all of whose means were based on at least 30 players.
+through 35, all of whose means were based on at least 30 players.  That
+age range corresponded to elements 3 through 15 of **taout**, so here is
+the code for plotting:
 
 ``` r
 > plot(23:35,taout[3:15])
 ```
 
-!gainst[alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
+![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
 
 There does indeed seem to be an upward trend in time.  Ballplayers
 should be more careful!
