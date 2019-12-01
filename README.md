@@ -86,6 +86,7 @@ you should cook up your own variants to try.
 * [Lesson 27: Tips on R Coding Style and Strategy](#style)
 * [Lesson 28: The Logistic Model](#logit)
 * [Lesson 29: Files and Directories](#fd)
+* [Lesson 30: R 'while' Loops](#whl)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
 
@@ -2208,9 +2209,9 @@ don't have to.  Here's why:
 
 As mentioned earlier, R is an *object-oriented language*. Everthing is
 an *object*, and every object has a *class*.  One of the most common
-classes is called 'S3'.  
+class structures is called 'S3'.  
 
-When we call **lm**, the latter returns an object of 'S3' class:
+When we call **lm**, the latter returns an S3 object of 'lm' class:
 
 ``` r
 > lmout <- lm(Weight ~ Age,data=mlb)
@@ -2307,7 +2308,7 @@ Paradox").  Suppose for instance the shorter players tend to have longer
 careers.  If we do *not* include height in our model, that omission
 might bias the age coefficient downward.  Thus great care must be taken
 in interpreting coefficients in the Description setting.  For
-Prediction, it is not much of an issue.
+Prediction, it is not as much of an issue.
 
 > **Your Turn:** In the **mtcars** data, fit a linear model of the
 > regression of MPG against weight and horsepower; what is the estimated
@@ -2379,12 +2380,12 @@ outfielder is in row 12 of the data frame.
 > there are many forums on the Web at which you can ask questions,
 > e.g. Stack Overflow.
 
-<span style="color:red">Tip:</span>
-Now, remember, a nice thing about R lists is that we can reference their
-elements in various ways.  The first element above, for instance, is any
-of **rownums$Catcher**, **rownums[['Catcher']]** and **rownums[[1]]**,
-This versatility is great, as for example we can use the latter two
-forms to write loops.
+> <span style="color:red">Tip:</span>
+> Now, remember, a nice thing about R lists is that we can reference their
+> elements in various ways.  The first element above, for instance, is any
+> of **rownums$Catcher**, **rownums[['Catcher']]** and **rownums[[1]]**,
+> This versatility is great, as for example we can use the latter two
+> forms to write loops.
 
 And a loop is exactly what we need here.  We want to call **lm** four
 times.  We could do this, say, with a loop beginning with
@@ -2429,12 +2430,14 @@ Some key things to note here.
 *  In order to add rows to **m**, we used R's **rbind** ("row bind")
    function.  The expression **rbind(m,newrow)** forms a new data frame,
 by tacking **newrow** onto **m**.  Here we reassign the result back to
-**m**, also a common operation.
+**m**, also a common operation.  (By the way, there is also a **cbind**
+functon for columns.)
    
 *  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
    **mlb** as previously, since here we wanted to fit a regression line
 on each position subgroup.  So, we restricted attention to only those
-rows of **mlb**.
+rows of **mlb** for which the position was equal to the current value of
+**pos**.
 
 So, what happens is:  **m** is initially an empty data frame.  Then the
 loop, for its first iteration, sets **pos** to 'Catcher'.  Then a line
@@ -2443,8 +2446,8 @@ returned to us from **lm**, and we assign it to **lmo**.  (Once again,
 the name is arbitrary; I chose this one to symbolize "lm output.")  We
 extract the coefficients and tack them on at the end of **m**.
 
-<span style="color:red">Tip:</span> This is a very common *design
-pattern* in R (and most other languages)
+> <span style="color:red">Tip:</span> This is a very common *design
+> pattern* in R (and most other languages)
 
 Nice output, with the two columns aligned.  But those column names are
 awful, and the row labels should be nicer than 1,2,3,4.  We can fix
@@ -2573,7 +2576,7 @@ First, I make an empty plot, based on the data frame **mlb**:
 > p <- ggplot(mlb)
 ```
 
-Nothing will appear on the screen.  The package displays when you
+Nothing will appear on the screen.  The package displays only when you
 "print" the plot:
 
 ``` r
@@ -2641,10 +2644,12 @@ We've seen the **tapply** function a couple of times already.  Now let's
 turn to **lapply** ("list apply").  The call form is
 
 ``` r
-lapply(someList,someFunction)
+lapply(someVecOrList,someFunction)
 ```
 
-This calls **someFunction** on each element of **someList**, placing the
+This first argument must be a vector or list, and the second argument
+must be the name of a one-argument function.  This calls
+**someFunction** on each element of **someVecOrList**, placing the
 return values in a new list.
 
 How might be use that here?  As noted before, programming is a creative
@@ -2657,8 +2662,16 @@ the blue," of unclear provenance.
 > w <- lapply(rownums,zlm)
 ```
 
-Recall that the first element of **rownums** was **rownums[['catcher']]**.
-So, first **lapply** will make the call
+The reader should take extra time here to ponder what **zlm** does: For
+a set **rws** of **mlb**, the function will call **lm**, then return the
+coefficient portion of whatever **lm** returns.  In sort, the function
+runs a linear regression analysis on the designated rows of **mlb**, and
+returns the coefficients.
+
+The call to **lapply** then says, run **zlm** on each set of rows we see
+in **rownums**, placing the coefficient vectors in an output list.
+Specifically: Recall that the first element of **rownums** was
+**rownums[['catcher']]**.  So, first **lapply** will make the call
 
 ``` r
 zlm(rownums[['Catcher']])
@@ -3560,6 +3573,81 @@ On the other hand, if this subdirectory *does* contain a file named
 reads in the found file, and assigns its contents as a new element of
 our **resultsFiles** list.
 
+## <a name="whl"> </a> R 'while' Loops
+
+We've seen R **for** loops in previous lessons, but there's another kind
+of loop, **while**.  It keeps iterating until some specified condition
+is met.  We don't know how many iterations will be needed, unlike the
+**for** case, with a fixed number of iterations.
+
+As our example, consider **AirPassengers**, which consists of number of
+air travelers in thousands, in monthly data from January 1949.  As
+usual, let's glance at it first:
+
+``` r
+> str(airpass)
+ Time-Series [1:144] from 1949 to 1961: 112 118 132 129 121 135 148 148 136 119 ...
+```
+
+Suppose we wish to know when the cumulative number of passengers first
+exceeded 10 million.  A crude way would be to use R's **cumsum**
+("cumulative sums") function:
+
+``` r
+> cumsum(airpass)
+  [1]   112   230   362   491   612   747   895  1043  1179  1298  1402  1520
+ [13]  1635  1761  1902  2037  2162  2311  2481  2651  2809  2942  3056  3196
+ [25]  3341  3491  3669  3832  4004  4182  4381  4580  4764  4926  5072  5238
+ [37]  5409  5589  5782  5963  6146  6364  6594  6836  7045  7236  7408  7602
+ [49]  7798  7994  8230  8465  8694  8937  9201  9473  9710  9921 10101 10302
+ [61] 10506 10694 10929 11156 11390 11654 11956 12249 12508 12737 12940 13169
+ [73] 13411 13644 13911 14180 14450 14765 15129 15476 15788 16062 16299 16577
+ [85] 16861 17138 17455 17768 18086 18460 18873 19278 19633 19939 20210 20516
+ [97] 20831 21132 21488 21836 22191 22613 23078 23545 23949 24296 24601 24937
+[109] 25277 25595 25957 26305 26668 27103 27594 28099 28503 28862 29172 29509
+[121] 29869 30211 30617 31013 31433 31905 32453 33012 33475 33882 34244 34649
+[133] 35066 35457 35876 36337 36809 37344 37966 38572 39080 39541 39931 40363
+```
+
+We see that that occurred in the 59th month.  But though this approach
+would be convenient, it also would be wasteful:  We are calculating *all*
+the cumulative sums, even though we don't need them all.  In a really
+long vector, this could be slow.  Here is a less wasteful way:
+
+``` r
+ tot <- 0
+> i <- 0
+> while (i <= length(airpass) && tot < 10000) {
++    i <- i + 1
++    tot <- tot + airpass[i]
++ }
+> i
+[1] 59
+```
+
+So, the **while** loop keeps iterating until we get the desired
+cumulative total.
+
+Key points here:
+
+* The '&&' operator stands for "and".  
+
+* The condition within the 'while' says that (a) we are not yet at the
+  end of the **airpass** vector, AND (b) our total is still less than
+10000.
+
+* Note the need for the condition **i <= length(airpass)**.  It's
+  possible that **tot** will never exceed 10000 (not true here, but we
+wouldn't know that *a priori*), so we need that condition so that the
+loop doesn't iterate forever!
+
+There's more, though.  The **cumsum** function is vectorized, so using
+it, though seemingly wasteful, may actually be faster than the loop
+
+
+
+
+
 ## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot (yes, I
@@ -3588,11 +3676,12 @@ I recommend.
 
 * Norm Matloff, *Parallel Computation for Data Science*, CRC
 
-* Hadley Wickham, *Advanced R*, CRC
+* Hadley Wickham, *Advanced R* (second edition), CRC
 
 **Data Science with R**
 
-Nina Zumel and John Mount, *Practical Data Science with R*, Manning
+* Nina Zumel and John Mount, *Practical Data Science with R*, Manning
+  (2nd ed.)
 
 * Hadley Wickham and Garrett Grolemund, *R for Data Science: Import,
 Tidy, Transform, Visualize, and Model Data*, O'Reilly
@@ -3601,7 +3690,7 @@ Tidy, Transform, Visualize, and Model Data*, O'Reilly
 
 * Winston Chang, *R Graphics Cookbook: Practical Recipes for Visualizing Data*, O'Reilly
 
-* Paul Murrell, *R Graphics* (third ed.), CRC
+* Paul Murrell, *R Graphics* (third edition), CRC
 
 * Deepayan Sarkar, *Lattice: Multivariate Data Visualization with R*,
 Springer
