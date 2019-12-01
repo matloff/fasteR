@@ -3,6 +3,8 @@
 
 ![alt text](https://raw.githubusercontent.com/matloff/prVis/master/inst/data/SwissRoll/SWwithY.png)
 
+"Becoming productive in R, as fast as possible"
+
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
 (See notice at the end of this document regarding copyright.)
@@ -1099,7 +1101,7 @@ $b
 [1] "sky"
 ```
 
-Note that here we can names to the list elements, 'a' and 'b'.  In
+Note that here we can give names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
 according to the values of the vector beiing split.  (In that earlier
 case, we also needed backquotes `   `, since the names were numbers.)
@@ -1198,9 +1200,9 @@ entire data and visually scanned it for a low number.  But what if the
 length of the data vector had been 100,000 instead of 100?  Then the
 visual approach wouldn't work.  
 
-<span style="color:red">Tip:</span>
-Remember, a goal of programming is to automate tasks, rather 
-than doing them by hand.
+> <span style="color:red">Tip:</span>
+> Remember, a goal of programming is to automate tasks, rather 
+> than doing them by hand.
 
 > **Your Turn:**  There appear to be some unusually high values as well,
 > e.g. one around 1875.  Determine which year this was, using the
@@ -1211,7 +1213,8 @@ than doing them by hand.
 > occurring?
 
 Here is another point:  That function **plot** is not quite so innocuous
-as it may seem.
+as it may seem.  Let's run the same function, **plot**, but with two
+arguments instead of one:
 
 ``` r
 > plot(mtcars$wt,mtcars$mpg)
@@ -1230,7 +1233,7 @@ here's more:  That **plot** function is pretty smart!
 
 Why?  Well, **plot** knew to take different actions for different input
 types.  When we fed it a single vector, it plotted those numbers against
-time.  When we fed it two vectors, it knew to do a scatter plot.
+time (or, against index).  When we fed it two vectors, it knew to do a scatter plot.
 
 In fact, **plot** was even smarter than that.  It noticed that **Nile**
 is not just of **'numeric'** type, but also of another class, **'ts'**
@@ -1264,7 +1267,8 @@ it:
 
 R did the computation 1925 - 1871 + 1 itself, yielding 55, then looked
 up the value of **Nile[55]**.  This is the start of your path to
-programming.
+programming -- we try to automate things as much as possible, doing
+things by hand as little as possible.
 
 ## <a name="pause1"> </a> Pause to Reflect
 
@@ -1345,9 +1349,9 @@ R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
 rows of **pe**, in a new data frame **pe2500**.
 
-<span style="color:red">Tip:</span>
-Note again that it's clearer to break complex operations into simpler,
-smaller ones.  I could have written the more compact
+> <span style="color:red">Tip:</span>
+> Note again that it's clearer to break complex operations into simpler,
+> smaller ones.  I could have written the more compact
 
 ``` r
 > pe2500 <- pe[sample(1:nrow(pe),2500),]
@@ -1384,9 +1388,10 @@ any observational dataset, the underlying factors are complex, but it
 does seem there is an age discrimination problem in Silicon Valley.
 (And it is well documented in various studies and litigation.)
 
-* Note the horizontal streaks.  Some people in the census had 0 income
-(or close to it), as they were not working.  And the census imposed a
-top wage limit of $350,000 (probably out of privacy concerns).
+* Note the horizontal streaks at the very top and very bottom of the
+  picture.  Some people in the census had 0 income (or close to it), as
+they were not working.  And the census imposed a top wage limit of
+$350,000 (probably out of privacy concerns).
 
 We can break things down by gender, via color coding:
 
@@ -1445,7 +1450,7 @@ First we use **split** to separate the data by gender:
 ```
 
 Remember, **wageByGender[[1]]** will now be the vector of men's wages,
-and similarly **wageByGender[[1]]** will have the women's wages.
+and similarly **wageByGender[[2]]** will have the women's wages.
 
 The **density** function does not automatically draw a plot; it has the
 plot information in a return value, which we've assigned to **dm** and
@@ -1501,13 +1506,13 @@ bunch of TRUEs and FALSEs, one for each element of **Nile**.  Then
 'Nile[Nile > 1200]' gives us the subvector of **Nile** corresponding to
 the TRUEs, i.e. the stated condition.  We then take the mean of that.
 
-<span style="color:red">Tip:</span>
-If we have an operation we will use a lot, we should consider writing a
-function for it.
-Say we want to do the above again, but with 1350 instead of 1200.  Or, with
-the **tg$len** vector from Lesson 3, with 10.2 as our lower bound.  We
-*could* keep typing the same pattern as above, but if we're going to
-do this a lot, it's better to write a function for it:
+> <span style="color:red">Tip:</span>
+> If we have an operation we will use a lot, we should consider writing a
+> function for it.
+> Say we want to do the above again, but with 1350 instead of 1200.  Or, with
+> the **tg$len** vector from Lesson 3, with 10.2 as our lower bound.  We
+> *could* keep typing the same pattern as above, but if we're going to
+> do this a lot, it's better to write a function for it:
 
 ``` r
 > mgd <- function(x,d) mean(x[x > d])
@@ -1758,9 +1763,9 @@ determines where the 0s are in column **i**, and then the line
 
 replaces those 0s by NAs.
 
-<span style="color:red">Tip:</span>
-Note that I have indented the two lines in the block.  This is not
-required but is considered good for clear code. 
+> <span style="color:red">Tip:</span>
+> Note that I have indented the two lines in the block.  This is not
+> required but is considered good for clear code. 
 
 ## <a name="edt"> </a> Lesson 13: Text Editing
 
@@ -1925,9 +1930,9 @@ worked):
 > pe$educ <- ifelse(edu < 13,12,edu)
 ```
 
-<span style="color:red">Tip:</span>
-Once again, we've broken what could have been one line into two, for
-clarity.
+> <span style="color:red">Tip:</span>
+> Once again, we've broken what could have been one line into two, for
+> clarity.
 
 Now how did that work?  As you see above, R's **ifelse** function
 has three arguments, and its return value is a new vector, that in this
@@ -2008,9 +2013,9 @@ UCLA Statistics Dept.)
 [1] "factor"
 ```
 
-<span style="color:red">Tip:</span>
-As usual, after reading in the data, we took a look around, glancing at
-the first few records, and looking at a couple of data types.
+> <span style="color:red">Tip:</span>
+> As usual, after reading in the data, we took a look around, glancing at
+> the first few records, and looking at a couple of data types.
 
 Now, as a first try in assessing the question of weight gain over time,
 let's look at the mean weight for each age group.  In order to have
@@ -2155,10 +2160,10 @@ line, superimposed on our scatter plot:
 
 ## <a name="s3"> </a> Lesson 18: S3 classes
 
-<span style="color:red">Tip:</span>
-Remember, the point of computers is to alleviate us of work.  We should
-avoid doing what the computer could do.  For instance,
-concerning the graph in the last lesson: We had typed
+> <span style="color:red">Tip:</span>
+> Remember, the point of computers is to alleviate us of work.  We should
+> avoid doing what the computer could do.  For instance,
+> concerning the graph in the last lesson: We had typed
 
 ``` r
 > abline(181.4366,0.6936)
@@ -2310,9 +2315,9 @@ the infielders and so on.  So we can take all the row numbers,
 > rownums <- split(1:nrow(mlb),mlb$PosCategory)
 ```
 
-<span style="color:red">Tip:</span>
-As usual, following an intricate operation like this, we should glance
-at the result:
+> <span style="color:red">Tip:</span>
+> As usual, following an intricate operation like this, we should glance
+> at the result:
 
 ``` r
 > str(rownums)
@@ -2328,17 +2333,17 @@ that **split** produces an R list.  Also not surprisingly, the elements
 of the list are named "Catcher" etc.  So for example, the third
 outfielder is in row 12 of the data frame.
 
-<span style="color:red">Tip:</span>
-The idea here, using **split** on **1:nrow(mlb)**, was a bit of a trick.
-Actually, it is a common ploy for experienced R coders, but you might
-ask, "How could a novice come up with this idea?"  The answer, as noted
-several times already here, is the programming is a creative process.
-Creativity may not come quickly!  In some case, one might need to mull
-over a problem for a long time before coming up with a solution.  Don't
-give up!  The more you think about a problem, the more skilled you will
-get, even if you sometimes come up empty-handed.  And of course, 
-there are many forums on the Web at which you can ask questions,
-e.g. Stack Overflow.
+> <span style="color:red">Tip:</span>
+> The idea here, using **split** on **1:nrow(mlb)**, was a bit of a trick.
+> Actually, it is a common ploy for experienced R coders, but you might
+> ask, "How could a novice come up with this idea?"  The answer, as noted
+> several times already here, is the programming is a creative process.
+> Creativity may not come quickly!  In some case, one might need to mull
+> over a problem for a long time before coming up with a solution.  Don't
+> give up!  The more you think about a problem, the more skilled you will
+> get, even if you sometimes come up empty-handed.  And of course, 
+> there are many forums on the Web at which you can ask questions,
+> e.g. Stack Overflow.
 
 <span style="color:red">Tip:</span>
 Now, remember, a nice thing about R lists is that we can reference their
