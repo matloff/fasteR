@@ -914,7 +914,7 @@ values, while the second, fourth, sixth and so on lines are the counts
 of women having those values.  For instance, 3 women had the glucose =
 68.
 
-Uh, oh!  5 women in the study had glucose level 0.  And 44 had level 1,
+Uh, oh!  5 women in the study had glucose level 0.  And 1 had level 44,
 etc.  Presumably this is not physiologically possible.
 
 Let's consider a version of the glucose data that at least excludes these 0s.
