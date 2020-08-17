@@ -1303,8 +1303,7 @@ in the data and take a look at the first records:
 
 ``` r
 > pe <- 
-   read.table('https://raw.githubusercontent.com/matloff/polyreg/master/data/prgeng.txt',
-   header=TRUE)
+   read.table('read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/prgeng.txt',header=TRUE)
 > head(pe)
        age educ occ sex wageinc wkswrkd
 1 50.30082   13 102   2   75000      52
