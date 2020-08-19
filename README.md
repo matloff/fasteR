@@ -185,7 +185,7 @@ but whenever we are at the R '>' prompt, any expression we type will be
 printed out.
 
 Since there are only 100 data points here, it's not unwieldy to print
-them out.  Again, all we have to do is ``Nile,'' no need to call
+them out.  Again, all we have to do is type ``Nile,'' no need to call
 **print**:
 
 ``` r
@@ -1455,9 +1455,9 @@ dots:
 Here 'xlab' meant "X label" and similarly for 'ylab'.  The argument 'cex
 = 0.6' means "Draw the dots at 60% of default size."
 
-Now, how did the men's dots come out black and the women's red?  The
-men were coded 1, which preces 2, the female code.  So men got the first
-color in the default palette, black, and the women got the second, red.
+Now, how did the men's dots come out black and the women's red?  The men
+were coded 1, the women 2.  So men got color 1 in the default palette,
+black, and the women color 2, red.
 
 There are many, many other features.  More in a future lesson.
 
@@ -1482,7 +1482,7 @@ First we use **split** to separate the data by gender:
 > dw <- density(wageByGender[[2]])
 ```
 
-Remember, **wageByGender[[1]]** will now be the vector of men's wages,
+So, **wageByGender[[1]]** will now be the vector of men's wages,
 and similarly **wageByGender[[2]]** will have the women's wages.
 
 The **density** function does not automatically draw a plot; it has the
@@ -1538,9 +1538,11 @@ Now, say we want the mean of those elements:
 ```
 
 Let's review how this works.  The expression 'Nile > 1200' gives us a
-bunch of TRUEs and FALSEs, one for each element of **Nile**.  Then
-'Nile[Nile > 1200]' gives us the subvector of **Nile** corresponding to
-the TRUEs, i.e. the stated condition.  We then take the mean of that.
+bunch of TRUEs and FALSEs, one for each element of **Nile**.  The result
+of that, i.e. the vector of TRUEs and FALSEs, is then fed into the
+**Nile** vector, giving us 'Nile[Nile > 1200]'; it gives us the
+subvector of **Nile** corresponding to the TRUEs, i.e. the stated
+condition.  We then take the mean of that subvector.
 
 > <span style="color:red">Tip:</span>
 > If we have an operation we will use a lot, we should consider writing a
@@ -1580,13 +1582,18 @@ So, how does all this work?  Again, look at the code:
 
 ``` r
 > mgd <- function(x,d) mean(x[x > d])
+> class(mgd)
+[1] "function"
 ```
 
-Humor me for a moment, as I bring in a little of the "theory" of R:
+There is a lot going on here.  Bear with me for a moment, as I bring in
+a little of the "theory" of R:
  
-Odd to say, but there is a built-in function in R itself named 'function'!
-We're calling it here.  And its job is to build a function. Yes, as I
-like to say, 
+Odd to say, but there is a built-in function in R itself named
+'function'!  We've already seen several R functions, e.g. **mean()**,
+**sum()** and **plot()**.  Well, here is another, **function()**.  We're
+calling it here.  And its job is to build a function. Yes, as I like to
+say, to my students' amusement,
 
 > "The function of the function named **function** is to build functions!
 > And the class of object returned by **function** is 'function'!"
@@ -1596,11 +1603,17 @@ assigned to **mgd**.  We can then call the latter, as we saw above,
 repeated here for convenience:
 
 ``` r
+> mgd(Nile,1200)
+[1] 1250
+```
+
+The line of code 
+``` r
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
-Now returning to our main goal of getting you readers proficient in R,
-the above line of code says that **mgd** will have two arguments, ***x***
+
+says that **mgd** will have two arguments, ***x***
 and ***d***.  These are known as *formal* arguments, as they are just
 placeholders.  For example, in 
 
@@ -1626,9 +1639,8 @@ a bit more complicated than the above version.  But the call to
 **return** is not needed here, because in any function, R will return the
 last value computed, in this case the requested mean.
 
-
-And we can save the function for later use, by using R's **save**
-function, which can be used to save any R object:
+And we can save the function for later use.  One way to do this is to
+call R's **save** function, which can be used to save any R object:
 
 ``` r
 > save(mgd,file='mean_greater_than_d')
@@ -1643,8 +1655,9 @@ run
 > load('mean_greater_than_d')
 ```
 
-and then **mgd** will be restored, ready for us to use again.  (A more
-advanced way is to form an R package, subject of a later lesson.)
+and then **mgd** will be restored, ready for us to use again.
+(Typically this is not the way people save code, but this is
+the subject of a later lesson.)
 
 Let's write another function, this one to find the range of a vector,
 i.e. the difference between the minimal and maximal values:
