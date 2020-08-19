@@ -1751,16 +1751,15 @@ Now, it's worth reviewing what those statements do, say the first.  Once
 again, **pima[,1] == 0** yields a vector of TRUEs and FALSEs, each
 indicating whether the corresponding element of column 1 is 0.  When we
 call **sum**, TRUEs and FALSEs are treated as 1s and 0s, so we get the
-total number of 1s -- which is a count of the number of elements in that
+total number of TRUEs -- which is a count of the number of elements in that
 column that are 0, exactly what we wanted.
 
 A technical point:  Why did we need the explicit call to **print**?
-Didn't we say earlier that just typing an expression 
-at the R '>' prompt will automatically print out the value of the
-expression?  Ah yes -- but we are not at the R prompt here!  Yes, in the
-expanded form above, that would be at the prompt, but inside the **for**
-loop we are not at the prompt, even though **for** call had been made at
-the prompt.
+Didn't we say earlier that just typing an expression at the R '>' prompt
+will automatically print out the value of the expression?  Ah yes -- but
+we are not at the R prompt here!  Yes, in the expanded form above, that
+would be at the prompt, but inside the **for** loop we are not at the
+prompt, even though **for** call itself had been made at the prompt.
 
 So there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
 column 3.  We probably have forgotten which column is which, so let's
