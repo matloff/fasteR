@@ -1727,13 +1727,36 @@ that there are 9 columns in this data frame.
 [1] 500
 ```
 
-This is known in the programming world as a *for loop*.  
+This is known in the programming world as a *'for' loop*.  
 
 The 'print(etc.)' is called the *body* of the loop.  The 'for (i in
 1:9)' part says, "Execute the body of the loop with i = 1, then execute
 it with i = 2, then i = 3, etc. up through i = 9."
 
 In other words, the above code instructs R to do the following:
+
+``` r
+i <- 1
+print(sum(pima[,i] == 0))
+i <- 2
+print(sum(pima[,i] == 0))
+i <- 3
+print(sum(pima[,i] == 0))
+i <- 4
+print(sum(pima[,i] == 0))
+i <- 5
+print(sum(pima[,i] == 0))
+i <- 6
+print(sum(pima[,i] == 0))
+i <- 7
+print(sum(pima[,i] == 0))
+i <- 8
+print(sum(pima[,i] == 0))
+i <- 9
+print(sum(pima[,i] == 0))
+```
+
+And this amounts to doing
 
 ``` r
 print(sum(pima[,1] == 0))
@@ -1753,6 +1776,9 @@ indicating whether the corresponding element of column 1 is 0.  When we
 call **sum**, TRUEs and FALSEs are treated as 1s and 0s, so we get the
 total number of TRUEs -- which is a count of the number of elements in that
 column that are 0, exactly what we wanted.
+
+The variable **i** in "for (i in 1:9)..." is known as the *index* of the
+loop.  It's just an ordinary R variable, so name it what you wish.
 
 A technical point:  Why did we need the explicit call to **print**?
 Didn't we say earlier that just typing an expression at the R '>' prompt
@@ -2445,7 +2471,17 @@ use the names:
 for (pos in c('Catcher','Infielder','Outfielder','Pitcher'))
 ```
 
-And we could have **lm** and **print** calls in the body of the loop.
+Just an ordinary 'for' loop.  Recall such loops are of the form
+
+``` r
+for (variable in vector)...
+```
+
+Instead of having a numeric vector, e.g. the 1:4 above, we now have a
+character vector, which each element of the vector being a character
+string, but the principles are the same.
+
+We could have **lm** and **print** calls in the body of the loop.
 But let's be a little fancier, building up a data frame with the output.
 We'll start with an empty frame, and keep adding rows to it.
 
