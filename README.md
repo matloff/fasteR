@@ -224,22 +224,21 @@ graph.
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
 
-> **Your Turn:**  The **hist** function draws 10 bins in the histogram by
-> default, but you can choose other values, by specifying a second
-> argument to the function, named **breaks**.  E.g.  
+> **Your Turn:**  The **hist** function draws 10 bins for this dataset
+> in the histogram by default, but you can choose other values, by
+> specifying a second argument to the function, named **breaks**.  E.g.  
 > 
 > ``` r
 > > hist(Nile,breaks=20)
 > ```
 > 
-> would draw the histogram with 20 bins.  Try plotting using
-> several different large and small values of the number of bins.
+> would draw the histogram with 20 bins.  Try plotting using several
+> different large and small values of the number of bins.
 > 
 > **Note:**  The **hist** function, as with many R functions, has many
 > different options, specifiable via various arguments.  For now, we'll
 > just keep things simple, and resist the temptation to explore them
 > all.
-
 R has lots of online help, which you can access via '?'.  E.g. typing
 
 ``` r
@@ -390,8 +389,8 @@ Fine, but how will **sum** add up some TRUEs and FALSEs?  The
 answer is that R, like most computer languages, treats TRUE and FALSE as
 1 and 0, respectively.  So we summed the vector (0,1,1), yielding 2.
 
-Getting back to the quesiton of the number of years in which the Nile
-flow exceeded 1200, let's look at that expression again"
+Getting back to the question of the number of years in which the Nile
+flow exceeded 1200, let's look at that expression again:
 
 ``` r
 > sum(Nile > 1200)
@@ -476,7 +475,7 @@ The element in row 3, column 1 in the *data frame* **tg** is element 3 in
 the *vector* **tg$len**.
 
 > **Your Turn:**  The above examples are fundamental to R, so you should
-> conduct a few small experiments on your at this time, little variants
+> conduct a few small experiments on your own this time, little variants
 > of the above.  The more you do, the better!
 
 Some data frames don't have column names, but that is no obstacle.  We
@@ -669,9 +668,11 @@ opposed to the single-equal used in setting function arguments.)
     * Finally, in the context of vector or data freame indices, TRUE means
   to take the element/row/column, and FALSE means skip it.
 
-4.  So, the expression **tg[tg$supp == 'OJ',]** says, "Extract from
-    **tg** the rows in which the supplement was OJ."  In each case, take
-the entire row, i.e. all columns.
+4.  So, the expression **tg[tg$supp == 'OJ',   ]** says, "Find which
+    elements of the **tg$supp** vector equal 'OJ', and extract the
+corresponding rows of **tg**."  (We're taking full rows, as there is
+nothing after the comma, thus no restriction on columns.)  In other words, take
+from **tg** the rows in which the supplement was OJ."  
 
 5.  For convenience, we assigned that result to **tgoj**, in case we
     need it later.  The latter
