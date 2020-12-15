@@ -665,7 +665,7 @@ opposed to the single-equal used in setting function arguments.)
     * Further, if i or j is missing, it means we want ALL rows or columns,
       as the case may be.  
     
-    * Finally, in the context of vector or data freame indices, TRUE means
+    * Finally, in the context of vector or data frame indices, TRUE means
   to take the element/row/column, and FALSE means skip it.
 
 4.  So, the expression **tg[tg$supp == 'OJ',   ]** says, "Find which
@@ -679,11 +679,12 @@ from **tg** the rows in which the supplement was OJ."
 now consists of all rows of **tg** with the OJ supplement.  And it's a
 new data frame!
 
-So **tgoj** does become those rows of **tg**.  In other words, we
-extracted the rows of **tg** for which the supplement was orange juice,
-with no restriction on columns, and assigned the result to **tgoj**.
-(Once again, we can choose any name; we chose this one to help remember
-what we put into that variable.)
+So **tgoj** does become those rows of **tg**, i.e.  all rows of **tg**
+with the OJ supplement.  In other words, we extracted the rows of **tg**
+for which the supplement was orange juice, with no restriction on
+columns, and assigned the result to **tgoj**.  (Once again, we can
+choose any name; we chose this one to help remember what we put into
+that variable.)
 
 Thus we have the answer to our original question:  Orange juice appeared
 to produce more growth than Vitamin C.  (Of course, one might form a
@@ -910,6 +911,7 @@ later (future lesson).
 [1] 768   9
 ```
 
+The **dim** function tells us that there are
 768 people in the study, 9 variables measured on each.
 
 Since this is a study of diabetes, let's take a look at the glucose
@@ -1140,7 +1142,7 @@ $b
 Note that here we can give names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
 according to the values of the vector beiing split.  (In that earlier
-case, we also needed backquotes `   `, since the names were numbers.)
+case, we also needed backquotes ``   ``, since the names were numbers.)
 
 
 If we don't like those default names, we can change them:
@@ -1259,7 +1261,7 @@ arguments instead of one:
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MTCarsWtMPG.png)
 
 In contrast to the previous plot, in which our data were on the vertical
-axis and time was on the horizontal, now we are plotting *two* datasets,
+axis and time was on the horizontal, now we are plotting *two* vectors,
 against each other.  This enables us to explore the relation between
 car weight and gas mileage.  
 
@@ -1285,9 +1287,9 @@ is not just of **'numeric'** type, but also of another class, **'ts'**
 So, **plot** put years on the horizontal axis, instead of indices 1,2,3,...
 
 And one more thing:  Say we wanted to know the flow in the year 1925.
-The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  This
-means the flow for that year is in element 1+44 = 55.
-
+The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  Since
+the 1871 number is in element 1 of the vector, that means the flow for
+the year 1925 is in element 1+44 = 55.
 ``` r
 > Nile[55]
 [1] 698
@@ -1297,7 +1299,7 @@ OK, but why did we do this arithmetic ourselves?  We should have R do
 it:
 
 ``` r
-> Nile[1925 - 1871 + 1]
+> Nile[1 + 1925 - 1871]
 [1] 698
 ```
 
@@ -1356,7 +1358,7 @@ Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
 codes.  (You can find them in the
 [Census Bureau document](https://www.census.gov/prod/cen2000/doc/pums.pdf).
-For instance, search for "Educational Attainmenti" for the **educ**
+For instance, search for "Educational Attainment" for the **educ**
 variable.)
 
 Let's start with a scatter plot of wage vs. age:
@@ -1513,8 +1515,8 @@ at a little less than $50,000, seems to be at a lower wage than that for
 men, at something like $60,000.  At salaries around, say, $125,000,
 there seem to be more men than women.  (Black curve higher than red
 curve.  Remember, the curves are just smoothed histograms, so, if a
-curve is really high at, say 168.0, that means that 168.0 is very
-frequently-occurring value..)
+curve is really high at, say 168.0, that means that 168.0 is a very
+frequently-occurring value.)
 
 > **Your Turn:**  Try plotting multiple such curves on the same graph, for other
 > data.
@@ -1786,7 +1788,7 @@ Didn't we say earlier that just typing an expression at the R '>' prompt
 will automatically print out the value of the expression?  Ah yes -- but
 we are not at the R prompt here!  Yes, in the expanded form above, that
 would be at the prompt, but inside the **for** loop we are not at the
-prompt, even though **for** call itself had been made at the prompt.
+prompt, even though the **for** call itself had been made at the prompt.
 
 So there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
 column 3.  We probably have forgotten which column is which, so let's
@@ -1976,7 +1978,7 @@ We could use this in the Pima data"
 > pima <- zerosToNAs(pima,2:6)
 ```
 
-There is an important subtlety here.  The function **zeroIndices** will
+There is an important subtlety here.  Use of the vector **zeroIndices** will
 produce a new data frame, rather than changing **pima** itself.  So, if
 we want **pima** to change, we must reassign the output of the function
 back to **pima**.
@@ -3330,7 +3332,7 @@ even bettery, in POSIX form:
 There are many operations that can be done on R dates.  The above is
 just a little sample.
 
-## <a name="style"> </a> Tips on R Coding Style and Strategy
+## <a name="style"> </a> Lesson 27:  Tips on R Coding Style and Strategy
 
 Programming is a creative activity, and thus different programmers will
 have different coding styles.  Some people feel so strongly that they
@@ -3468,7 +3470,7 @@ cases.
 
 More on this in a later lesson!
 
-## <a name="logit"> </a> The Logistic Model
+## <a name="logit"> </a> Lesson 28:  The Logistic Model
 
 In our earlier examples of regression analysis, we were predicting a
 continuous variable such as human weight.  But what if we wish to
@@ -3538,7 +3540,7 @@ of age 40.
 So, the risk of diabetes increases substantial over that 10-year period,
 but this population and BMI level.
 
-## <a name="fd"> </a> Files and Directories
+## <a name="fd"> </a> Lesson 29:  Files and Directories
 
 In assmebling a dataset for my **regtools** package, I needed to collect
 the records of several of my course offerings.  I started in a directory
@@ -3654,7 +3656,7 @@ On the other hand, if this subdirectory *does* contain a file named
 reads in the found file, and assigns its contents as a new element of
 our **resultsFiles** list.
 
-## <a name="whl"> </a> R 'while' Loops
+## <a name="whl"> </a> Lesson 30:  R 'while' Loops
 
 We've seen R **for** loops in previous lessons, but there's another kind
 of loop, **while**.  It keeps iterating until some specified condition
