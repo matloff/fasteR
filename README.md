@@ -2401,7 +2401,7 @@ This says:
 So, under this more refined analysis, things are even more pessimistic;
 players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
-weight; taller players are indeed heavier, as we surmised.
+weight; taller players are indeed heavier, as we surmized.
 
 <span style="color:red">Warning:</span>
 Though this is not a statistics tutorial *per se*, an important point
@@ -2478,7 +2478,7 @@ outfielder is in row 12 of the data frame.
 > The idea here, using **split** on **1:nrow(mlb)**, was a bit of a trick.
 > Actually, it is a common ploy for experienced R coders, but you might
 > ask, "How could a novice come up with this idea?"  The answer, as noted
-> several times already here, is the programming is a creative process.
+> several times already here, is that programming is a creative process.
 > Creativity may not come quickly!  In some case, one might need to mull
 > over a problem for a long time before coming up with a solution.  Don't
 > give up!  The more you think about a problem, the more skilled you will
@@ -2600,8 +2600,8 @@ course, though we'll cover it briefly in a future lesson.
 ## <a name="cran"> </a> R Packages, CRAN, Etc.
 
 We'll soon bring in **ggplot2**, a user-contributed package, stored in
-the [CRAN repository](https://cran.r-project.org).  As of June 2019,
-there are over 14,000 packages there.  If you need to do some special
+the [CRAN repository](https://cran.r-project.org).  As of June 2020,
+there are nearly 17,000 packages there.  If you need to do some special
 operation in R, say spatial data analysis, it may well be in there. 
 You might take the [CRAN Task
 Views](https://cran.r-project.org/web/views/) as your starting point, or
@@ -2612,19 +2612,19 @@ Other good sources of public R packages are
 pages.  More on this in a later lesson.
 
 UseRs usually designate a special folder/directory for their packages
-(both those they download and ones they write themselves).  I use 'R' in
-my home directory for that purpose, and will assume here that you do
-too.  You'll need to create that directory first, e.g. by typing
+(both those they download and ones they write themselves).  The question
+then arises as to which folder is used.  I use 'R' in my home directory
+for that purpose, but if you don't specify a folder, your package
+installer will choose one for you.  It won't matter as long as you are
+consistent.  I'll assume you don't specify a package folder.
 
-``` 
-mkdir ~/R
-``` 
+To install, say, **ggplot2**, you can type at the R prompt,
 
-in a terminal window.
+``` r
+> install.packages('ggplot2')
+```
 
-Note:  The term *directory* is, as you can see above, synonymous with
-*folder* on Mac/Windows systems.  Actually, both of those OSs used to
-use this term too.  R retains that terminology.
+Or in RStudio, choose Tools | Install Packages...
 
 When you want to use one of your installed packages, you need to tell R
 to load it, e.g. by typing at the R prompt,
@@ -2632,26 +2632,6 @@ to load it, e.g. by typing at the R prompt,
 ``` r
 > library(ggplot2)
 ```
-
-But R needs to know where to look for the package!
-I can do this with
-
-``` r
-> .libPaths("~/R")
-```
-
-prior to calling **library**.  But instead, I actually place this in my
-R *startup file*, **~/.Rprofile**, which is executed automatically
-whenever I start R.
-
-You'll need to install the package from CRAN, by typing
-
-``` r
-> install.packages('ggplot2', lib='~/R')
-```
-
-You'll be prompted to supply the location of the library
-directory/folder, **~/R** (or not, if you use **~/.Rprofile** as above). 
 
 Later, you'll write your own R packages, a future lesson.
 
@@ -3904,6 +3884,11 @@ into a terminal window.
 Again, there is a lot more one can do than the following, but we'll
 stick to the absolute basics.
 
+Note the pane in the lower-left portion of the RStudio screen.  By
+default, that is the Console pane, containing the usual R '>' prompt.
+You can use it just as we have throughout this tutorial.  Note too that
+this is where your R output will appear.
+
 Everything here involves files, where we store our R code (*scripts*).
 
 **creating a new code file:**  File | New File | R Script will create an
@@ -3924,6 +3909,7 @@ will only print the 8.
 
 **exiting RStudio:**
 
+File | Quit Session...
 
 
 ## LICENSING
