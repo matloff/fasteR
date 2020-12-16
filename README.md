@@ -9,8 +9,8 @@
 
 (See notice at the end of this document regarding copyright.)
 
-This site is for those who know nothing of R, or maybe even nothing of
-programming, and seek *QUICK*, painless entree to the world of R.
+This site is for those who know nothing of R, and maybe even nothing of
+programming, and seek *QUICK, PAINLESS!* entree to the world of R.
 
 * **FAST**:  You'll already be doing good stuff in R -- useful data analysis
 -- in your very first lesson.
@@ -26,19 +26,22 @@ conversational, story-telling manner.
 
 * **Just the basics, no frills or polemics:** 
 
-    - Notably, we do not use Integrated Development Environments (IDEs).
-      RStudio, ESS etc. are great, but you shouldn't be burdened with
-learning R *and* learning an IDE at the same time, a distraction from
-the goal of becoming productive in R as fast as possible.  
+    - Notably, in the first few lessons, we do NOT use Integrated
+      Development Environments (IDEs).  RStudio, ESS etc. are great, but
+you shouldn't be burdened with learning R *and* learning an IDE at the
+same time, a distraction from the goal of becoming productive in R as
+fast as possible.  
 
      Note that even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
 which does start with RStudio, laments that **RStudio can be
-"overwhelming."**  Here we stick to the R command line, and focus on data
-analysis, not tools such as IDEs, which we will cover as an advanced
-topic.  (Some readers of this tutorial may already be using RStudio or
-an external editor, and the treatment here will include special
-instructions for them when needed.)
+"overwhelming."**  
+
+     So, in the initial lessons,  we stick to the R command line, and
+focus on data analysis, not tools such as IDEs, which we will cover as
+an intermediate-level topic.  (Some readers of this tutorial may already
+be using RStudio or an external editor, and the treatment here will
+include special instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the 
 popular but self-described "opinionated" Tidyverse is not 
@@ -56,39 +59,40 @@ you should cook up your own variants to try.
 ## Table of Contents
 
 * [Overview and Getting Started](#overview)
-* [Lesson 1:  First R Steps](#firstr)
-* [Lesson 2:  More on Vectors](#less2)
-* [Lesson 3:  On to Data Frames!](#less3)
-* [Lesson 4:  R Factor Class](#less4)
-* [Lesson 5:  The tapply Function](#tapply)
-* [Lesson 6:  Data Cleaning](#less5)
-* [Lesson 7:  R List Class](#less6)
-* [Lesson 8:  Another Look at the Nile Data](#less7)
+* [First R Steps](#firstr)
+* [More on Vectors](#less2)
+* [On to Data Frames!](#less3)
+* [R Factor Class](#less4)
+* [The tapply Function](#tapply)
+* [Data Cleaning](#less5)
+* [R List Class](#less6)
+* [Another Look at the Nile Data](#less7)
 * [Pause to Reflect](#pause1)
-* [Lesson 9: Introduction to Base R Graphics ](#less8)
-* [Lesson 10: More on Base Graphics ](#less9)
-* [Lesson 11: Writing Your Own Functions](#less10)
-* [Lesson 12: 'For' Loops](#less11)
-* [Lesson 13: Functions with Blocks](#ftnbl)
-* [Lesson 14: Text Editing](#edt)
-* [Lesson 15: If, Else, Ifelse](#ifelse)
-* [Lesson 16: Do Pro Athletes Keep Fit?](#keepfit)
-* [Lesson 17: Linear Regression Analysis, I](#linreg1)
-* [Lesson 18: S3 Classes](#s3)
-* [Lesson 19: Baseball Player Analysis (cont'd.)](#less15)
-* [Lesson 20: R Packages, CRAN, Etc.](#cran)
-* [Lesson 21: A First Look at ggplot2](#gg2first)
-* [Lesson 22: More on the apply Family](#appfam)
-* [Lesson 23: Simple Text Processing, I](#txt)
-* [Lesson 24: Simple Text Processing, II](#txt1)
-* [Lesson 25: Linear Regression Analysis, II](#linreg2)
-* [Lesson 26: Working with the R Date Class](#dates)
-* [Lesson 27: Tips on R Coding Style and Strategy](#style)
-* [Lesson 28: The Logistic Model](#logit)
-* [Lesson 29: Files and Directories](#fd)
-* [Lesson 30: R 'while' Loops](#whl)
+* [Introduction to Base R Graphics ](#less8)
+* [More on Base Graphics ](#less9)
+* [Writing Your Own Functions](#less10)
+* ['For' Loops](#less11)
+* [Functions with Blocks](#ftnbl)
+* [IDEs: Text Editing, Saving, Executing](#edt)
+* [If, Else, Ifelse](#ifelse)
+* [Do Pro Athletes Keep Fit?](#keepfit)
+* [Linear Regression Analysis, I](#linreg1)
+* [S3 Classes](#s3)
+* [Baseball Player Analysis (cont'd.)](#less15)
+* [R Packages, CRAN, Etc.](#cran)
+* [A First Look at ggplot2](#gg2first)
+* [More on the apply Family](#appfam)
+* [Simple Text Processing, I](#txt)
+* [Simple Text Processing, II](#txt1)
+* [Linear Regression Analysis, II](#linreg2)
+* [Working with the R Date Class](#dates)
+* [Tips on R Coding Style and Strategy](#style)
+* [The Logistic Model](#logit)
+* [Files and Directories](#fd)
+* [R 'while' Loops](#whl)
 * (more lessons coming soon!)
 * [To Learn More](#forMore)
+* [Appendix: Installing and Using RStudio](#rstudio)
 
 
 ## <a name="overview"> </a> Getting Started
@@ -141,7 +145,7 @@ sure to enable Allow Access to File URLs).
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
 
-## <a name="firstr"> </a> Lesson 1:  First R Steps
+## <a name="firstr"> </a> First R Steps
 
 The R command prompt is '>'.  Again, it will be shown here, but you don't type
 it.  It is just there in your R window to let you know R is inviting you
@@ -340,7 +344,7 @@ elements in the vector, e.g.
 
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
-## <a name="less2"> </a> Lesson 2:  More on Vectors
+## <a name="less2"> </a> More on Vectors
 
 Continuing along the Nile, say we would like to know in how many years
 the level exceeded 1200.  Let's first introduce R's **sum** function:
@@ -407,7 +411,7 @@ number of TRUEs, exactly what we want.
 > (2,1,1,6,8,5), so you will know that your answers are correct.
 > Remember, you'll learn best nonpassively.  Code away!
 
-## <a name="less3"> </a> Lesson 3:  On to Data Frames!
+## <a name="less3"> </a> On to Data Frames!
 
 Right after vectors, the next major workhorse of R is the *data frame*.
 It's a rectangular table consisting of one row for each data point.
@@ -586,7 +590,7 @@ strings.
 > so devise and run as many examples as possible; err on the side of
 > doing too many!
 
-## <a name="less4"> </a> Lesson 4:  R Factor Class
+## <a name="less4"> </a> R Factor Class
 
 Each object in R has a *class*. The number 3 is of the **'numeric'**
 class, the character string 'abc' is of the **'character'** class, and
@@ -690,7 +694,7 @@ Thus we have the answer to our original question:  Orange juice appeared
 to produce more growth than Vitamin C.  (Of course, one might form a
 confidence interval for the difference etc.)
 
-## <a name="tapply"> </a> Lesson 5:  The tapply Function
+## <a name="tapply"> </a> The tapply Function
 
 > <span style="color:red">Tip:</span> Often in R there is a shorter, more
 > compact way of doing things.  That's the case here; we can use the
@@ -861,7 +865,7 @@ function!  But this is not the place to go into that.)
 > is so ubiquitously useful that we have introduced it early in this
 > tutorial.  We'll be using it more in later lessons.
 
-## <a name="less5"> </a> Lesson 6:  Data Cleaning
+## <a name="less5"> </a> Data Cleaning
 
 Most real-world data is "dirty," i.e. filled with errors.  The famous
 [New York taxi trip
@@ -1043,7 +1047,7 @@ the function to skip the NAs:
 > What years did these correspond to?  Find the mean of the data,
 > excluding these cases.
 
-## <a name="less6"> </a> Lesson 7:  The R List Class
+## <a name="less6"> </a> The R List Class
 
 We saw earlier how handy the **tapply** function can be.  Let's look at
 a related one, **split**.
@@ -1196,7 +1200,7 @@ of the list, which is the first column of the data frame.
 > **Your Turn** Try using **split** on the ToothGrowth data, say splitting
 > into groups according to the supplement, and finding various quantities.
 
-## <a name="less7"> </a> Lesson 8:  Another Look at the Nile Data
+## <a name="less7"> </a> Another Look at the Nile Data
 
 Here we'll learn several new concepts, using the **Nile** data as our
 starting point.
@@ -1326,7 +1330,7 @@ makes it fun, like solving a puzzle.
 And...we can combine various functions in order to build *our own*
 functions.  This will come in future lessons.
 
-## <a name="less8"> </a> Lesson 9:  Introduction to Base R Graphics
+## <a name="less8"> </a> Introduction to Base R Graphics
 
 One of the greatest things about R is its graphics capabilities.  There
 are excellent graphics features in base R, and then many contributed
@@ -1470,7 +1474,7 @@ There are many, many other features.  More in a future lesson.
 > 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
 > professional degree and 16 is a doctorate.)
 
-## <a name="less9"> </a> Lesson 10:  More on Base Graphics
+## <a name="less9"> </a> More on Base Graphics
 
 We can also plot multiple histograms on the same graph.  But the
 pictures are more effective using a smoothed version of histograms,
@@ -1521,12 +1525,12 @@ frequently-occurring value.)
 > **Your Turn:**  Try plotting multiple such curves on the same graph, for other
 > data.
 
-## <a name="less10"> </a> Lesson 11:  Writing Your Own Functions
+## <a name="less10"> </a> Writing Your Own Functions
 
 We've seen a number of R's built-in functions so far, but here comes the
 best part -- you can write your *own* functions.
 
-Recall a line we had in Lesson 2:
+Recall a line we had earlier:
 
 ``` r
 > sum(Nile > 1200)
@@ -1550,10 +1554,12 @@ condition.  We then take the mean of that subvector.
 > <span style="color:red">Tip:</span>
 > If we have an operation we will use a lot, we should consider writing a
 > function for it.
-> Say we want to do the above again, but with 1350 instead of 1200.  Or, with
-> the **tg$len** vector from Lesson 3, with 10.2 as our lower bound.  We
-> *could* keep typing the same pattern as above, but if we're going to
-> do this a lot, it's better to write a function for it:
+>
+> Say we want to do the above again, but with 1350 instead of 1200.  Or,
+> with the **tg$len** vector from our ToothGrowth example, with 10.2 as
+> our lower bound.  We *could* keep typing the same pattern as above,
+> but if we're going to do this a lot, it's better to write a function
+> for it:
 
 ``` r
 > mgd <- function(x,d) mean(x[x > d])
@@ -1698,9 +1704,9 @@ can print them by just typing their names!
 function(x,d) mean(x[x > d])
 ```
 
-## <a name="less11"> </a> Lesson 12:  'For' Loops
+## <a name="less11"> </a> 'For' Loops
 
-Recall that in Lesson 6, we found that there were several columns in the
+Recall that earlier we found that there were several columns in the
 Pima dataset that contained values of 0, which were physiologically
 impossible.  These should be coded NA.  We saw how to do that recoding
 for the glucose variable:
@@ -1870,7 +1876,7 @@ replaces those 0s by NAs.
 > required but is considered good for clear code, in order to easily
 > spot the block when you or others read the code. 
 
-## <a name="edt"> </a> Lesson 13: Text Editing
+## <a name="edt"> </a> Text Editing and IDEs
 
 In trying out our function **zeroIndices** above, you probably used your
 computer's mouse to copy-and-paste from this tutorial into your machine.
@@ -1890,20 +1896,28 @@ error-prone.  And what if we were to change the code?  Must we type in
 the whole thing again?  We really need a *text editor* for this.  Just
 as we edit, say, reports, we do the same for code.  
 
-### Creating/editing code
-
 Here are your choices:
 
-1. If you are already using RStudio, you simply edit in the SOURCE pane.  
+1. If you are already using an IDE, say RStudio, you simply edit
+in the designated pane.
 
-2.  If you are using an external editor, say
-    [Vim](http://heather.cs.ucdavis.edu/~matloff/vim.html) (Macs, Linux)
-or Notepad (Windows), just open a new file and use that workspace.
+2.  If you are using an external editor, say vim or emacs,
+just open a new file and use that workspace.
 
 3.  For  those not using these, we'll just use R's built-in **edit**
     function.  
 
-Plan to eventually routinely do either 1 or 2 above, but 3 is fine for now.
+Option 3 is fine for now, but eventually you'll want to use either
+Option 1 or 2.  You may wish to start with one of those options now,
+before going further. 
+
+We have details on getting start with RStudio in the <a
+href="#ide">Appendix</a> at the end of this document.  **Warning:** 
+As noted earlier, one major R Users Group described RStudio as
+"overwhelming." But it is quite easy if you resist the temptation (or
+the exhortations of others) to learn it all at once.  As long as you
+stick to the basics in the Appendix, you'll find it quite easy; you can
+learn the advanced tricks later.
 
 Consider the following toy example:
 
@@ -1951,7 +1965,26 @@ This again opens the text editor, but this time with the current **f**
 code showing.  You edit the code as desired, then as before, the result
 is reassigned to **f**.
 
-## <a name="ftnbl"> </a> Lesson 14: Functions with Blocks 
+How do you then run the code, say for computing **f(5,2)**?
+
+* If you had created **f()** using **edit()**, then execute as usual:
+
+
+``` r
+> f(5,2)
+```
+
+* If you had used an external text editor, say saving the code into the
+  file **a.R**, then
+
+``` r
+> source('a.R')
+``` 
+
+loads file, and then you run as above.
+
+* In RStudio, click on Source, then run as above.
+## <a name="ftnbl"> </a> Functions with Blocks 
 
 Blocks are usually key in defining functions.  Let's generalize the
 above code in the Loops lesson, writing a function that replaces 0s by
@@ -1989,7 +2022,7 @@ back to **pima**.
 > above by a well-chosen call to the **sum** function.  Test it on a small
 > artificial dataset that you create.
 
-## <a name="ifelse"> </a> Lesson 15: If, Else, Ifelse
+## <a name="ifelse"> </a> If, Else, Ifelse
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -2096,7 +2129,7 @@ coming lessons.
 > You'll probably want to do this using two separate calls to
 > **ifelse**.
 
-## <a name="keepfit"> </a> Lesson 16: Do Professional Athletes Keep Fit?
+## <a name="keepfit"> </a> Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -2211,7 +2244,7 @@ weight was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg1"> </a> Lesson 17: Linear Regression Analysis, I
+## <a name="linreg1"> </a> Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -2266,7 +2299,7 @@ line, superimposed on our scatter plot:
 > regression of MPG against weight; what is the estimated
 > effect of 100 pounds of extra weight?
 
-## <a name="s3"> </a> Lesson 18: S3 classes
+## <a name="s3"> </a> S3 classes
 
 > <span style="color:red">Tip:</span>
 > Remember, the point of computers is to alleviate us of work.  We should
@@ -2387,7 +2420,7 @@ Prediction, it is not as much of an issue.
 > regression of MPG against weight and horsepower; what is the estimated
 > effect of 100 pounds of extra weight, for fixed horsepower?
 
-## <a name="less15"> </a> Lesson 19: Baseball Player Analysis (cont'd.)
+## <a name="less15"> </a> Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer, but it will give you more practice
 on a number of earlier topics, and will also bring in some new R
@@ -2564,7 +2597,7 @@ question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course, though we'll cover it briefly in a future lesson.
 
-## <a name="cran"> </a> Lesson 20:  R Packages, CRAN, Etc.
+## <a name="cran"> </a> R Packages, CRAN, Etc.
 
 We'll soon bring in **ggplot2**, a user-contributed package, stored in
 the [CRAN repository](https://cran.r-project.org).  As of June 2019,
@@ -2622,7 +2655,7 @@ directory/folder, **~/R** (or not, if you use **~/.Rprofile** as above).
 
 Later, you'll write your own R packages, a future lesson.
 
-## <a name="gg2"> </a> Lesson 21:  A First Look at ggplot2
+## <a name="gg2"> </a> A First Look at ggplot2
 
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
@@ -2695,7 +2728,7 @@ right of the graph, so we know which color corresponds to which
 position.  We can do this in base-R graphics too, but need to set an
 argument for it in **plot**.
 
-## <a name="appfam"> </a> Lesson 22:  More on the apply Family
+## <a name="appfam"> </a> More on the apply Family
 
 Recall our earlier example, in which we wanted to fit separate
 regression lines to each of the four player position categories.  We
@@ -2833,7 +2866,7 @@ The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
 More compact code may not be easier.
 
-## <a name="txt"> </a> Lesson 23:  Simple Text Processing, I
+## <a name="txt"> </a> Simple Text Processing, I
 
 These days, text processing is big in the Data Science field, e.g. in
 Natural Language Processing applications.  In this lesson, we'll do a
@@ -3018,7 +3051,7 @@ say in a loop.  We'll do this in the next section.
 > **Your Turn:** Write a function with call form **delNAs(x)**, that
 > returns **x** with NAs deleted.  
 
-## <a name="txt1"> </a> Lesson 24:  Simple Text Processing, II
+## <a name="txt1"> </a> Simple Text Processing, II
 
 So, let's use our **extractWords** function on our **abt** vector.
 Here's a loop way to do it:
@@ -3123,7 +3156,7 @@ empty strings; empty lines; 'for' loop to get tot number of words;
 fancier, Reduce()
 -->
 
-## <a name="linreg2"> </a> Lesson 25:  Linear Regression Analysis, II
+## <a name="linreg2"> </a> Linear Regression Analysis, II
 
 Continuing our look at linear regression analysis using R, let's look at
 the famous [bike sharing
@@ -3270,7 +3303,7 @@ The **predict** function, which here is **predict.lm**, assumes that the
 new cases to be predicted are supplied as a data frame, with the same
 column names as with the original data.
 
-## <a name="dates"> </a> Lesson 26:  Work with the R Date Class
+## <a name="dates"> </a> Work with the R Date Class
 
 In the bike sharing data, dates were included, in **day$dteday**.  As
 noted, some of those were holidays, indicated in the **holiday** column.
@@ -3332,7 +3365,7 @@ even bettery, in POSIX form:
 There are many operations that can be done on R dates.  The above is
 just a little sample.
 
-## <a name="style"> </a> Lesson 27:  Tips on R Coding Style and Strategy
+## <a name="style"> </a> Tips on R Coding Style and Strategy
 
 Programming is a creative activity, and thus different programmers will
 have different coding styles.  Some people feel so strongly that they
@@ -3470,7 +3503,7 @@ cases.
 
 More on this in a later lesson!
 
-## <a name="logit"> </a> Lesson 28:  The Logistic Model
+## <a name="logit"> </a> The Logistic Model
 
 In our earlier examples of regression analysis, we were predicting a
 continuous variable such as human weight.  But what if we wish to
@@ -3540,7 +3573,7 @@ of age 40.
 So, the risk of diabetes increases substantial over that 10-year period,
 but this population and BMI level.
 
-## <a name="fd"> </a> Lesson 29:  Files and Directories
+## <a name="fd"> </a> Files and Directories
 
 In assmebling a dataset for my **regtools** package, I needed to collect
 the records of several of my course offerings.  I started in a directory
@@ -3656,7 +3689,7 @@ On the other hand, if this subdirectory *does* contain a file named
 reads in the found file, and assigns its contents as a new element of
 our **resultsFiles** list.
 
-## <a name="whl"> </a> Lesson 30:  R 'while' Loops
+## <a name="whl"> </a> R 'while' Loops
 
 We've seen R **for** loops in previous lessons, but there's another kind
 of loop, **while**.  It keeps iterating until some specified condition
@@ -3828,10 +3861,75 @@ I also would recommend various Web tutorials:
 * Hadley Wickham, 
 [the Tidyverse](https://www.tidyverse.org) 
 
-**LICENSING**
+## <a name="ide"> Installing and Using IDEs </a>
 
-The document is covered by a [Creative
-Commons](http://creativecommons.org/licenses/by-nd/3.0/us/) license,
+An *interactive development environment* (IDE) is a software tool that
+enables editing, saving and running your code, as well as related
+actions such as installing packages.
+
+The real "power users" tend to use either Emacs Speaks Statistics (ESS),
+a plugin for the Emacs editor, or Nvim-r,, a plugin for the vim editor.
+However, since this tutorial is aimed at those with little or no prior
+coding background, we will not cover them.  Instead, we introduce 
+RStudio.  Here are some pros and cons:
+
+* RStudio is very highly popular, especially in the US and Australia/New
+  Zealand.  Indeed, for many users, RStudio *is* R.  
+
+* Lots of help available on the Web, and in R User Groups that have been
+  established in many major cities.  Has numerous features, keyboard
+shortcuts etc.  
+
+* That however also has a downside, since as noted earlier, the
+  compexity of RStudio can be "overwhelming."
+
+In light of that last point, we recommend that you NOT try to learn
+RStudio to any degree of complexity at the outset.  Just learn how to
+create, load, run, and save files of R code, the simple stuff, which
+should be easy.  Leave the advanced features for later.
+
+### Installation
+
+There are many tutorials on the Web for installing RStudio.   
+[This one](https://techvidvan.com/tutorials/install-r/) is pretty good, 
+for all major platforms.
+
+### Startup
+
+If your screen has an RStudio icon, click it.  Otherwise type 'rstudio'
+into a terminal window.
+
+### Basic actions:
+
+Again, there is a lot more one can do than the following, but we'll
+stick to the absolute basics.
+
+Everything here involves files, where we store our R code (*scripts*).
+
+**creating a new code file:**  File | New File | R Script will create an
+empty window pane, ready to be filled with code.  Start typing!
+
+**saving a code file:** File | Save will save the contents of the pane.
+If it's a new file, you'll be asked to give the file a name.
+
+**running code file:** Source will result in your entire file being
+executed.  Note:  You'll need explicit **print()** calls, e.g.
+
+``` r
+3
+print(8)
+```
+
+will only print the 8.
+
+**exiting RStudio:**
+
+
+
+## LICENSING
+
+The document is covered by a 
+[Creative Commons](http://creativecommons.org/licenses/by-nd/3.0/us/) license,
 Creative Commons Attribution-No Derivative Works 3.0 United States 
 ![alt text](http://i.creativecommons.org/l/by-nd/3.0/us/88x31.png).  I have
 written the document to be *used*, so readers, teachers and so on are
