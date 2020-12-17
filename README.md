@@ -142,6 +142,8 @@ has its own Markdown renderer. Or you can download it to your own
 machine in Chrome and use the Markdown Reader extension to view it (be
 sure to enable Allow Access to File URLs).  
 
+When you end your R session, exit by typing 'quit()'.
+
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
 
@@ -2229,7 +2231,8 @@ the code for plotting:
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
 
 There does indeed seem to be an upward trend in time.  Ballplayers
-should be more careful!
+should be more careful!  (Of course, they would insist the gained weight
+is all muscle. :-) )
 
 Note again that the **plot** function noticed that we supplied it with
 two arguments instead of one, and thus drew a two-dimensional scatter
@@ -2600,8 +2603,8 @@ course, though we'll cover it briefly in a future lesson.
 ## <a name="cran"> </a> R Packages, CRAN, Etc.
 
 We'll soon bring in **ggplot2**, a user-contributed package, stored in
-the [CRAN repository](https://cran.r-project.org).  As of June 2020,
-there are nearly 17,000 packages there.  If you need to do some special
+the [CRAN repository](https://cran.r-project.org).  As of December 2020,
+there were nearly 17,000 packages there.  If you need to do some special
 operation in R, say spatial data analysis, it may well be in there. 
 You might take the [CRAN Task
 Views](https://cran.r-project.org/web/views/) as your starting point, or
@@ -2632,6 +2635,9 @@ to load it, e.g. by typing at the R prompt,
 ``` r
 > library(ggplot2)
 ```
+
+In RStudio, click the Packages button; there may be a delay while R
+makes a list of all your packages.
 
 Later, you'll write your own R packages, a future lesson.
 
@@ -2686,7 +2692,7 @@ to the screen.  Here the plot (albeit) empty is printed to the screen.
 Now let's do something useful:
 
 ``` r
-> p + geom_point(aes(x = Age, y = Weight, col = PosCategory),cex=0.8)
+> p + geom_point(aes(x = Age, y = Weight, col = PosCategory),cex=0.6)
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WtAgePosGG.png)
@@ -2954,7 +2960,7 @@ to us, the programmer, a note to help us remember what we did.
 
 Comments are extremely important.  When we read our code six months from
 now, we will have forgotten most of it, so comments help us reorient.
-The same holds if someone else reads our code.  Comments -- *meaninful*
+The same holds if someone else reads our code.  Comments -- *meaningful*
 comments -- are key to good coding.  More on this in a future lesson.
 
 But we also see another snag.  The above output tells us that R took
@@ -3214,7 +3220,8 @@ cold or very hot days, so we may wish to add a quadratic term to the
 model, say by doing
 
 ``` r
-day1$temp2 <- temp^2  # the caret symbol means exponentiation, i.e. 2nd power here
+day1$temp2 <- temp^2  # the caret symbol means exponentiation, 
+                      # i.e. 2nd power here
 ```
 
 This would add the indicated column to **day1**.  But we will not pursue
@@ -3553,7 +3560,12 @@ of age 40.
 So, the risk of diabetes increases substantial over that 10-year period,
 but this population and BMI level.
 
-## <a name="fd"> </a> Files and Directories
+## <a name="fd"> </a> Files and Folders/Directories
+
+Note:  On Unix-family systems such as Linux, the Windows term *folder*
+is said to be a *directory*.  You will frequently see this in Mac
+discussions as well.  (The Mac OS is a Unix-family system.)  We will
+typically use the term *directory* here, as that is what R uses.
 
 In assmebling a dataset for my **regtools** package, I needed to collect
 the records of several of my course offerings.  I started in a directory
@@ -3895,17 +3907,12 @@ Everything here involves files, where we store our R code (*scripts*).
 empty window pane, ready to be filled with code.  Start typing!
 
 **saving a code file:** File | Save will save the contents of the pane.
-If it's a new file, you'll be asked to give the file a name.
+If it's a new file, you'll be asked to give the file a name.  Make sure
+to note what folder the file will be in, so you know where to read it
+from later.
 
-**running code file:** Source will result in your entire file being
-executed.  Note:  You'll need explicit **print()** calls, e.g.
-
-``` r
-3
-print(8)
-```
-
-will only print the 8.
+**running code:** To run the code in your current window, choose Code |
+Run Region | Run All.
 
 **exiting RStudio:**
 
