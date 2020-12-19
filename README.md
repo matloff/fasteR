@@ -2793,7 +2793,17 @@ right of the graph, so we know which color corresponds to which
 position.  We can do this in base-R graphics too, but need to set an
 argument for it in **plot**.
 
-## <a name="appfam"> </a> More on the apply Family
+## <a name="appfam"> </a> Functional Programming and the Role of Loops, Especially for Beginners
+
+Earlier in this tutorial, we've found R's **tapply** function to be
+quite handy.  There are several others in this family, notably
+**apply**, **lapply** and **sapply**.  In addition, there are other
+related functions, such as **do.call** and **Reduce()**.  And there are
+a number of counterparts in the Tidyverse **purrr** package.
+All of these go under the aegis of *functional programming* (FP).
+
+To many, FP is intended as a higher-level replacement for loops.
+
 
 Recall our earlier example, in which we wanted to fit separate
 regression lines to each of the four player position categories.  We
