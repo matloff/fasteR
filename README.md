@@ -2433,12 +2433,15 @@ Prediction, it is not as much of an issue.
 
 ## <a name="less15"> </a> Baseball Player Analysis (cont'd.)
 
-This lesson will be a little longer, but it will give you more practice
-on a number of earlier topics, and will also bring in some new R
-functions for you.
+This lesson will be a little longer and more detail-oriented.  But it
+will give you more practice on a number of earlier topics, and will also
+bring in some new R functions for you.  Spending extra time on
+this lesson will pay substantial dividends.
 
 We might wonder whether the regression lines differ much among player
-positions.  Let's first see what positions are tabulated:
+positions.  (A more statistical approach would be to include
+*interaction terms* in the model.) Let's first see what positions are
+tabulated:
 
 ``` r
 > table(mlb$PosCategory)
@@ -2505,7 +2508,8 @@ outfielder is in row 12 of the data frame.
 > forms to write loops.
 
 And a loop is exactly what we need here.  We want to call **lm** four
-times.  We could do this, say, with a loop beginning with
+times, once for each position.  We could do this, say, with a loop
+beginning with
 
 ``` r
 for (i in 1:4)
@@ -2532,15 +2536,22 @@ We could have **lm** and **print** calls in the body of the loop.
 But let's be a little fancier, building up a data frame with the output.
 We'll start with an empty frame, and keep adding rows to it.
 
+Our code is
+
 ``` r
-> posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
-> m <- data.frame()
-> for (pos in posNames) {
-+   posRows <- rownums[[pos]]
-+   lmo <- lm(Weight ~ Age, data = mlb[posRows,])
-+   newrow <- lmo$coefficients
-+   m <- rbind(m,newrow)
-+ }
+posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
+m <- data.frame()
+for (pos in posNames) {
+   posRows <- rownums[[pos]]
+   lmo <- lm(Weight ~ Age, data = mlb[posRows,])
+   newrow <- lmo$coefficients
+   m <- rbind(m,newrow)
+}
+```
+
+Here is the output:
+
+``` r
 > m
   X180.828029016113 X0.794925225995348
 1          180.8280          0.7949252
@@ -2552,13 +2563,15 @@ We'll start with an empty frame, and keep adding rows to it.
 Some key things to note here.  
 
 *  The overall strategy is to start with an empty data frame, then keep
-   adding rows to it, one row per playing position.
+   adding rows to it, one row of regression coefficients per playing position.
 
 *  In order to add rows to **m**, we used R's **rbind** ("row bind")
    function.  The expression **rbind(m,newrow)** forms a new data frame,
 by tacking **newrow** onto **m**.  Here we reassign the result back to
-**m**, also a common operation.  (By the way, there is also a **cbind**
-functon for columns.)
+**m**, also a common operation.  (Note carefully: The **rbind**
+operation did not change **m**; it merely created a new data frame.  To
+update **m**, we needed to assign that new data frame to **m**.)
+By the way, there is also a **cbind** function for columns.
    
 *  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
    **mlb** as previously, since here we wanted to fit a regression line
@@ -2567,11 +2580,12 @@ rows of **mlb** for which the position was equal to the current value of
 **pos**.
 
 So, what happens is:  **m** is initially an empty data frame.  Then the
-loop, for its first iteration, sets **pos** to 'Catcher'.  Then a line
-will be fit to the rows of **mlb** that are for catchers.  That line is
-returned to us from **lm**, and we assign it to **lmo**.  (Once again,
-the name is arbitrary; I chose this one to symbolize "lm output.")  We
-extract the coefficients and tack them on at the end of **m**.
+loop, for its first iteration, sets **pos** to 'Catcher'.  Then a
+regression line will be fit to the rows of **mlb** that are for
+catchers.  That line is returned to us from **lm**, and we assign it to
+**lmo**.  (Once again, the name is arbitrary; I chose this one to
+symbolize "lm output.")  We extract the coefficients and tack them on at
+the end of **m**.
 
 > <span style="color:red">Tip:</span> This is a very common *design
 > pattern* in R (and most other languages)
@@ -2591,8 +2605,7 @@ Outfielder  176.2884 0.7883343
 Pitcher     185.5994 0.6543904
 ```
 
-What happened here?  
-We earlier saw the built-in **row.names** function,
+What happened here?  We earlier saw the built-in **row.names** function,
 so that setting row names was easy.  But what about the column names?
 Recall that a data frame is actually an R list, consisting of several
 vectors of the same length, which form the columns.  So, **names(m)** is
@@ -2603,11 +2616,42 @@ Moreover, we now have our results in a data frame for further use.  For
 instance, we may wish to plot the four lines on the same graph, and we
 would use rows of the data frame as input.
 
-Finally, what about those results?  There is substantial variation in
-those estimated slopes, but again, they are only estimates.  The
-question of whether there is substantial variation at the population
+A little more finessing is possible.  Look at the line
+
+``` r
+posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
+```
+
+We're using a computer!  We shouldn't have to type out these names by
+hand, as I did in this line.  In fact, we already have them in one of
+our R objects, **rownums**; recall our earlier check:
+
+``` r
+> str(rownums)
+List of 4
+ $ Catcher   : int [1:76] 1 2 3 35 36 66 67 68 101 102 ...
+ $ Infielder : int [1:210] 4 5 6 7 8 9 37 38 39 40 ...
+ $ Outfielder: int [1:194] 10 11 12 13 14 15 16 43 44 45 ...
+ $ Pitcher   : int [1:535] 17 18 19 20 21 22 23 24 25 26 ...
+```
+
+The elements of the R list **rownums** are the names of the positions!
+So, the better way to set **posNames** is
+
+``` r
+posNames <- names(rownums)
+```
+
+> <span style="color:red">Tip:</span> Again, the reader may be thinking,
+> "How in the world would I have been able to realize this?"  Again, the
+> answer is that as you acquire more experience in coding, you will be
+> more and more ability to come up with insights like this.  Patience!
+
+Finally, what about those numerical results?  There is substantial
+variation in those estimated slopes, but again, they are only estimates.
+The question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
-course, though we'll cover it briefly in a future lesson.
+course. 
 
 ## <a name="cran"> </a> R Packages, CRAN, Etc.
 
