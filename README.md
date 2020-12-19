@@ -2231,7 +2231,15 @@ the code for plotting:
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/MLB.png)
 
 There does indeed seem to be an upward trend in time.  Ballplayers
-should be more careful!  (Of course, they would insist the gained weight
+should be more careful!  
+
+(Though it is far beyond the scope of this tutorial, which is on R
+rather than statistics, it should be pointed out that interpretation of
+the regression coefficients must be done with care.  It may be, for
+instance, that heavier players tend to have longer careers.  If so,
+fitting our linear form to data that has many older, heavier players may
+misleadingly imply that most individual players gain weight as they age.
+And of course, they would insist the gained weight
 is all muscle. :-) )
 
 Note again that the **plot** function noticed that we supplied it with
@@ -2583,7 +2591,8 @@ Outfielder  176.2884 0.7883343
 Pitcher     185.5994 0.6543904
 ```
 
-What happened here?  We earlier saw the built-in **row.names** function,
+What happened here?  
+We earlier saw the built-in **row.names** function,
 so that setting row names was easy.  But what about the column names?
 Recall that a data frame is actually an R list, consisting of several
 vectors of the same length, which form the columns.  So, **names(m)** is
@@ -2602,24 +2611,28 @@ course, though we'll cover it briefly in a future lesson.
 
 ## <a name="cran"> </a> R Packages, CRAN, Etc.
 
-We'll soon bring in **ggplot2**, a user-contributed package, stored in
+One of the great things about R is that are tens of thousands of
+packages that were developed by users and then contributed to
 the [CRAN repository](https://cran.r-project.org).  As of December 2020,
 there were nearly 17,000 packages there.  If you need to do some special
 operation in R, say spatial data analysis, it may well be in there. 
-You might take the [CRAN Task
-Views](https://cran.r-project.org/web/views/) as your starting point, or
-simply use Google, e.g. plugging in the search term "CRAN spatial data." 
-
+You might take the [CRAN Task Views](https://cran.r-project.org/web/views/) 
+as your starting point, or simply use Google, e.g. plugging in the search 
+term "CRAN spatial data." 
 Other good sources of public R packages are
 [Bioconductor](https://www.bioconductor.org/) and useRs' personal GitHub
-pages.  More on this in a later lesson.
+pages.  
 
-UseRs usually designate a special folder/directory for their packages
-(both those they download and ones they write themselves).  The question
-then arises as to which folder is used.  I use 'R' in my home directory
-for that purpose, but if you don't specify a folder, your package
-installer will choose one for you.  It won't matter as long as you are
-consistent.  I'll assume you don't specify a package folder.
+Below, we'll introduce one of the most popular user-contributed
+packages, **ggplot2**.  But first, how does one install and load
+packages?
+
+First, one needs a place to put the packages.  UseRs often designate a
+special folder/directory for their packages (both those they download
+and ones they write themselves).  I use 'R' in my home directory for
+that purpose, but if you don't specify a folder, your package installer
+will choose one for you.  It won't matter as long as you are consistent.
+I'll assume you don't specify a package folder.
 
 To install, say, **ggplot2**, you can type at the R prompt,
 
@@ -2636,12 +2649,15 @@ to load it, e.g. by typing at the R prompt,
 > library(ggplot2)
 ```
 
-In RStudio, click the Packages button; there may be a delay while R
-makes a list of all your packages.
+In RStudio, click the Packages button and select the one you want; there
+may be a delay while R makes a list of all your packages.
 
-Later, you'll write your own R packages, a future lesson.
+Later, you'll write your own R packages.  We won't cover that here, but
+there are many good tutorials for this on the Web.
 
-## <a name="gg2"> </a> A First Look at ggplot2
+## <a name="gg2first"> </a> The ggplot2 Graphics Package
+
+Now, on to **ggplot2**.
 
 The **ggplot2** package was written by Hadley Wickham, who later became
 Chief Scientist at RStudio.  It's highly complex, with well over 400
@@ -2697,17 +2713,36 @@ Now let's do something useful:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WtAgePosGG.png)
 
-What happened here?  We took our existing (blank) plot, **p**, and told
-R to add to the plot ("add" symbolized by the '+'), with Age on the x
-axis, Weight on the y axis, with color coded by PosCategory.  We didn't
-specify the data frame, since we had already done that in **p**.
-Finally, after R computed **p + geom_point(aes(x = Age, y = Weight, col
-= PosCategory),cex=0.8)**, that was printed to the screen -- since we
-had typed it at th '>' prompt.
+What happened here?  Quite a bit, actually, so let's take this slowly.
 
-The 'aes' stands for "aesthetic."  This is rather abstract, and in a
-rare exception to our rule of explaining all, will just have to leave
-this as something that must be done.
+* We took our existing (blank) plot, **p**, and by writing the'+' sign,
+directed **ggplot2** to add to the plot **p**.  
+
+* Now, WHAT do we want added?  We are saying, "**ggplot2**, please add
+  to the plot **p** whatever **geom_point()** returns."  
+
+* Note that **geom_point()** is a **ggplot2** function.  Its task is to
+  produce scatter plots.
+
+* Here are the details on the arguments to **geom_point**: 
+
+    * We want to plot weight against height.  We do not need to specify what
+      data frame these two variables are from, as we already stated that
+the plot **p** is for the data frame **mlb**.  
+
+    * We are also specifying that the color coding will be according to
+      the player position, again from **mlb**.
+
+* When R evaluates that entire expression, **p + geom_point(aes(x = Age,
+  y = Weight, col = PosCategory),cex=0.6)**, the result will be another
+**ggplot2** graph object. Since we typed that expression at the '>'
+prompt, it was then printed to the screen as seen above.
+
+* There is one mystery left, though:  What does the function **aes**
+  ('aesthetic") do?  And why is the expression **cex=0.6** NOT an
+argument to **aes**?  Unfortunately, there are no easy answers to
+these questions, and in a rare exception to our rule of explaining all,
+we will just have to leave this as something that must be done.
 
 One nice thing is that we automatically got a legend printed to the
 right of the graph, so we know which color corresponds to which
@@ -2719,13 +2754,15 @@ argument for it in **plot**.
 Recall our earlier example, in which we wanted to fit separate
 regression lines to each of the four player position categories.  We
 used a loop, which for convenience I'll duplicate here:
+
 ``` r
 > posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
 > m <- data.frame()
 > for (pos in posNames) {
 +   lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
 +   newrow <- lmo$coefficients
-+   m <- rbind(m,newrow)w <- lapply(rownums,zlm)
++   m <- rbind(m,newrow)
++   w <- lapply(rownums,zlm)
 + }
 ```
 
@@ -2734,13 +2771,15 @@ Recall too that the **rownums** list had come from the output of R's
 
 Loops make some in the R community nervous.  First, there is the concern
 that the operation might be vectorized upon further thought, thus making
-it faster.  Second, some people believe loop code is prone to bugs, and a
-*functional programming* (FP) approach is safer.
+it faster; by using a loop, we would forego that speedup.  Second, some
+people believe loop code is prone to bugs, and a *functional
+programming* (FP) approach is safer.
 
-Those points may be valid, but in my view avoidance of loops has been an
-unhealthy obsession in some quarters.  Nevertheless, let's see what the
-FP approach might be here.  (We are, as usual, sticking to base-R.
-There are various FP packages, e.g. **purrr**.)
+Those points may have validity, but in my view avoidance of loops has
+been an unhealthy obsession in some quarters.  Nevertheless, let's see
+what the FP approach might be here.  (We are, as usual, sticking to
+base-R, and thus will use FP features from the base.  There are various
+FP packages, e.g. the Tidyverse's **purrr**.)
 
 We've seen the **tapply** function a couple of times already.  Now let's
 turn to **lapply** ("list apply").  The call form is
@@ -2754,21 +2793,22 @@ must be the name of a one-argument function.  This calls
 **someFunction** on each element of **someVecOrList**, placing the
 return values in a new list.
 
-How might be use that here?  As noted before, programming is a creative
+How might we use that here?  As noted before, programming is a creative
 process, and solutions may not come immediately.  The following solution
 is natural to experienced R coders, but you may find that it "came out of
-the blue," of unclear provenance.
+the blue," of unclear provenance; just be patient, and you will
+gradually develop such insight too.
 
 ``` r
 > zlm <- function(rws) lm(Weight ~ Age, data=mlb[rws,])$coefficients
 > w <- lapply(rownums,zlm)
 ```
 
-The reader should take extra time here to ponder what **zlm** does: For
-a set **rws** of **mlb**, the function will call **lm**, then return the
-coefficient portion of whatever **lm** returns.  In sort, the function
-runs a linear regression analysis on the designated rows of **mlb**, and
-returns the coefficients.
+The reader should take extra time here to ponder what the function
+**zlm** does: For a set **rws** of **mlb**, the function will call
+**lm**, then return the coefficient portion of whatever **lm** returns.
+In short, the function runs a linear regression analysis on the
+designated rows of **mlb**, and returns the coefficients.
 
 The call to **lapply** then says, run **zlm** on each set of rows we see
 in **rownums**, placing the coefficient vectors in an output list.
@@ -2797,9 +2837,11 @@ one:
 ``` 
 jibing with **m[1,]** in our data-frame/loop appraoch above.
 
-Well, then, what did we accomplish?  Certainly the **lapply** version
-made for more compact code.  But we had to think a little harder to come
-up with the idea.  And worse, printing it out is less compact:
+Well, then, what did we accomplish -- if anything -- by using **lapply**
+here rather than our earlier approach using a loop?  Certainly the
+**lapply** version did make for more compact code, just 2 lines.  But we
+had to think a harder to come up with the idea.  And worse, printing it
+out is less compact:
 
 ``` r
 > w
@@ -2820,11 +2862,16 @@ $Pitcher
 185.5993689   0.6543904 
 ```
 
-Another central function in the **apply** family is, not surprisingly,
-named **apply**.  It is used on **matrix** objects (like data frames,
-but with the contents being all of the same type, e.g. all numerical),
-on either rows or columnṡ, and on data frames, where it is used only on
-columns.
+So, I don't recommend use of **lapply** (or similar functions in the
+Tidyverse) for beginners.  Even I, as a skilled R coder, would prefer
+the loop version, though I do indeed use **lapply** in some settings.
+The KISS principle, "Keep It Simple, Stupid" offers great wisdom here.
+
+Now, let's turn to another central function in the **apply** family.
+Not surprisingly, it's named **apply**!  It is usually used on
+**matrix** objects (like data frames, but with the contents being all of
+the same type, e.g. all numerical), on either rows or columnṡ, but can
+be used on data frames too.
 
 The call form is
 
@@ -2848,6 +2895,10 @@ age
      1.00 
 ```
 
+Note that to use the  **apply** family, you can either use a built-in R
+function, e.g. **max** here, or one you write yourself, such as **zlm**
+above.
+
 The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
 More compact code may not be easier.
@@ -2860,7 +2911,8 @@ simple yet practical example, in order to illustrate some key functions
 in base-R.  (R has many packages for advanced text work, such as **tm**.)
 
 Our example will cover reading in a file of text, and compiling a word
-count, i.e. calculating the number of times each word appears.
+count, i.e. calculating the number of times each word appears.  This
+kind of task is at the core of many text classification algorithms.
 
 The file is
 [here](https://raw.githubusercontent.com/matloff/fasteR/master/data/aboutR.txt).
@@ -2967,10 +3019,14 @@ But we also see another snag.  The above output tells us that R took
 line 6, which has 11 words, and split into 14 words -- the first 3 of
 which are empty words "".  This is because the first three characters in
 line 6 are blanks.  When there is more than one consecutive blank, 
-the **strsplit** function works, R treats some of the blanks as
-"words."  (By the way, Python's analogous function doesn't do this.)
+the **strsplit** function treats the excess blanks as
+"words."  (This comes as quite a surprise to Python programmers.)
 
-So, how to fix it?  For that particular line, we could do, say,
+So, how to fix it?  Answering that question will give us a chance to
+learn more about R in general.
+
+For that particular line, we could do, say, is remove those empty
+"words" as follows:
 
 ``` r
 > z <- w[[6]]
@@ -3005,54 +3061,56 @@ to delete the empty "words" sounds like something worth keeping.  So,
 let's write it in function form:
 
 ``` r
-extractWords <- function(s) 
+extractNonemptyWords <- function(s) 
 {
    z <- strsplit(s,' ')[[1]]
    z[z != ""]
 }
 ```
 
-(Recall that in R functions, the last computed value is automatically
-returned.)
+Recall that in R functions, the last computed value is automatically
+returned.  The expression **z[z != ""]** evaluates to the set of
+nonempty words, and it is returned.
 
 <span style="color:red">Tip:</span> 
 As mentioned, we should probably save that function for future use.
-We could save it using **save** as discussed earlier, but it
+We could save it using the **save** function as discussed earlier, but it
 would be better to save our "home grown" functions in one or more
 packages, maybe even submitting them to CRAN.  More on this in a later
 lesson.
 
-> **Your Turn:** That [[1]] expression in the body of **extractWords** was
-> crucial!  Try the code without it, and see if you can explain the
-> result, which is not what we desire.
-> 
+We'll continue with this example in the next lesson, but first, time for
+a **Your Turn** session.
+
+> **Your Turn:** That [[1]] expression in the body of
+> **extractNonemptyWords** was crucial!  Try the code without it, and
+> see if you can explain the result, which is not what we desire.
 > <span style="color:red">Tip:</span>  This illustrates a common error
 > for beginners and veterans alike.  The error message probably won't be
 > helpful!  So keep this frequent error in mind, both when you're
 > writing code and viewing cryptic error messages.
 
-We can then call our **extractWords** function on each line of the file,
-say in a loop.  We'll do this in the next section.
+We can then call our **extractNonemptyWords** function on each line of
+the file, say in a loop.  We'll do this in the next section.
 
 > **Your Turn:** Write a function with call form **delNAs(x)**, that
 > returns **x** with NAs deleted.  
 
 ## <a name="txt1"> </a> Simple Text Processing, II
 
-So, let's use our **extractWords** function on our **abt** vector.
+So, let's use our **extractNonemptyWords** function on our **abt** vector.
 Here's a loop way to do it:
 
 ``` r
 allWords <- NULL  # start with empty vector
 for (i in 1:70) {
-   thisLine <- extractWords(abt[i])
+   thisLine <- extractNonemptyWords(abt[i])
    allWords <- c(allWords,thisLine)
 }
 ```
 
-Note that the result (again, the result of the last computation, which
-will be the final value of **allWords**), will be one long vector,
-consisting of all the words in the file.
+Note that the result, i.e. the final value of **allWords**, will be one
+long vector, consisting of all the words in the file.
 
 As usual, it is a must to inspect the result, say the first 25 elements:
 
@@ -3074,6 +3132,7 @@ desired.  But how to get the word counts?  Why, it's our old friend,
 **tapply**!
 
 ``` r
+> q <- tapply(allWords,allWords,length)
 > head(q,25)
             ;            …) “environment”      (easily)     (formerly 
             1             1             1             1             1 
@@ -3104,7 +3163,8 @@ lot.
 
 We're not fully done yet.  For instance, we have a punctuation problem,
 where periods, commas and so on are considered parts of words, such as
-the period in **allWords[17]** seen above, 'graphics.'  
+the period in **allWords[17]** seen above, 'graphics.'  We also probably
+should change capital letters to lower  
 
 For major usage, we should consider using one of the advanced R packages
 in text processing.  For instance, the **tm** package has a
