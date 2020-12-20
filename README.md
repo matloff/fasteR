@@ -80,8 +80,9 @@ you should cook up your own variants to try.
 * [S3 Classes](#s3)
 * [Baseball Player Analysis (cont'd.)](#less15)
 * [R Packages, CRAN, Etc.](#cran)
+* [A Pause, Before Going on to Advanced Topics](#advanced)
 * [A First Look at ggplot2](#gg2first)
-* [More on the apply Family](#appfam)
+* [Should You Use Functional Programming?](#appfam)
 * [Simple Text Processing, I](#txt)
 * [Simple Text Processing, II](#txt1)
 * [Linear Regression Analysis, II](#linreg2)
@@ -90,7 +91,6 @@ you should cook up your own variants to try.
 * [The Logistic Model](#logit)
 * [Files and Directories](#fd)
 * [R 'while' Loops](#whl)
-* (more lessons coming soon!)
 * [To Learn More](#forMore)
 * [Appendix: Installing and Using RStudio](#rstudio)
 
@@ -2699,6 +2699,17 @@ may be a delay while R makes a list of all your packages.
 Later, you'll write your own R packages.  We won't cover that here, but
 there are many good tutorials for this on the Web.
 
+## <a name="advanced"> </a> A Pause, Before Going on to Advanced Topics
+
+At this point, you have a pretty good grounding in R.  You are capable
+of doing lots of things in R.  It may be all you need, but even if not,
+you know enough to ask a question online if you get stuck on something.
+
+The remaining topics are more advanced, and lessons will be somewhat
+longer and more detailed that the previous ones.  But you are still
+strongly encouraged to go through them, as they will not only cover new
+topics but also give you deeper insight into the earlier material.
+
 ## <a name="gg2first"> </a> The ggplot2 Graphics Package
 
 Now, on to **ggplot2**.
@@ -2793,7 +2804,7 @@ right of the graph, so we know which color corresponds to which
 position.  We can do this in base-R graphics too, but need to set an
 argument for it in **plot**.
 
-## <a name="appfam"> </a> Functional Programming and the Role of Loops, Especially for Beginners
+## <a name="appfam"> </a> Should You Use Functional Programming?
 
 Earlier in this tutorial, we've found R's **tapply** function to be
 quite handy.  There are several others in this family, notably
@@ -2802,67 +2813,120 @@ related functions, such as **do.call** and **Reduce()**.  And there are
 a number of counterparts in the Tidyverse **purrr** package.
 All of these go under the aegis of *functional programming* (FP).
 
-To many, FP is intended as a higher-level replacement for loops.
+To many, FP is intended as a higher-level replacement for loops, and
+some members of the R community view that as desirable, even a must.  I
+personally take a more moderate point of view, but before discussing the
+controversy, let's see how FP works as a loop-replacement.
 
-
-Recall our earlier example, in which we wanted to fit separate
-regression lines to each of the four player position categories.  We
-used a loop, which for convenience I'll duplicate here:
+As a simple example, say we have a nonnegative integer vector **x**, and
+want code that counts doubles each element that is greater than 9.
+Of course, this is something we should not use a loop with in the first
+place.  We should take advantage of R's vectorization capabilities:
 
 ``` r
-> posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
-> m <- data.frame()
-> for (pos in posNames) {
-+   lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
-+   newrow <- lmo$coefficients
-+   m <- rbind(m,newrow)
-+   w <- lapply(rownums,zlm)
-+ }
+x <- ifelse(x > 9,2*x,x)
+
 ```
 
-Recall too that the **rownums** list had come from the output of R's
-**split** function.
-
-Loops make some in the R community nervous.  First, there is the concern
-that the operation might be vectorized upon further thought, thus making
-it faster; by using a loop, we would forego that speedup.  Second, some
-people believe loop code is prone to bugs, and a *functional
-programming* (FP) approach is safer.
-
-Those points may have validity, but in my view avoidance of loops has
-been an unhealthy obsession in some quarters.  Nevertheless, let's see
-what the FP approach might be here.  (We are, as usual, sticking to
-base-R, and thus will use FP features from the base.  There are various
-FP packages, e.g. the Tidyverse's **purrr**.)
-
-We've seen the **tapply** function a couple of times already.  Now let's
-turn to **lapply** ("list apply").  The call form is
+But let's ignore vectorization, for the sake of illustrating the issues,
+and write up a loop version:
 
 ``` r
-lapply(someVecOrList,someFunction)
+for (i in 1:5) if (x[i] > 9) x[i] <- 2 * x[i]
+```
+
+Now, how would we replace this loop by a call to R's **sapply** function?
+The latter has the call form
+
+``` r
+sapply(X,FUN)
+```
+
+where **X** is an R factor and **FUN** is a function.  We will assume
+here that **FUN** returns a number, not a vector or other R object.  The
+action of the function is to apply **FUN** on each element of **X**,
+producing a new vector.  (It of course can be reassigned to the old
+one.)
+
+The key is defining **FUN**:
+
+``` r
+doubleIt <- function(z) if(z > 9) return(2*z) else return(z)
+sapply(x,doubleIt)
+```
+
+Let's check:
+
+``` r
+> x <- c(5,12,13,8,88)
+> x <- sapply(x,doubleIt)
+> x
+[1]   5  24  26   8 176
+```
+
+Or, we can use what is called an *anonymous* function:
+
+``` r
+> x <- c(5,12,13,8,88)
+> x <- sapply(x,function(z) if(z > 9) return(2*z) else return(z))
+> x
+[1]   5  24  26   8 176
+```
+
+Instead of defining the function separately, we define it right there in
+the second argument of **sapply**.  
+ 
+Now let's consider something more elaborate.  Recall our earlier
+baseball player example, in which we wanted to fit separate regression
+lines to each of the four player position categories.  We used a loop,
+which for convenience I'll duplicate here:
+
+``` r
+rownums <- split(1:nrow(mlb),mlb$PosCategory)
+posNames <- c('Catcher','Infielder','Outfielder','Pitcher')
+m <- data.frame()
+for (pos in posNames) {
+  lmo <- lm(Weight ~ Age, data = mlb[rownums[[pos]],])
+  newrow <- lmo$coefficients
+  m <- rbind(m,newrow)
+}
+```
+
+How might we do this in FP?  We've seen the **tapply** function a couple
+of times already.  Now let's turn to **lapply** ("list apply").  The
+call form is
+
+``` r
+lapply(VectorOrList,FUN)
 ```
 
 This first argument must be a vector or list, and the second argument
 must be the name of a one-argument function.  This calls
-**someFunction** on each element of **someVecOrList**, placing the
+**FUN** on each element of **VetorcOrList**, placing the
 return values in a new list.
 
-How might we use that here?  As noted before, programming is a creative
-process, and solutions may not come immediately.  The following solution
-is natural to experienced R coders, but you may find that it "came out of
-the blue," of unclear provenance; just be patient, and you will
-gradually develop such insight too.
+How might we use that here?  Well, **lapply**, as the name implies, is
+aimed at working on lists.  Do we have any?  Why yes, **rownums** is a
+list!
+
+And indeed, we do want to take some action on each element of that list:
+We want to fit a linear regression model to the rows in that element.
+It is natural, then, to take for **FUN** the following function:
+
+``` r
+zlm <- function(rws) lm(Weight ~ Age, data=mlb[rws,])$coefficients
+```
+
+Here **rws** is a set of row numbers, e.g. those for the pitchers.  This
+function calls **lm** on those rows, i.e. on the data **mlb[rws,]**,
+then extracts the regression coefficients.
+
+The code then is
 
 ``` r
 > zlm <- function(rws) lm(Weight ~ Age, data=mlb[rws,])$coefficients
 > w <- lapply(rownums,zlm)
 ```
-
-The reader should take extra time here to ponder what the function
-**zlm** does: For a set **rws** of **mlb**, the function will call
-**lm**, then return the coefficient portion of whatever **lm** returns.
-In short, the function runs a linear regression analysis on the
-designated rows of **mlb**, and returns the coefficients.
 
 The call to **lapply** then says, run **zlm** on each set of rows we see
 in **rownums**, placing the coefficient vectors in an output list.
@@ -2894,7 +2958,7 @@ jibing with **m[1,]** in our data-frame/loop appraoch above.
 Well, then, what did we accomplish -- if anything -- by using **lapply**
 here rather than our earlier approach using a loop?  Certainly the
 **lapply** version did make for more compact code, just 2 lines.  But we
-had to think a harder to come up with the idea.  And worse, printing it
+had to think a harder to come up with the idea.  Also, printing it
 out is less compact:
 
 ``` r
@@ -2916,10 +2980,31 @@ $Pitcher
 185.5993689   0.6543904 
 ```
 
-So, I don't recommend use of **lapply** (or similar functions in the
-Tidyverse) for beginners.  Even I, as a skilled R coder, would prefer
-the loop version, though I do indeed use **lapply** in some settings.
-The KISS principle, "Keep It Simple, Stupid" offers great wisdom here.
+(Actually, we can use **sapply** here instead of **lapply**, with a
+nicer printing.)
+
+So, should beginning R coders use FP?  Actually, even I, with decades of
+coding experience, take a moderate approach.  The criterion for
+loop-based (LB) code vs.  FP should be to ask these questions:
+
+* Would FP code be easier to write than LB in this case?
+
+* Would FP code be easier to debug than LB in this case?
+
+* Would FP code be easier to read -- either by others, or by myself 6
+  months from now -- than LB in this case?
+
+For the code in this tutorial in which we've used **tapply**, I believe
+the answers to the above questions are definitely Yes.  But for the
+**lapply** example above, I would say the answer is No -- *especially
+for beginning coders*, but even for myself.  
+
+Beginners are in the process of learning functions.  FP by definition is
+based on writing functions, thus making FP a more abstract and difficult
+process.  And I certainly disagree with the doctrinnaire view of some
+that one should never write loops.
+
+My recommendation is to take things on a case-by-case basis.
 
 Now, let's turn to another central function in the **apply** family.
 Not surprisingly, it's named **apply**!  It is usually used on
