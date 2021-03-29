@@ -1295,7 +1295,7 @@ So, **plot** put years on the horizontal axis, instead of indices 1,2,3,...
 And one more thing:  Say we wanted to know the flow in the year 1925.
 The data start at 1871, so 1925 is 1925 - 1871 = 54 years later.  Since
 the 1871 number is in element 1 of the vector, that means the flow for
-the year 1925 is in element 1+44 = 55.
+the year 1925 is in element 1+54 = 55.
 ``` r
 > Nile[55]
 [1] 698
@@ -1346,7 +1346,7 @@ in the data and take a look at the first records:
 
 ``` r
 > pe <- 
-   read.table('read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/prgeng.txt',header=TRUE)
+   read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/prgeng.txt',header=TRUE)
 > head(pe)
        age educ occ sex wageinc wkswrkd
 1 50.30082   13 102   2   75000      52
