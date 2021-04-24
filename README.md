@@ -948,7 +948,8 @@ of women having those values.  For instance, 3 women had the glucose =
 68.
 
 Uh, oh!  5 women in the study had glucose level 0.  And 1 had level 44,
-etc.  Presumably this is not physiologically possible.
+etc.  Presumably 0 is not physiologically possible, and maybe not 44
+either.
 
 Let's consider a version of the glucose data that at least excludes these 0s.
 
@@ -2352,13 +2353,14 @@ List of 12
 Our use of ... here is to indicate that we've omitted a lot of the
 output.  But a couple of things stand out even in this excerpt:
 
-1. An S3 object is actually an R list.
+1. Our **lmout** object here is an R list (which is typical of S3
+   objects).  That R list here has 12 elements.
 
 2. But it has an extra *attribute*, which is the class name, in this
    case **'lm'**.  (So the designers of R simply chose to name the class
 after the function, which is not always the case.)
 
-3. One of the components of this list is named **coefficients**, and it
+3. The first of the elements of this R list is named 'coefficients', and it
    is a vector containing the slope and intercept.
 
 So, we don't have to type the slope and intercept in by hand after all.
@@ -2366,6 +2368,14 @@ So, we don't have to type the slope and intercept in by hand after all.
 ``` r
 > cfs <- lmout$coefficients
 > abline(a = cfs[1], b = cfs[2])
+```
+
+By the way, **abline()** is actually a *generic* function, like
+**print()** and **plot()**.  So if we want to be clever, we can add our
+line to the graph using this approach:
+
+``` r
+> abline(lmout)
 ```
 
 Now, what about our original question -- do baseball players gain weight
