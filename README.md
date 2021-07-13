@@ -43,12 +43,14 @@ an intermediate-level topic.  (Some readers of this tutorial may already
 be using RStudio or an external editor, and the treatment here will
 include special instructions for them when needed.)
 
-    - Coverage is mainly limited to base R. So for instance the 
-popular but self-described "opinionated" Tidyverse is not 
-treated, partly due to its controversial nature (I am a 
-[skeptic](http://github.com/matloff/TidyverseSkeptic)),
-but again mainly because it would be a burden on the user
-to learn both base R and the Tidyverse at the same time.
+    - Coverage is mainly limited to base R. So for instance the popular
+      but self-described "opinionated" Tidyverse is not treated, partly
+due to its controversial nature (I am a
+[skeptic](http://github.com/matloff/TidyverseSkeptic)), but again mainly
+because it would be an obstacle to your becoming productive in R
+quickly. While you can learn a few simple things in Tidy quickly, they
+are quite limited in scope.  Our tutorial here is aimed a learners who
+goal is to *use* R productively in their own data analysis.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
@@ -60,6 +62,7 @@ you should cook up your own variants to try.
 
 * [Overview and Getting Started](#overview)
 * [First R Steps](#firstr)
+* [Vectors and Indices](#vecidxs)
 * [More on Vectors](#less2)
 * [On to Data Frames!](#less3)
 * [R Factor Class](#less4)
@@ -129,7 +132,7 @@ you're pretty good at it.  After all, we can all work puzzles.
 You'll need to install R, from [the R Project site](https://www.r-project.org).
 Start up R, either by clicking an icon or typing 'R' in a terminal
 window.  We are not requiring RStudio here, but if you already have it,
-start it.  You'll be typing into the R console, the Console pane.
+start it; you'll be typing into the R console, the Console pane.
 
 As noted, this tutorial will be "bare bones."  In particular, there is
 no script to type your command for you.  Instead, you will either
@@ -163,6 +166,8 @@ were expecting maybe 12108?):
 ```
 But what is that '[1]' here?  It's just a row label.  We'll go into that
 later, not needed quite yet.
+
+### Example: Nile River data
 
 R includes a number of built-in datasets, mainly for illustration
 purposes.  One of them is **Nile**, 100 years of annual flow data on the
@@ -210,7 +215,13 @@ Frequency = 1
 ```
 
 Now you can see how the row labels work.  There are 15 numbers per row
-here, so the second row starts with the 16th, indicated by '[16]'.
+here, so the second row starts with the 16th, indicated by '[16]'.  The
+third row starts with the 31st output number, hence the '[31]' and so
+on.
+
+Note that a set of numbers such as **Nile** is called a *vector*.
+
+### A first graph
 
 R has great graphics, not only in base R but also in wonderful
 user-contributed packages, such as **ggplot2** and **lattice**.  But
@@ -232,8 +243,8 @@ graph.
 
 > **Your Turn:**  The **hist** function draws 10 bins for this dataset
 > in the histogram by default, but you can choose other values, by
-> specifying a second argument to the function, named **breaks**.  E.g.  
-> 
+> specifying an optional second argument to the function, named
+> **breaks**.  E.g.  
 > ``` r
 > > hist(Nile,breaks=20)
 > ```
@@ -258,12 +269,14 @@ it's a vital resource to know.
 
 > **Your Turn:**  Look at the online help for **mean** and **Nile**.
 
-Now, one more new thing for this first lesson.  Say we want to find the
-mean flow after year 1950.  Since 1971 is the 100th year, 1951 is the 80th.
-How do we designate the 80th through 100th elements in the **Nile**
-data?
+## <a name="vecidxs"> </a> Vectors and Indices
 
-First, note that a set of numbers such as **Nile** is called a *vector*.
+Say we want to find the mean rive flow after year 1950.  
+
+The above output said that the **Nile** series starts in 1871.  That
+means 1951 will be the 81st year, and the 100th will be 1970.  How do we
+designate the 81st through 100th elements in this data?
+
 Individual elements can be accessed using *subscripts* or *indices*
 (singular is *index*), which are specified using brackets, e.g. 
 
@@ -272,8 +285,8 @@ Individual elements can be accessed using *subscripts* or *indices*
 [1] 1160
 ```
 
-for the second element (which we see above is indeed 1160).
-The value 2 here is the index.
+for the second element (the output we saw earlier shows that the second
+element is indeed 1160).  The value 2 here is the index.
 
 The **c** ("concatenate") function builds a vector, stringing several
 numbers together.  E.g. we can get the 2nd, 5th and 6th elements of
@@ -284,13 +297,43 @@ numbers together.  E.g. we can get the 2nd, 5th and 6th elements of
 [1] 1160 1160 1160
 ```
 
-And 80:100 means all the numbers from 80 to 100.  So, to answer the above
-question on the mean flow during 1951-1971, we can do
+If we wish to build a vector of *consecutive* numbers, we can use the
+"colon" notation:
 
 ``` r
-> mean(Nile[80:100])
-[1] 877.6667
+> Nile[c(2,3,4)]
+[1] 1160  963 1210
+> Nile[2:4]
+[1] 1160  963 1210
 ```
+
+As you can see, 2:4 is shorter way to specify the vector c(2,3,4).
+
+
+So, 81:100 means all the numbers from 81 to 100.  Thus
+**Nile[81:100]** specifies the 81st through 100th elements in the **Nile**
+vector.
+
+Then to answer the above question on the mean flow during 1951-1971, we
+can do
+
+``` r
+> mean(Nile[81:100])
+[1] 877.05
+```
+
+> **NOTE:** Observe how the above reasoning process worked.  We had a
+> goal, to find the mean river flow after 1950.  We knew we had some tools
+> available to us, namely the **mean** function and R vector indices.  We
+> then had to figure out a way to combine these tools in a manner that
+> achieves our goal, which we did.  
+> 
+> This is how use of R works in general.  As you go through this tutorial,
+> you'll add more and more to your R "toolbox."  Then for any given goal,
+> you'll rummage around in that toolbox, and eventually figure out the
+> right set of tools for the goal at hand.  Sometimes this will require
+> some patience, but you'll find that the more you do, the more adept you
+> become.
 
 If we plan to do more with that time period, we should make a copy of
 it:
@@ -346,6 +389,19 @@ elements in the vector, e.g.
 
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
+### Recap: What have you learned in these first two lessons?
+
+* Starting and existing R.
+
+* Some R functions:  **mean**, **hist**, **length**.
+
+* R vectors, and vector indices.
+
+* Extracting vector subsets.
+
+Not bad for Lesson 1!  And needless to say, you'll be using all of these
+frequently in the subsequent lessons and in your own usage of R.
+
 ## <a name="less2"> </a> More on Vectors
 
 Continuing along the Nile, say we would like to know in how many years
@@ -373,23 +429,31 @@ We can now use this to answer our question on the **Nile** data:
 
 The river level exceeded 1200 in 7 years.
 
-But how in the world did that work?  Bear with me a bit here.  Let's
+**But how in the world did that work?**  Bear with me a bit here.  Let's
 look at a small example first:
 
 ``` r
 > x <- c(5,12,13)
+> x
+[1]  5 12 13
 > x > 8
 [1] FALSE  TRUE  TRUE
 > sum(x > 8)
 [1] 2
 ```
 
-First, R *recycled* that 8 into 3 8s, i.e. the vector (8,8,8), in
-order to have the same length as **x**.  This sets up an
-element-by-element comparison.  Then, the 5 was compared to the
-first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 was
-compared to the second 8, then 13 with the third.  So, we got the vector
-(FALSE,TRUE,TRUE).
+First, notice something odd here, in the expression **x > 8**. Here
+**x** is a vector, 3 elements in length, but 8 is just a number.  It
+would seem that it's nnonsense to ask whether a vector is greater than a
+number; they're different animals.
+
+But R makes them "the same kind" of animal, by extending that number 8
+to a 3-element vector 8,8,8.  This is called *recycling*.  This sets up
+an element-by-element comparison:  Then, the 5 in **x** is compared to
+the first 8, yielding FALSE i.e. 5 is NOT greater than 8.  Then 12 is
+compared to the second 8, yielding TRUE, and then the comparison of 13
+to the third 8 yields another TRUE.  So, we get the vector
+FALSE,TRUE,TRUE.
 
 Fine, but how will **sum** add up some TRUEs and FALSEs?  The
 answer is that R, like most computer languages, treats TRUE and FALSE as
@@ -402,6 +466,7 @@ flow exceeded 1200, let's look at that expression again:
 > sum(Nile > 1200)
 ```
 
+
 Since the vector **Nile** has length 100, that number 1200 will be
 recycled into a vector of one hundred copies of 1200.  The '>'
 comparison will then yield 100 TRUEs and FALSEs, so summing gives us the
@@ -413,6 +478,41 @@ number of TRUEs, exactly what we want.
 > (2,1,1,6,8,5), so you will know that your answers are correct.
 > Remember, you'll learn best nonpassively.  Code away!
 
+A question related to *how many* years had a flow above 1200 is *which*
+years had that property.  Well, R actually has a **which** function:
+
+``` r
+> which(Nile > 1200)
+[1]  4  8  9 22 24 25 26
+```
+
+So the 4th, 8th, 9th etc. elements in **Nile** had the queried property.
+(Note that those were years 1875, 1879 and so on.)
+
+In fact, that gives us another way to get the count of the years with
+that trait:
+
+``` r
+> which1200 <- which(Nile > 1200)
+> which1200
+[1]  4  8  9 22 24 25 26
+> length(which1200)
+[1] 7
+```
+
+R's **length** function does what it says, i.e. finding the length of a
+vector.  In our context, that gives us the count of years with flow
+above 1200.
+
+
+### Recap:  What have you learned in this lesson?
+
+Here you've refined your skillset for R vectors, learning R's recycling
+feature, and two tricks that R users employ for finding counts of things.
+
+Once again, as you progress through this tutorial, you'll see that these
+things are used a lot in R.
+
 ## <a name="less3"> </a> On to Data Frames!
 
 Right after vectors, the next major workhorse of R is the *data frame*.
@@ -422,13 +522,19 @@ Say we have height, weight and age on each of 100 people.  Our data
 frame would have 100 rows and 3 columns.  The entry in, e.g., the second
 row and third column would be the age of the second person in our data. 
 The second row as a whole would be all the data for that second person,
-i.e. the height, weight and age of that person.  The third column as a
-whole would be the vector of all ages in our dataset.
+i.e. the height, weight and age of that person.  
+
+**Note that that row would also be cnsidered a vector.  The third column
+as a whole would be the vector of all ages in our dataset.**
 
 As our first example, consider the **ToothGrowth** dataset built-in to
-R.  Again, you can read about it in the online help (the data turn out
-to be on guinea pigs, with orange juice or Vitamin C as growth
-supplements).  Let's take a quick look from the command line.
+R.  Again, you can read about it in the online help by typing
+
+``` r
+> ?ToothGrowth
+``` (The data turn out to be on guinea pigs, with orange juice or
+Vitamin C as growth supplements.)  Let's take a quick look from the
+command line.
 
 ``` r
 > head(ToothGrowth)
@@ -443,7 +549,8 @@ supplements).  Let's take a quick look from the command line.
 
 R's **head** function displays (by default) the first 6 rows of the
 given dataframe.  We see there are length, supplement and dosage
-columns; each column is an R vector.  
+columns, which the curator of the data decided to name 'len', 'supp' and
+'dose'.  Each of column is an R vector.  
 
 > <span style="color:red">Tip:</span>
 > To avoid writing out the long words repeatedly, it's handy to
@@ -453,17 +560,17 @@ columns; each column is an R vector.
 > tg <- ToothGrowth
 ```
 
-Dollar signs are used to denote the individual columns.  E.g. we can
-print out the mean tooth length; **tg$len** is the tooth length column
-(the dollar sign is the delimiter, separating 'tg' and 'len'), so
+Dollar signs are used to denote the individual columns, e.g.
+**ToothGrowth$dose** for the dose column.  So for instance, we can print
+out the mean tooth length: 
 
 ``` r
 > mean(tg$len)
 [1] 18.81333
 ```
 
-Subscripts in data frames are pairs, specifying row and column numbers.
-To get the element in row 3, column 1:
+Subscripts/indices in data frames are pairs, specifying row and column
+numbers.  To get the element in row 3, column 1:
 
 ``` r
 > tg[3,1]
@@ -477,8 +584,9 @@ fact that **tg$len** is a vector:
 [1] 7.3
 ```
 
-The element in row 3, column 1 in the *data frame* **tg** is element 3 in
-the *vector* **tg$len**.
+The element in row 3, column 1 in the *data frame* **tg** is element 3
+in the *vector* **tg$letn**.  This duality between data frames and
+vectors is often exploited in R.
 
 > **Your Turn:**  The above examples are fundamental to R, so you should
 > conduct a few small experiments on your own this time, little variants
@@ -497,8 +605,8 @@ we are talking about column 1.  And since the first position, before the
 comma, is empty, no rows are specified -- so *all* rows are included.
 That boils down to: all of column 1.
 
-A key feature of R is that one can extract subsets of data frames, using
-either some of the rows or some of the columns, e.g.:
+A key feature of R is that one can extract subsets of data frames, 
+just as we extracted subsets of vectors earlier.  For instance,
 
 ``` r
 > z <- tg[2:5,c(1,3)]
@@ -578,9 +686,20 @@ your understanding -- as follows:
 3 13   z
 ```
 
+Look at that second line!  Instead of vectors consisting of numbers,
+one can form vectors of character strings, complete with indexing
+capability, e.g.
+
+``` r
+> y <- c('abc','de','z')
+> y[2]
+[1] "de"
+```
+
 As noted, all the columns in a data frame must be of the same length.
 Here **x** consists of 3 numbers, and **y** consists of 3 character
-strings.
+strings.  (The string is the unit in the latter.  The number of
+characters in each string is irrelevant.)
 
 > **Your Turn:** Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
@@ -591,6 +710,19 @@ strings.
 > last eruption.  As mentioned, these operations are key features of R,
 > so devise and run as many examples as possible; err on the side of
 > doing too many!
+
+### Recap:  What you have learned in this lesson
+
+As mentioned, the data frame is the fundamental workhorse of R.  It is
+made up of columns of vectors (of equal lengths), a fact that often
+comes in handy.  
+
+Unlike the single-number indices of vectors, each element in a data
+frame has 2 indices, a row number and a column number.  One can specify
+sets of rows and columns to extra subframes.
+
+One can use the R **nrow** function to query the number of rows in a
+data frame; **ncol** does the same for the number of columns.
 
 ## <a name="less4"> </a> R Factor Class
 
