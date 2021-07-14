@@ -389,7 +389,7 @@ elements in the vector, e.g.
 
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
-### Recap: What have you learned in these first two lessons?
+### Recap: What have we learned in these first two lessons?
 
 * Starting and existing R.
 
@@ -505,7 +505,7 @@ vector.  In our context, that gives us the count of years with flow
 above 1200.
 
 
-### Recap:  What have you learned in this lesson?
+### Recap:  What have we learned in this lesson?
 
 Here you've refined your skillset for R vectors, learning R's recycling
 feature, and two tricks that R users employ for finding counts of things.
@@ -711,7 +711,7 @@ characters in each string is irrelevant.)
 > so devise and run as many examples as possible; err on the side of
 > doing too many!
 
-### Recap:  What you have learned in this lesson
+### Recap:  What have we learned in this lesson?
 
 As mentioned, the data frame is the fundamental workhorse of R.  It is
 made up of columns of vectors (of equal lengths), a fact that often
@@ -745,7 +745,8 @@ as well.
 > 1-element vector with another 1-element vector, resulting in a 2-element
 > vector.
 
-What about **tg** and **tg$supp**?  What are their classes?
+What about **tg** and **tg$supp** in the Vitamin C example above?  What
+are their classes?
 
 ``` r
 > class(tg)
@@ -827,6 +828,72 @@ that variable.)
 Thus we have the answer to our original question:  Orange juice appeared
 to produce more growth than Vitamin C.  (Of course, one might form a
 confidence interval for the difference etc.)
+
+Let's look at a small toy example to cement these ideas:
+
+``` r
+> x <- c(5,12,13)
+> y <- c('abc','de','z')
+> d <- data.frame(x,y)
+> d
+   x   y
+1  5 abc
+2 12  de
+3 13   z
+> d[d$x > 8,]
+   x  y
+2 12 de
+3 13  z
+```
+
+What just happened?  Look at the expression **d$x > 8**.
+
+``` r
+> d$x > 8
+[1] FALSE  TRUE  TRUE
+```
+
+Yes, 5 < 8 is false, 12 > 8 is true, and 13 > 8 is true.  So,
+**d[d$x > 8,]** is the same as
+
+``` r
+> d[c(FALSE,TRUE,TRUE),]
+   x  y
+2 12 de
+3 13  z
+```
+
+The FALSE,TRUE,TRUE said to take the second and third rows of **d**.
+
+Why rows, not columns?  Because that **c(FALSE,TRUE,TRUE)** was in the
+rows position of **d**, i.e. before the comma.  Let's do a column
+example, using the **tg** data frame from before:
+
+``` r
+> w <- tg[,c(TRUE,FALSE,TRUE)]
+> head(w)
+   len dose
+1  4.2  0.5
+2 11.5  0.5
+3  7.3  0.5
+4  5.8  0.5
+5  6.4  0.5
+6 10.0  0.5
+```
+
+Sure enough, we picked up the second and third columns of **tg**.
+
+### Recap: What have we learned in this lesson?
+
+Just as we learned earlier how to use a sequence of TRUE and FALSE
+values to extract a parts of a vector, we now see how to do the
+analogous thing for data frames:  **We can use a sequence of TRUE and FALSE
+values to extract a certain rows or columns from a data frame.**
+
+It is imperative that the reader fully understand this lesson before
+continuing, trying some variations of the above example on his/her own.
+We'll be using this technique often in this tutorial, and it is central
+to R usage in the real world.
 
 ## <a name="tapply"> </a> The tapply Function
 
