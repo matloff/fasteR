@@ -66,6 +66,8 @@ you should cook up your own variants to try.
 * [More on Vectors](#less2)
 * [On to Data Frames!](#less3)
 * [R Factor Class](#less4)
+* [Extracting Rows/Columns from Data Frames](#extractdf)
+* [The 'with' Function](#with)
 * [The tapply Function](#tapply)
 * [Data Cleaning](#less5)
 * [R List Class](#less6)
@@ -769,13 +771,22 @@ The categorical variable here is **supp**, the name the creator of this
 dataset chose for the supplement column.  We see that there are two categories
 (*levels*), either orange juice or Vitamin C.
 
+Note carefully that the values of an R factor must be quoted. Either
+single or double quote marks is fine (though the marks don't show
+up when we use **head**).
+
 Factors can sometimes be a bit tricky to work with, but the above is
 enough for now.  Let's see how to apply the notion in the current
 dataset.
 
-Let's compare mean tooth length for the two types of supplements.
-(The reader should take the next few lines slowly.  You'll get it, but
-there is a quite a bit going on here.)
+## <a name="extractdf"> </a> Extracting Rows/Columns from Data Frames
+
+(The reader should cover this lesson especially slowly and carefully.
+The concepts are simple, but putting them together requires careful
+inspection.)
+
+Continuing the Vitamin C example, let's compare mean tooth length for
+the two types of supplements.  Here is the code:
 
 ``` r
 > tgoj <- tg[tg$supp == 'OJ',]
@@ -786,50 +797,8 @@ there is a quite a bit going on here.)
 [1] 16.96333
 ```
 
-Let's take apart that first line:
-
-1.  **tg$supp == 'OJ'** produces a vector of TRUEs and FALSEs.  The
-    lines of **tg** in which supplement = OJ produce TRUE, the rest
-FALSE.  (Note the double-equal sign, which is needed for comparisons, as
-opposed to the single-equal used in setting function arguments.)
-
-2.  Look at the expression **tg[tg$supp == 'OJ',]**.  Let's review:
-
-    * Remember, the [i,j] notation for a data frame means row i, column j of
-      that data frame.  
-    
-    * The i can be a vector, meaning several rows, and the same is
-    true for j possibly signifying several columns.  
-    
-    * Further, if i or j is missing, it means we want ALL rows or columns,
-      as the case may be.  
-    
-    * Finally, in the context of vector or data frame indices, TRUE means
-  to take the element/row/column, and FALSE means skip it.
-
-4.  So, the expression **tg[tg$supp == 'OJ',   ]** says, "Find which
-    elements of the **tg$supp** vector equal 'OJ', and extract the
-corresponding rows of **tg**."  (We're taking full rows, as there is
-nothing after the comma, thus no restriction on columns.)  In other words, take
-from **tg** the rows in which the supplement was OJ."  
-
-5.  For convenience, we assigned that result to **tgoj**, in case we
-    need it later.  The latter
-now consists of all rows of **tg** with the OJ supplement.  And it's a
-new data frame!
-
-So **tgoj** does become those rows of **tg**, i.e.  all rows of **tg**
-with the OJ supplement.  In other words, we extracted the rows of **tg**
-for which the supplement was orange juice, with no restriction on
-columns, and assigned the result to **tgoj**.  (Once again, we can
-choose any name; we chose this one to help remember what we put into
-that variable.)
-
-Thus we have the answer to our original question:  Orange juice appeared
-to produce more growth than Vitamin C.  (Of course, one might form a
-confidence interval for the difference etc.)
-
-Let's look at a small toy example to cement these ideas:
+There is a lot going on in there.  To understand it, let's start with a
+simple toy example first.
 
 ``` r
 > x <- c(5,12,13)
@@ -846,15 +815,37 @@ Let's look at a small toy example to cement these ideas:
 3 13  z
 ```
 
-What just happened?  Look at the expression **d$x > 8**.
+We set up the same little data frame **d** from before.  But what does
+that new line do,
+
+``` r
+d[d$x > 8,]
+```
+
+Remember, data frames are accessed with two subscript expressions, one
+for rows, one for colums, in the format
+
+``` r
+d[the rows we want, the columns we want]
+```
+
+Recall that since the expression **d[d$x > 8,]** has nothing following
+the comma, that means we want all columns.  
+
+What about the rows?  The rows are specified here by **d$x > 8**.  What
+does that expression evaluate too?
 
 ``` r
 > d$x > 8
 [1] FALSE  TRUE  TRUE
 ```
 
-Yes, 5 < 8 is false, 12 > 8 is true, and 13 > 8 is true.  So,
-**d[d$x > 8,]** is the same as
+That comes from the fact that the **x** column in **d** consists of 5,
+12 and 13.  When we ask whether these numbes are greater than 8, the
+answers are FALSE, TRUE and TRUE.
+
+So, **d[d$x > 8,]** is the same as **d[c(FALSE,TRUE,TRUE),]**
+i.e. take the second and third rows of **d**.
 
 ``` r
 > d[c(FALSE,TRUE,TRUE),]
@@ -863,25 +854,57 @@ Yes, 5 < 8 is false, 12 > 8 is true, and 13 > 8 is true.  So,
 3 13  z
 ```
 
-The FALSE,TRUE,TRUE said to take the second and third rows of **d**.
-
-Why rows, not columns?  Because that **c(FALSE,TRUE,TRUE)** was in the
-rows position of **d**, i.e. before the comma.  Let's do a column
-example, using the **tg** data frame from before:
+In terms of the original expression,
 
 ``` r
-> w <- tg[,c(TRUE,FALSE,TRUE)]
-> head(w)
-   len dose
-1  4.2  0.5
-2 11.5  0.5
-3  7.3  0.5
-4  5.8  0.5
-5  6.4  0.5
-6 10.0  0.5
+> d[d$x > 8,]
+   x  y
+2 12 de
+3 13  z
 ```
 
-Sure enough, we picked up the second and third columns of **tg**.
+In other words, **d[d$x > 8,]** is simply saying, 
+
+> "Extract those rows in **d** for which the **x** column entry is greater
+> than 8."
+
+Now back to our original question, involving the Vitamin C example: How
+can we compare mean tooth length for the two types of supplements.
+Again, here is the code:
+
+``` r
+> tgoj <- tg[tg$supp == 'OJ',]
+> tgvc <- tg[tg$supp == 'VC',]
+> mean(tgoj$len)
+[1] 20.66333
+> mean(tgvc$len)
+[1] 16.96333
+```
+
+Let's take apart that first line.  Using the same reasoning as in our
+toy example above, the expression **tg[tg$supp == 'OJ',]** si simply
+saying
+
+> "Extract those rows in **tg** for which the **supp** column entry is 
+> is OJ."
+
+We assign those rows of **tg** to **tgoj**.  Since these are the OJ
+rows, we can mean do **mean(tgoj$len)** to get what we wanted, the
+average growth in tooth length in the OJ group.  The VC group analysis
+is similar.
+
+Thus we have the answer to our original question:  Orange juice appeared
+to produce more growth than Vitamin C.  (Of course, one might form a
+confidence interval for the difference etc.)
+
+Since we are only interested in tooth length, we could extract both OJ rows
+and the length column (which is column 1) at the same time:
+
+``` r
+> lenoj <- tg[tg$supp=='OJ',1]
+> mean(lenoj)
+[1] 20.66333
+```
 
 ### Recap: What have we learned in this lesson?
 
@@ -894,6 +917,30 @@ It is imperative that the reader fully understand this lesson before
 continuing, trying some variations of the above example on his/her own.
 We'll be using this technique often in this tutorial, and it is central
 to R usage in the real world.
+
+## <a name="with"> </a> The 'with' Function
+
+Say we wish to extract from **tg** the sub-data frame consisting of OJ
+and length less than 8.8.  We could do this, using the ampersand symbol
+'&', which means a logical AND operation:
+
+``` r
+> tg[tg$supp=='OJ' & tg$len < 8.8,]
+   len supp dose
+37 8.2   OJ  0.5
+```
+
+Ah, it turns out that only one case satisfied both conditions.
+
+But typing the above was rather unwieldy.  We can reduce typing, and
+have less cluttered code, by using R's **with** function:
+
+``` r
+> with(tg, tg[supp == 'OJ' & len < 8.8,])
+   len supp dose
+37 8.2   OJ  0.5
+```
+
 
 ## <a name="tapply"> </a> The tapply Function
 
