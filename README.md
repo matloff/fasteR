@@ -2260,6 +2260,38 @@ replaces those 0s by NAs.
 > required but is considered good for clear code, in order to easily
 > spot the block when you or others read the code. 
 
+Sometimes our code needs to leave a loop early, which we can do using
+the R **break** construct.  Say we are adding cubes of numbers
+1,2,3,..., and for some reason want to determine which one is the first
+to exceed **s**:
+
+``` r
+> f
+function(n,s) 
+{
+   tot <- 0
+   for (i in 1:n) {
+      tot <- tot + i^3
+      if (tot > s) {
+         print(i)
+         break
+      }
+      if (i == n) print('failed')
+   }
+}
+> f(100,345)
+[1] 6
+> f(5,345)
+[1] "failed"
+
+```
+
+If our accumulated total meets our goal, we leave the loop.
+
+A better approach is to use 'while' loops, covered later in this
+tutorial.
+
+
 ## <a name="ftnbl"> </a> Lesson 18:  Functions with Blocks 
 
 Blocks are usually key in defining functions.  Let's generalize the
@@ -4415,6 +4447,9 @@ Practical Approach for Predictive Models*, CRC
 
 * Norm Matloff, *Statistical Regression and Classification: from Linear
 Models to Machine Learning*, CRC
+
+* Norm Matloff, *The Art of Machine Learing: Algorithms+Data+R*, NSP,
+  coming soon
 
 **Other**
 
