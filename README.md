@@ -45,12 +45,14 @@ include special instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the popular
       but self-described "opinionated" Tidyverse is not treated, partly
-due to its controversial nature (I am a
-[skeptic](http://github.com/matloff/TidyverseSkeptic)), but again mainly
-because it would be an obstacle to your becoming productive in R
-quickly. While you can learn a few simple things in Tidy quickly, they
-are quite limited in scope.  Our tutorial here is aimed a learners who
-goal is to *use* R productively in their own data analysis.
+      due to its controversial nature (I am a
+      [skeptic](http://github.com/matloff/TidyverseSkeptic)), but again
+      mainly because it would be an obstacle to your becoming productive
+      in R quickly. While you can learn a few simple things in Tidy
+      quickly, they are quite limited in scope, and Tidy learners often
+      find difficulty in applying R to real world data.  **Our tutorial
+      here is aimed a learners who goal is to USE the R system
+      productively in their own data analysis.**
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
@@ -468,7 +470,6 @@ flow exceeded 1200, let's look at that expression again:
 > sum(Nile > 1200)
 ```
 
-
 Since the vector **Nile** has length 100, that number 1200 will be
 recycled into a vector of one hundred copies of 1200.  The '>'
 comparison will then yield 100 TRUEs and FALSEs, so summing gives us the
@@ -502,9 +503,41 @@ that trait:
 [1] 7
 ```
 
+Of course, as usual, my choice of the variable name "which1200" was
+arbirary, just something to help me remember what is stored in that
+variable.
+
 R's **length** function does what it says, i.e. finding the length of a
 vector.  In our context, that gives us the count of years with flow
 above 1200.
+
+And, what were the river flows in those 7 years?
+
+``` r
+> which1200 <- which(Nile > 1200)
+> Nile[which1200]
+[1] 1210 1230 1370 1210 1250 1260 1220
+```
+
+
+Finally, something a little fancier.  We can combine steps above:
+
+``` r
+> Nile[Nile > 1200]
+[1] 1210 1230 1370 1210 1250 1260 1220
+```
+
+We just "eliminated the middle man," **which1200**.  The R interpreter
+saw our "Nile > 1200", and thus generated the corresponding TRUEs and
+FALSEs.  The R interpreter then treated those TRUEs and 
+FALSEs as subscripts in **Nile**, thus extracting the desired data.
+
+Now, we might say here, "Don't try this at home, kids."  For
+beginners, it's really easier and more comfprtable to break things into
+steps.  Once, you become experienced at R, you may wish to start
+skipping steps.  
+
+
 
 
 ### Recap:  What have we learned in this lesson?
@@ -785,92 +818,46 @@ dataset.
 The concepts are simple, but putting them together requires careful
 inspection.)
 
+First, let's review what we saw in a previous lesson:
+
+``` r
+> which1200 <- which(Nile > 1200)
+> Nile[which1200]
+[1] 1210 1230 1370 1210 1250 1260 1220
+```
+
+There, we saw how to extract *vector elements*.  We can do something
+similar to extract *data frame rows or columns*.  Here is how:
+
 Continuing the Vitamin C example, let's compare mean tooth length for
 the two types of supplements.  Here is the code:
 
 ``` r
-> tgoj <- tg[tg$supp == 'OJ',]
-> tgvc <- tg[tg$supp == 'VC',]
-> mean(tgoj$len)
+> whichOJ <- which(tg$supp == 'OJ')
+> whichVC <- which(tg$supp == 'VC')
+> mean(tg[whichOJ,1])
 [1] 20.66333
-> mean(tgvc$len)
+> mean(tg[whichVC,1])
 [1] 16.96333
 ```
 
-There is a lot going on in there.  To understand it, let's start with a
-simple toy example first.
+In the first two lines above, we found which rows in **tg** (or
+equivalently, which elements in **tg$supp**) had the OJ supplement, and
+recorded those row numbers in **whichOJ**.  Then we did the same for VC.
 
-``` r
-> x <- c(5,12,13)
-> y <- c('abc','de','z')
-> d <- data.frame(x,y)
-> d
-   x   y
-1  5 abc
-2 12  de
-3 13   z
-> d[d$x > 8,]
-   x  y
-2 12 de
-3 13  z
-```
-
-We set up the same little data frame **d** from before.  But what does
-that new line do,
-
-``` r
-d[d$x > 8,]
-```
-
-Remember, data frames are accessed with two subscript expressions, one
-for rows, one for colums, in the format
+Now, look at the expression **tg[whichOJ,1]**.  Remember, data frames
+are accessed with two subscript expressions, one for rows, one for
+colums, in the format
 
 ``` r
 d[the rows we want, the columns we want]
 ```
 
-Recall that since the expression **d[d$x > 8,]** has nothing following
-the comma, that means we want all columns.  
+So, **tg[whichOJ,1]** says to restrict attention to the OJ rows, and
+only column 1, tooth length.  We then find the mean of those restricted
+numberss.  This turned out to be 20.66333.  Then do the same for VC.
 
-What about the rows?  The rows are specified here by **d$x > 8**.  What
-does that expression evaluate too?
-
-``` r
-> d$x > 8
-[1] FALSE  TRUE  TRUE
-```
-
-That comes from the fact that the **x** column in **d** consists of 5,
-12 and 13.  When we ask whether these numbes are greater than 8, the
-answers are FALSE, TRUE and TRUE.
-
-So, **d[d$x > 8,]** is the same as **d[c(FALSE,TRUE,TRUE),]**
-i.e. take the second and third rows of **d**.
-
-``` r
-> d[c(FALSE,TRUE,TRUE),]
-   x  y
-2 12 de
-3 13  z
-```
-
-In terms of the original expression,
-
-``` r
-> d[d$x > 8,]
-   x  y
-2 12 de
-3 13  z
-```
-
-In other words, **d[d$x > 8,]** is simply saying, 
-
-> "Extract those rows in **d** for which the **x** column entry is greater
-> than 8."
-
-Now back to our original question, involving the Vitamin C example: How
-can we compare mean tooth length for the two types of supplements.
-Again, here is the code:
+Again, if we are pretty experienced, we can skip steps:
 
 ``` r
 > tgoj <- tg[tg$supp == 'OJ',]
@@ -881,30 +868,9 @@ Again, here is the code:
 [1] 16.96333
 ```
 
-Let's take apart that first line.  Using the same reasoning as in our
-toy example above, the expression **tg[tg$supp == 'OJ',]** si simply
-saying
-
-> "Extract those rows in **tg** for which the **supp** column entry is 
-> is OJ."
-
-We assign those rows of **tg** to **tgoj**.  Since these are the OJ
-rows, we can mean do **mean(tgoj$len)** to get what we wanted, the
-average growth in tooth length in the OJ group.  The VC group analysis
-is similar.
-
-Thus we have the answer to our original question:  Orange juice appeared
+Either way, we have the answer to our original question:  Orange juice appeared
 to produce more growth than Vitamin C.  (Of course, one might form a
 confidence interval for the difference etc.)
-
-Since we are only interested in tooth length, we could extract both OJ rows
-and the length column (which is column 1) at the same time:
-
-``` r
-> lenoj <- tg[tg$supp=='OJ',1]
-> mean(lenoj)
-[1] 20.66333
-```
 
 ### Recap: What have we learned in this lesson?
 
@@ -926,9 +892,10 @@ to R usage in the real world.
 
 Often we need to extract rows or columns from a data frame, subject to
 more than one condition.  For instance, say we wish to extract from
-**tg** the sub-data frame consisting of OJ and length less than 8.8.  We
-could do this, using the ampersand symbol '&', which means a logical AND
-operation:
+**tg** the sub-data frame consisting of OJ and length less than 8.8.  
+
+We could do this, using the ampersand symbol '&', which means a logical
+AND operation:
 
 ``` r
 > tg[tg$supp=='OJ' & tg$len < 8.8,]
