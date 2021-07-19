@@ -34,8 +34,8 @@ fast as possible.
 
      Note that even the excellent course by [R-Ladies
 Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
-which does start with RStudio, laments that **RStudio can be
-"overwhelming."**  
+which does start with RStudio, laments that RStudio can be
+**"way too overwhelming."**  
 
      So, in the initial lessons,  we stick to the R command line, and
 focus on data analysis, not tools such as IDEs, which we will cover as
@@ -45,14 +45,17 @@ include special instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the popular
       but self-described "opinionated" Tidyverse is not treated, partly
-      due to its controversial nature (I am a
-      [skeptic](http://github.com/matloff/TidyverseSkeptic)), but again
-      mainly because it would be an obstacle to your becoming productive
-      in R quickly. While you can learn a few simple things in Tidy
-      quickly, they are quite limited in scope, and Tidy learners often
-      find difficulty in applying R to real world data.  **Our tutorial
-      here is aimed a learners who goal is to USE the R system
-      productively in their own data analysis.**
+due to its controversial nature (I am a
+[skeptic](http://github.com/matloff/TidyverseSkeptic)), but again mainly
+because it would be an obstacle to your becoming productive in R
+quickly. 
+
+    While you can learn a few simple things in Tidy quickly, thinking
+you are learning a lot, those things are quite limited in scope, and
+Tidy learners often find difficulty in applying R to real world data.
+<span style="color:red"> Our tutorial here is aimed at learners whose
+goal is to USE the R system productively in their own data analysis.
+</span>  
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
@@ -62,47 +65,50 @@ you should cook up your own variants to try.
 
 ## Table of Contents
 
-* [Overview and Getting Started](#overview)
-* [First R Steps](#firstr)
-* [Vectors and Indices](#vecidxs)
-* [More on Vectors](#less2)
-* [On to Data Frames!](#less3)
-* [R Factor Class](#less4)
-* [Extracting Rows/Columns from Data Frames](#extractdf)
-* [More Examples of Extracting Rows, Columns](#moreextract)
-* [The tapply Function](#tapply)
-* [Data Cleaning](#less5)
-* [R List Class](#less6)
-* [Another Look at the Nile Data](#less7)
-* [Pause to Reflect](#pause1)
-* [Introduction to Base R Graphics ](#less8)
-* [More on Base Graphics ](#less9)
-* [Writing Your Own Functions](#less10)
-* ['For' Loops](#less11)
-* [Functions with Blocks](#ftnbl)
-* [IDEs: Text Editing, Saving, Executing](#edt)
-* [If, Else, Ifelse](#ifelse)
-* [Do Pro Athletes Keep Fit?](#keepfit)
-* [Linear Regression Analysis, I](#linreg1)
-* [S3 Classes](#s3)
-* [Baseball Player Analysis (cont'd.)](#less15)
-* [R Packages, CRAN, Etc.](#cran)
-* [A Pause, Before Going on to Advanced Topics](#advanced)
-* [A First Look at ggplot2](#gg2first)
-* [Should You Use Functional Programming?](#appfam)
-* [Simple Text Processing, I](#txt)
-* [Simple Text Processing, II](#txt1)
-* [Linear Regression Analysis, II](#linreg2)
-* [Working with the R Date Class](#dates)
-* [Tips on R Coding Style and Strategy](#style)
-* [The Logistic Model](#logit)
-* [Files and Directories](#fd)
-* [R 'while' Loops](#whl)
-* [To Learn More](#forMore)
+**PART I**
+* [Lesson 1: Getting Started](#overview)
+* [Lesson 2: First R Steps](#firstr)
+* [Lesson 3: Vectors and Indices](#vecidxs)
+* [Lesson 4: More on Vectors](#less2)
+* [Lesson 5: On to Data Frames!](#less3)
+* [Lesson 6: The R Factor Class](#less4)
+* [Lesson 7: Extracting Rows/Columns from Data Frames](#extractdf)
+* [Lesson 8: More Examples of Extracting Rows, Columns](#moreextract)
+* [Lesson 9: The tapply Function](#tapply)
+* [Lesson 10: Data Cleaning](#less5)
+* [Lesson 11: The R List Class](#less6)
+* [Lesson 12: Another Look at the Nile Data](#less7)
+* [Lesson 13: Pause to Reflect](#pause1)
+* [Lesson 14: Introduction to Base R Graphics ](#less8)
+* [Lesson 15: More on Base Graphics ](#less9)
+* [Lesson 16: Writing Your Own Functions](#less10)
+* [Lesson 17: 'For' Loops](#less11)
+* [Lesson 18: Functions with Blocks](#ftnbl)
+* [Lesson 19: Text Editing and IDes](#edt)
+* [Lesson 20: If, Else, Ifelse](#ifelse)
+* [Lesson 21: Do Pro Athletes Keep Fit?](#keepfit)
+* [Lesson 22: Linear Regression Analysis, I](#linreg1)
+* [Lesson 23: S3 Classes](#s3)
+* [Lesson 24: Baseball Player Analysis (cont'd.)](#less15)
+* [Lesson 25: R Packages, CRAN, Etc.](#cran)
+
+**PART II**
+* [Lesson 26: A Pause, Before Going on to Advanced Topics](#advanced)
+* [Lesson 27: A First Look at ggplot2](#gg2first)
+* [Lesson 28: Should You Use Functional Programming?](#appfam)
+* [Lesson 29 Simple Text Processing, I](#txt)
+* [Lesson 30: Simple Text Processing, II](#txt1)
+* [Lesson 31: Linear Regression Analysis, II](#linreg2)
+* [Lesson 32: Working with the R Date Class](#dates)
+* [Lesson 33: Tips on R Coding Style and Strategy](#style)
+* [Lesson 34: The Logistic Model](#logit)
+* [Lesson 35: Files and Directories](#fd)
+* [Lesson 36: R 'while' Loops](#whl)
+* [Lesson 37: To Learn More](#forMore)
 * [Appendix: Installing and Using RStudio](#rstudio)
 
 
-## <a name="overview"> </a> Getting Started
+## <a name="overview"> </a> Lesson 1:  Getting Started
 
 For the time being, the main part of this online course will be this
 **README.md** file.  It is set up as a potential R package, though, and
@@ -115,8 +121,10 @@ run on a famous dataset called *Swiss Roll*.
 ### Please note again:  
 
 * Nonpassive learning is absolutely key!  So even if the output of an R
-command is shown here, run the command yourself in your R console,
-by copy-and-pasting from this document into the R console.
+  command is shown here, run the command yourself in your R console, by
+copy-and-pasting from this document into the R console.  <span
+style="color:red">You will get out of this tutorial what you put
+in.</span>  
 
 * Similarly, the **Your Turn** sections are absolutely crucial.  Devise
   your own little examples, and try them!  "When in doubt, Try it
@@ -133,10 +141,12 @@ you're pretty good at it.  After all, we can all work puzzles.
 
 ### Starting out:
 
-You'll need to install R, from [the R Project site](https://www.r-project.org).
-Start up R, either by clicking an icon or typing 'R' in a terminal
-window.  We are not requiring RStudio here, but if you already have it,
-start it; you'll be typing into the R console, the Console pane.
+You'll need to [install
+R](https://www.datacamp.com/community/tutorials/installing-R-windows-mac-ubuntu),
+from [the R Project site](https://www.r-project.org).  Start up R,
+either by clicking an icon or typing 'R' in a terminal window.  We are
+not requiring RStudio here, but if you already have it, start it; you'll
+be typing into the R console, the Console pane.
 
 As noted, this tutorial will be "bare bones."  In particular, there is
 no script to type your command for you.  Instead, you will either
@@ -154,7 +164,7 @@ When you end your R session, exit by typing 'quit()'.
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
 
-## <a name="firstr"> </a> First R Steps
+## <a name="firstr"> </a> Lesson 2: First R Steps
 
 The R command prompt is '>'.  Again, it will be shown here, but you don't type
 it.  It is just there in your R window to let you know R is inviting you
@@ -273,9 +283,9 @@ it's a vital resource to know.
 
 > **Your Turn:**  Look at the online help for **mean** and **Nile**.
 
-## <a name="vecidxs"> </a> Vectors and Indices
+## <a name="vecidxs"> </a> Lesson 3:  Vectors and Indices
 
-Say we want to find the mean rive flow after year 1950.  
+Say we want to find the mean river flow after year 1950.  
 
 The above output said that the **Nile** series starts in 1871.  That
 means 1951 will be the 81st year, and the 100th will be 1970.  How do we
@@ -343,11 +353,11 @@ If we plan to do more with that time period, we should make a copy of
 it:
 
 ``` r
-> n80100 <- Nile[80:100]
-> mean(n80100)
-[1] 877.6667
-> sd(n80100)
-[1] 122.4117
+> n81100 <- Nile[81:100]
+> mean(n81100)
+[1] 877.05
+> sd(n81100)
+[1] 125.5583
 ```
 
 The function **sd** finds the standard deviation.  
@@ -358,6 +368,11 @@ you can use "=" instead of "<-", but why worry about what the exceptions
 might be?  They are arcane, so it's easier just to always use "<-".
 And though "keyboard shortcuts" for this are possible, again let's just
 stick to the basics for now.)
+
+Note too that though we will speak of the above operation as having
+"extracted" the 81st through 100th elements of **Nile**, we have merely
+made a copy of those elements.  The original vector **Nile** remains
+intact.
 
 > <span style="color:red">Tip:</span>
 > We can pretty much choose any name we want; "n80100" just was chosen
@@ -403,10 +418,12 @@ Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
 * Extracting vector subsets.
 
+* Forming vectors, using **c()** and ":".
+
 Not bad for Lesson 1!  And needless to say, you'll be using all of these
 frequently in the subsequent lessons and in your own usage of R.
 
-## <a name="less2"> </a> More on Vectors
+## <a name="less2"> </a> Lesson 4:  More on Vectors
 
 Continuing along the Nile, say we would like to know in how many years
 the level exceeded 1200.  Let's first introduce R's **sum** function:
@@ -532,13 +549,10 @@ saw our "Nile > 1200", and thus generated the corresponding TRUEs and
 FALSEs.  The R interpreter then treated those TRUEs and 
 FALSEs as subscripts in **Nile**, thus extracting the desired data.
 
-Now, we might say here, "Don't try this at home, kids."  For
-beginners, it's really easier and more comfprtable to break things into
+Now, we might add here, "Don't try this at home, kids."  For
+beginners, it's really easier and more comfortable to break things into
 steps.  Once, you become experienced at R, you may wish to start
 skipping steps.  
-
-
-
 
 ### Recap:  What have we learned in this lesson?
 
@@ -548,7 +562,7 @@ feature, and two tricks that R users employ for finding counts of things.
 Once again, as you progress through this tutorial, you'll see that these
 things are used a lot in R.
 
-## <a name="less3"> </a> On to Data Frames!
+## <a name="less3"> </a> Lesson 5:  On to Data Frames!
 
 Right after vectors, the next major workhorse of R is the *data frame*.
 It's a rectangular table consisting of one row for each data point.
@@ -585,7 +599,9 @@ command line.
 R's **head** function displays (by default) the first 6 rows of the
 given dataframe.  We see there are length, supplement and dosage
 columns, which the curator of the data decided to name 'len', 'supp' and
-'dose'.  Each of column is an R vector.  
+'dose'.  Each of column is an R vector, or in the case of the second
+column, a vector-like object called a *factor*, to be discussed
+shortly).  
 
 > <span style="color:red">Tip:</span>
 > To avoid writing out the long words repeatedly, it's handy to
@@ -626,6 +642,13 @@ vectors is often exploited in R.
 > **Your Turn:**  The above examples are fundamental to R, so you should
 > conduct a few small experiments on your own this time, little variants
 > of the above.  The more you do, the better!
+
+For any subset of a data frame **d**, we can extract whatever rows and
+columns we want using the format
+
+``` r
+d[the rows we want, the columns we want]
+```
 
 Some data frames don't have column names, but that is no obstacle.  We
 can use column numbers, e.g.
@@ -759,7 +782,7 @@ sets of rows and columns to extra subframes.
 One can use the R **nrow** function to query the number of rows in a
 data frame; **ncol** does the same for the number of columns.
 
-## <a name="less4"> </a> R Factor Class
+## <a name="less4"> </a> Lesson 6:  R Factor Class
 
 Each object in R has a *class*. The number 3 is of the **'numeric'**
 class, the character string 'abc' is of the **'character'** class, and
@@ -812,7 +835,7 @@ Factors can sometimes be a bit tricky to work with, but the above is
 enough for now.  Let's see how to apply the notion in the current
 dataset.
 
-## <a name="extractdf"> </a> Extracting Rows/Columns from Data Frames
+## <a name="extractdf"> </a> Lesson 7:  Extracting Rows/Columns from Data Frames
 
 (The reader should cover this lesson especially slowly and carefully.
 The concepts are simple, but putting them together requires careful
@@ -888,7 +911,7 @@ to R usage in the real world.
 > **faithful** dataset.  For instance, find the number of eruptions for
 > which the waiting time was more than 80 minutes.
 
-## <a name="moreextract"> </a> More Examples of Extracting Rows, Columns
+## <a name="moreextract"> </a> Lesson 8:  More Examples of Extracting Rows, Columns
 
 Often we need to extract rows or columns from a data frame, subject to
 more than one condition.  For instance, say we wish to extract from
@@ -1054,7 +1077,7 @@ ones to buy and combine into a meal.
 > minutes.
 
 
-## <a name="tapply"> </a> The tapply Function
+## <a name="tapply"> </a> Lesson 9:  The tapply Function
 
 > <span style="color:red">Tip:</span> Often in R there is a shorter, more
 > compact way of doing things.  That's the case here; we can use the
@@ -1225,7 +1248,7 @@ function!  But this is not the place to go into that.)
 > is so ubiquitously useful that we have introduced it early in this
 > tutorial.  We'll be using it more in later lessons.
 
-## <a name="less5"> </a> Data Cleaning
+## <a name="less5"> </a> Lesson 10:  Data Cleaning
 
 Most real-world data is "dirty," i.e. filled with errors.  The famous
 [New York taxi trip
@@ -1408,7 +1431,7 @@ the function to skip the NAs:
 > What years did these correspond to?  Find the mean of the data,
 > excluding these cases.
 
-## <a name="less6"> </a> The R List Class
+## <a name="less6"> </a> Lesson 11:  The R List Class
 
 We saw earlier how handy the **tapply** function can be.  Let's look at
 a related one, **split**.
@@ -1561,7 +1584,7 @@ of the list, which is the first column of the data frame.
 > **Your Turn** Try using **split** on the ToothGrowth data, say splitting
 > into groups according to the supplement, and finding various quantities.
 
-## <a name="less7"> </a> Another Look at the Nile Data
+## <a name="less7"> </a> Lesson 12:  Another Look at the Nile Data
 
 Here we'll learn several new concepts, using the **Nile** data as our
 starting point.
@@ -1673,7 +1696,7 @@ up the value of **Nile[55]**.  This is the start of your path to
 programming -- we try to automate things as much as possible, doing
 things by hand as little as possible.
 
-## <a name="pause1"> </a> Pause to Reflect
+## <a name="pause1"> </a> Lesson 13:  Pause to Reflect
 
 <span style="color:red">Tip:</span>
 Repeating an earlier point:
@@ -1691,7 +1714,7 @@ makes it fun, like solving a puzzle.
 And...we can combine various functions in order to build *our own*
 functions.  This will come in future lessons.
 
-## <a name="less8"> </a> Introduction to Base R Graphics
+## <a name="less8"> </a> Lesson 14:  Introduction to Base R Graphics
 
 One of the greatest things about R is its graphics capabilities.  There
 are excellent graphics features in base R, and then many contributed
@@ -1835,7 +1858,7 @@ There are many, many other features.  More in a future lesson.
 > 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
 > professional degree and 16 is a doctorate.)
 
-## <a name="less9"> </a> More on Base Graphics
+## <a name="less9"> </a> Lesson 15:  More on Base Graphics
 
 We can also plot multiple histograms on the same graph.  But the
 pictures are more effective using a smoothed version of histograms,
@@ -1886,7 +1909,7 @@ frequently-occurring value.)
 > **Your Turn:**  Try plotting multiple such curves on the same graph, for other
 > data.
 
-## <a name="less10"> </a> Writing Your Own Functions
+## <a name="less10"> </a> Lesson 16:  Writing Your Own Functions
 
 We've seen a number of R's built-in functions so far, but here comes the
 best part -- you can write your *own* functions.
@@ -2065,7 +2088,7 @@ can print them by just typing their names!
 function(x,d) mean(x[x > d])
 ```
 
-## <a name="less11"> </a> 'For' Loops
+## <a name="less11"> </a> Lesson 17:  'For' Loops
 
 Recall that earlier we found that there were several columns in the
 Pima dataset that contained values of 0, which were physiologically
@@ -2237,9 +2260,47 @@ replaces those 0s by NAs.
 > required but is considered good for clear code, in order to easily
 > spot the block when you or others read the code. 
 
-## <a name="edt"> </a> Text Editing and IDEs
+## <a name="ftnbl"> </a> Lesson 18:  Functions with Blocks 
 
-In trying out our function **zeroIndices** above, you probably used your
+Blocks are usually key in defining functions.  Let's generalize the
+above code in the Loops lesson, writing a function that replaces 0s by
+NAs for general data frames, not just **pima** as before.
+
+``` r
+zerosToNAs <- function(d,cols) 
+{
+   zeroIndices <- which(d[,cols] == 0)
+   d[zeroIndices,cols] <- NA
+   d
+}
+```
+
+Since we had three statements in the body of the function rather than
+one, we again needed to write them as a block.
+
+Here the formal argument **d** is the data frame to be worked on, and
+**cols** specifies the columns in which 0s are to be replaced.
+
+We could use this in the Pima data"
+
+``` r
+> pima <- zerosToNAs(pima,2:6)
+```
+
+There is an important subtlety here.  Use of the vector **zeroIndices** will
+produce a new data frame, rather than changing **pima** itself.  So, if
+we want **pima** to change, we must reassign the output of the function
+back to **pima**.
+
+> **Your Turn**: Write a function with call form **countNAs(dfr)**, which
+> prints the numbers of NAs in each column of the data frame **dfr**.
+> You can do this by replacing the second line in the **for** block
+> above by a well-chosen call to the **sum** function.  Test it on a small
+> artificial dataset that you create.
+
+## <a name="edt"> </a> Lesson 19:  Text Editing and IDEs
+
+In trying out our function **zeroToNAs** above, you probably used your
 computer's mouse to copy-and-paste from this tutorial into your machine.
 Your screen would then look like this:
 
@@ -2345,45 +2406,8 @@ How do you then run the code, say for computing **f(5,2)**?
 loads file, and then you run as above.
 
 * In RStudio, click on Source, then run as above.
-## <a name="ftnbl"> </a> Functions with Blocks 
 
-Blocks are usually key in defining functions.  Let's generalize the
-above code in the Loops lesson, writing a function that replaces 0s by
-NAs for general data frames, not just **pima** as before.
-
-``` r
-zerosToNAs <- function(d,cols) 
-{
-   zeroIndices <- which(d[,cols] == 0)
-   d[zeroIndices,cols] <- NA
-   d
-}
-```
-
-Since we had three statements in the body of the function rather than
-one, we again needed to write them as a block.
-
-Here the formal argument **d** is the data frame to be worked on, and
-**cols** specifies the columns in which 0s are to be replaced.
-
-We could use this in the Pima data"
-
-``` r
-> pima <- zerosToNAs(pima,2:6)
-```
-
-There is an important subtlety here.  Use of the vector **zeroIndices** will
-produce a new data frame, rather than changing **pima** itself.  So, if
-we want **pima** to change, we must reassign the output of the function
-back to **pima**.
-
-> **Your Turn**: Write a function with call form **countNAs(dfr)**, which
-> prints the numbers of NAs in each column of the data frame **dfr**.
-> You can do this by replacing the second line in the **for** block
-> above by a well-chosen call to the **sum** function.  Test it on a small
-> artificial dataset that you create.
-
-## <a name="ifelse"> </a> If, Else, Ifelse
+## <a name="ifelse"> </a> Lesson 20:  If, Else, Ifelse
 
 If our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
@@ -2490,7 +2514,7 @@ coming lessons.
 > You'll probably want to do this using two separate calls to
 > **ifelse**.
 
-## <a name="keepfit"> </a> Do Professional Athletes Keep Fit?
+## <a name="keepfit"> </a> Lesson 21:  Do Professional Athletes Keep Fit?
 
 Many people gain weight as they age.  But what about professional
 athletes?  They are supposed to keep fit, after all.  Let's explore this
@@ -2614,7 +2638,7 @@ weight was 200.2427, so there is a dot in the graph for the point
 > Another suggestion:  Plot the number of players at each age group, to
 > visualize the ages at which the bulk of the players fall.
  
-## <a name="linreg1"> </a> Linear Regression Analysis, I
+## <a name="linreg1"> </a> Lesson 22:  Linear Regression Analysis, I
 
 Looking at the picture in the last lesson, it seems we could draw a
 straight line through that cloud of points that fits the points pretty
@@ -2669,7 +2693,7 @@ line, superimposed on our scatter plot:
 > regression of MPG against weight; what is the estimated
 > effect of 100 pounds of extra weight?
 
-## <a name="s3"> </a> S3 classes
+## <a name="s3"> </a> Lesson 23:  S3 classes
 
 > <span style="color:red">Tip:</span>
 > Remember, the point of computers is to alleviate us of work.  We should
@@ -2799,7 +2823,7 @@ Prediction, it is not as much of an issue.
 > regression of MPG against weight and horsepower; what is the estimated
 > effect of 100 pounds of extra weight, for fixed horsepower?
 
-## <a name="less15"> </a> Baseball Player Analysis (cont'd.)
+## <a name="less15"> </a> Lesson 24:  Baseball Player Analysis (cont'd.)
 
 This lesson will be a little longer and more detail-oriented.  But it
 will give you more practice on a number of earlier topics, and will also
@@ -3021,7 +3045,7 @@ The question of whether there is substantial variation at the population
 level is one of statistical inference, beyond the scope of this R
 course. 
 
-## <a name="cran"> </a> R Packages, CRAN, Etc.
+## <a name="cran"> </a> Lesson 25:  R Packages, CRAN, Etc.
 
 One of the great things about R is that are tens of thousands of
 packages that were developed by users and then contributed to
@@ -3067,7 +3091,7 @@ may be a delay while R makes a list of all your packages.
 Later, you'll write your own R packages.  We won't cover that here, but
 there are many good tutorials for this on the Web.
 
-## <a name="advanced"> </a> A Pause, Before Going on to Advanced Topics
+## <a name="advanced"> </a> Lesson 26:  A Pause, Before Going on to Advanced Topics
 
 At this point, you have a pretty good grounding in R.  You are capable
 of doing lots of things in R.  It may be all you need, but even if not,
@@ -3078,7 +3102,7 @@ longer and more detailed that the previous ones.  But you are still
 strongly encouraged to go through them, as they will not only cover new
 topics but also give you deeper insight into the earlier material.
 
-## <a name="gg2first"> </a> The ggplot2 Graphics Package
+## <a name="gg2first"> </a> Lesson 27:  The ggplot2 Graphics Package
 
 Now, on to **ggplot2**.
 
@@ -3172,7 +3196,7 @@ right of the graph, so we know which color corresponds to which
 position.  We can do this in base-R graphics too, but need to set an
 argument for it in **plot**.
 
-## <a name="appfam"> </a> Should You Use Functional Programming?
+## <a name="appfam"> </a> Lesson 28:  Should You Use Functional Programming?
 
 Earlier in this tutorial, we've found R's **tapply** function to be
 quite handy.  There are several others in this family, notably
@@ -3410,7 +3434,7 @@ The R **apply** family includes other functions as well,  They are quite
 useful, but don't use them solely for the sake of avoiding writing a loop.
 More compact code may not be easier.
 
-## <a name="txt"> </a> Simple Text Processing, I
+## <a name="txt"> </a> Lesson 29:  Simple Text Processing, I
 
 These days, text processing is big in the Data Science field, e.g. in
 Natural Language Processing applications.  In this lesson, we'll do a
@@ -3603,7 +3627,7 @@ the file, say in a loop.  We'll do this in the next section.
 > **Your Turn:** Write a function with call form **delNAs(x)**, that
 > returns **x** with NAs deleted.  
 
-## <a name="txt1"> </a> Simple Text Processing, II
+## <a name="txt1"> </a> Lesson 30:  Simple Text Processing, II
 
 So, let's use our **extractNonemptyWords** function on our **abt** vector.
 Here's a loop way to do it:
@@ -3709,7 +3733,7 @@ empty strings; empty lines; 'for' loop to get tot number of words;
 fancier, Reduce()
 -->
 
-## <a name="linreg2"> </a> Linear Regression Analysis, II
+## <a name="linreg2"> </a> Lesson 31:  Linear Regression Analysis, II
 
 Continuing our look at linear regression analysis using R, let's look at
 the famous [bike sharing
@@ -3857,7 +3881,7 @@ The **predict** function, which here is **predict.lm**, assumes that the
 new cases to be predicted are supplied as a data frame, with the same
 column names as with the original data.
 
-## <a name="dates"> </a> Work with the R Date Class
+## <a name="dates"> </a> Lesson 32:  Work with the R Date Class
 
 In the bike sharing data, dates were included, in **day$dteday**.  As
 noted, some of those were holidays, indicated in the **holiday** column.
@@ -3919,13 +3943,14 @@ even bettery, in POSIX form:
 There are many operations that can be done on R dates.  The above is
 just a little sample.
 
-## <a name="style"> </a> Tips on R Coding Style and Strategy
+## <a name="style"> </a> Lesson 33:  Tips on R Coding Style and Strategy
 
 Programming is a creative activity, and thus different programmers will
 have different coding styles.  Some people feel so strongly that they
 will publish there own particular style guides, such as 
 [this one](https://google.github.io/styleguide/Rguide.xml) 
-by the R community at Google.
+by the R community at Google.  Mine is
+[here`](https://github.com/matloff/R-Style-Guide).
 
 Needless to say, style is a matter of personal taste.  But:
 
@@ -3981,7 +4006,7 @@ w <- f(w)
 # people over age 65 and who are homeowners
 ```
 
-*At the top of each source file, insert comments giving the reader n
+*At the top of each source file, insert comments giving the reader an
 overview of the contents.*
 
 This will typically an overview of the roles of each major function, how
@@ -4057,7 +4082,7 @@ cases.
 
 More on this in a later lesson!
 
-## <a name="logit"> </a> The Logistic Model
+## <a name="logit"> </a> Lesson 34: The Logistic Model
 
 In our earlier examples of regression analysis, we were predicting a
 continuous variable such as human weight.  But what if we wish to
@@ -4127,7 +4152,7 @@ of age 40.
 So, the risk of diabetes increases substantial over that 10-year period,
 but this population and BMI level.
 
-## <a name="fd"> </a> Files and Folders/Directories
+## <a name="fd"> </a> Lesson 35:  Files and Folders/Directories
 
 Note:  On Unix-family systems such as Linux, the Windows term *folder*
 is said to be a *directory*.  You will frequently see this in Mac
@@ -4248,7 +4273,7 @@ On the other hand, if this subdirectory *does* contain a file named
 reads in the found file, and assigns its contents as a new element of
 our **resultsFiles** list.
 
-## <a name="whl"> </a> R 'while' Loops
+## <a name="whl"> </a> Lesson 36:  R 'while' Loops
 
 We've seen R **for** loops in previous lessons, but there's another kind
 of loop, **while**.  It keeps iterating until some specified condition
@@ -4319,11 +4344,7 @@ loop doesn't iterate forever!
 There's more, though.  The **cumsum** function is vectorized, so using
 it, though seemingly wasteful, may actually be faster than the loop
 
-
-
-
-
-## <a name="forMore"> </a> To Learn More 
+## <a name="forMore"> </a> Lesson 37:  To Learn More 
 
 These are books and other resources that I myself consult a lot (yes, I
 do consult my own books; can't keep it all in my head :-) ), plus others
