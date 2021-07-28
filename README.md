@@ -554,6 +554,17 @@ beginners, it's really easier and more comfortable to break things into
 steps.  Once, you become experienced at R, you may wish to start
 skipping steps.  
 
+Less bold is the notion of negative indices, e.g.
+
+``` r
+> x <- c(5,12,13,8)
+> x[-1]  
+[1] 12 13  8
+```
+
+Here we are asking for all of **x** *except* for **x[1]**.  Can you
+guess what **x[c(-1,-4)]** evaluates to?  Guess first, then try it out.
+
 ### Recap:  What have we learned in this lesson?
 
 Here you've refined your skillset for R vectors, learning R's recycling
@@ -758,6 +769,20 @@ As noted, all the columns in a data frame must be of the same length.
 Here **x** consists of 3 numbers, and **y** consists of 3 character
 strings.  (The string is the unit in the latter.  The number of
 characters in each string is irrelevant.)
+
+One can use negative indices for rows and columns as well, e.g.
+
+``` r
+> z <- tg[,-2]
+> head(z)
+   len dose
+1  4.2  0.5
+2 11.5  0.5
+3  7.3  0.5
+4  5.8  0.5
+5  6.4  0.5
+6 10.0  0.5
+```
 
 > **Your Turn:** Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
