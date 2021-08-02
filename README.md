@@ -104,7 +104,8 @@ you should cook up your own variants to try.
 * [Lesson 34: The Logistic Model](#logit)
 * [Lesson 35: Files and Directories](#fd)
 * [Lesson 36: R 'while' Loops](#whl)
-* [Lesson 37: To Learn More](#forMore)
+* [To Learn More](#forMore)
+* [Thanks](#thanks)
 * [Appendix: Installing and Using RStudio](#rstudio)
 
 
@@ -2349,18 +2350,32 @@ NAs in specified columns in general data frames, not just **pima** as
 before.
 
 ``` r
-zerosToNAs <- function(d,cols) 
-{
-   for (j in cols) {
-      NArows <- which(d[,j] == 0)
-      d[NArows,j] <- NA
-   }
-   d
-}
+     1	zerosToNAs <- function(d,cols)
+     2	{
+     3	   for (j in cols) {
+     4	      NArows <- which(d[,j] == 0)
+     5	      d[NArows,j] <- NA
+     6	   }
+     7	   d
+     8	}
 ```
+
+(We've added line numbers to this display for convenence.)
 
 Here the formal argument **d** is the data frame to be worked on, and
 **cols** specifies the columns in which 0s are to be replaced.
+
+The loop goes through **d**, one column at a time.  Since **d[,j] == 0**
+means all of column **j** of **d**, then **which(d[,j] == 0)** will give
+us the indices in that column of elements that are 0s.  Those indices in
+turn mean row numbers in **d**, which we've named **NArows**.  In line
+5, then, we replace the 0s we've found in column **j** by NAs.
+
+When we reach line 7, we've already finished the loop, and exited from
+it.  So, we are ready to return the new value of **d**.  Recall that we
+could do this via the expression **return(d)**, but we can save
+ourselves some typing by simply writing 'd'.  That value becomes the
+last value computed, and R automatically returns that last value.
 
 We could use this in the Pima data:
 
@@ -2368,13 +2383,12 @@ We could use this in the Pima data:
 > pima <- zerosToNAs(pima,2:6)
 ```
 
-There is an important subtlety here.  Use of the vector **zeroIndices**
-will produce a new data frame, rather than changing **pima** itself.
-That does look odd; isn't **d** changing, and isn't **d** the same as
-**pima**?  Well, no; **d** is only a separate *copy* of **pima**. So,
-when **d** changes, **pima** does not.  So, if we want **pima** to
-change, we must reassign the output of the function back to **pima**, as
-we did above.
+There is an important subtlety here.  All of this will produce a new
+data frame, rather than changing **pima** itself.  That does look odd;
+isn't **d** changing, and isn't **d** the same as **pima**?  Well, no;
+**d** is only a separate *copy* of **pima**. So, when **d** changes,
+**pima** does not.  So, if we want **pima** to change, we must reassign
+the output of the function back to **pima**, as we did above.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
@@ -2586,17 +2600,44 @@ long, so in order to be compared on an element-to-element basis, the 13
 has to be recycled to a vector consisting of 20090 elements that are
 each 13.  The same holds for the 12.
 
+Here's another example.  Say we wish to recode the **Nile** data to a
+new vector **nile**, with values 1, 2 and 3, for the cases in which the
+value is less than 800, between 800 and 1150 inclusive, or greater than
+1150.  We could do this:
+
+``` r
+> nile <- ifelse(Nile > 1150,3,2)
+> nile <- ifelse(Nile < 800,1,nile)
+# check it 
+> table(nile)
+nile
+ 1  2  3 
+26 62 12 
+```
+
+After the first call to **ifelse**, the vector **nile** (not **Nile**;
+variable names etc. are case-sensitive) consists of 2s and 3s.  The 3s
+are right, but the 2s need further work, hence the second call.  
+
+But let's look closely at the second call, to review some things we've
+seen before:
+
+1. The expression **Nile > 1150** evaluates to a vector of 100 TRUEs and
+   FALSEs.  
+
+2. The singleton value 800 is then recycled to one hundred
+800s, to set up the '<'.  Let's call the result of that '<' operation w.
+
+3. Then **ifelse(Nile < 800,1,nile)** says, "For each element in the vector
+w that is TRUE, write down a 1; for each element that is FALSE, write
+down whatever the corresponding value is in **nile**."
+
 Well, congratulations!  With **for** and now **ifelse**, you've really
 gotten into the programming business.  We'll be using them a lot in the
 coming lessons.
 
-> **Your Turn:** Recode the **Nile** data to a new vector **nile**, with
-> the values 1 and 2 and 3, according to whether the corresponding number in
-> **Nile** is less than 800 or not.  Then (a bit harder), recode the
-> original **Nile** into values 1, 2 and 3, for the cases in which the
-> value is less than 800, between 800 and 1150, or greater than 1150.
-> You'll probably want to do this using two separate calls to
-> **ifelse**.
+> **Your Turn:**  Write a **for** loop version of the **Nile** example
+> above.
 
 ## <a name="keepfit"> </a> Lesson 21:  Do Professional Athletes Keep Fit?
 
@@ -4527,6 +4568,11 @@ I also would recommend various Web tutorials:
 
 * Hadley Wickham, 
 [the Tidyverse](https://www.tidyverse.org) 
+
+## <a name="thanks"> Thanks </a>
+
+This tutorial has benefited from feedback from (in alphabetical order)
+Reese Goding, Ira Sharenow, and Aaron Wichman.
 
 ## <a name="ide"> Installing and Using IDEs </a>
 
