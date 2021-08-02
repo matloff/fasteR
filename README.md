@@ -2201,19 +2201,43 @@ loop.  It's just an ordinary R variable, so name it what you wish.
 A technical point:  Why did we need the explicit call to **print**?
 Didn't we say earlier that just typing an expression at the R '>' prompt
 will automatically print out the value of the expression?  Ah yes -- but
-we are not at the R prompt here!  Yes, in the expanded form above, that
-would be at the prompt, but inside the **for** loop we are not at the
-prompt, even though the **for** call itself had been made at the prompt.
+we are not at the R prompt here!  Yes, in the expanded form we see
+above,
 
-So there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
+``` r
+print(sum(pima[,1] == 0))
+print(sum(pima[,2] == 0))
+print(sum(pima[,3] == 0))
+print(sum(pima[,4] == 0))
+print(sum(pima[,5] == 0))
+print(sum(pima[,6] == 0))
+print(sum(pima[,7] == 0))
+print(sum(pima[,8] == 0))
+print(sum(pima[,9] == 0))
+```
+
+each command would be issued at the prompt.  But in the 
+**for** loop version
+
+``` r
+for (i in 1:9) print(sum(pima[,i] == 0))
+```
+
+we are calling **print()** from *within the loop*, not at the prompt.
+So, the explicit call to **print()** is needed.
+
+We now see there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
 column 3.  We probably have forgotten which column is which, so let's
 see, using yet another built-R function:
+
  
 ``` r
 > colnames(pima)
 [1] "pregnant"  "glucose"   "diastolic" "triceps"   "insulin"   "bmi"      
 [7] "diabetes"  "age"       "test"     
 ```
+
+Ah, so column 3 was 'diastolic'.
 
 Since some women will indeed have had 0 pregnancies, that column should
 not be recoded.  And the last column states whether the test for
@@ -2287,7 +2311,7 @@ replaces those 0s by NAs.
 
 Sometimes our code needs to leave a loop early, which we can do using
 the R **break** construct.  Say we are adding cubes of numbers
-1,2,3,..., and for some reason want to determine which one is the first
+1,2,3,..., and for some reason want to determine which sum is the first
 to exceed **s**:
 
 ``` r
@@ -2321,33 +2345,36 @@ tutorial.
 
 Blocks are usually key in defining functions.  Let's generalize the
 above code in the Loops lesson, writing a function that replaces 0s by
-NAs for general data frames, not just **pima** as before.
+NAs in specified columns in general data frames, not just **pima** as
+before.
 
 ``` r
 zerosToNAs <- function(d,cols) 
 {
-   zeroIndices <- which(d[,cols] == 0)
-   d[zeroIndices,cols] <- NA
+   for (j in cols) {
+      NArows <- which(d[,j] == 0)
+      d[NArows,j] <- NA
+   }
    d
 }
 ```
 
-Since we had three statements in the body of the function rather than
-one, we again needed to write them as a block.
-
 Here the formal argument **d** is the data frame to be worked on, and
 **cols** specifies the columns in which 0s are to be replaced.
 
-We could use this in the Pima data"
+We could use this in the Pima data:
 
 ``` r
 > pima <- zerosToNAs(pima,2:6)
 ```
 
-There is an important subtlety here.  Use of the vector **zeroIndices** will
-produce a new data frame, rather than changing **pima** itself.  So, if
-we want **pima** to change, we must reassign the output of the function
-back to **pima**.
+There is an important subtlety here.  Use of the vector **zeroIndices**
+will produce a new data frame, rather than changing **pima** itself.
+That does look odd; isn't **d** changing, and isn't **d** the same as
+**pima**?  Well, no; **d** is only a separate *copy* of **pima**. So,
+when **d** changes, **pima** does not.  So, if we want **pima** to
+change, we must reassign the output of the function back to **pima**, as
+we did above.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**, which
 > prints the numbers of NAs in each column of the data frame **dfr**.
