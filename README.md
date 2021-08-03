@@ -61,7 +61,10 @@ goal is to USE the R system productively in their own data analysis.
 learning.  There will be occasional **Your Turn** sections, in which you the 
 learner must devise and try your own variants on what has been presented.
 Sometimes the tutorial will be give you some suggestions, but even then,
-you should cook up your own variants to try.
+you should cook up your own variants to try.  <span style="color:red"> 
+Remember:  You get out what you put in!</span>  The more actively you
+work the **Your Turn** sections, the more powerful you will be as an R
+coder.
 
 ## Table of Contents
 
@@ -1963,9 +1966,8 @@ As before, we could compactify this as
 [1] 1250
 ```
 
-But until you can even do R in your sleep, it's best to do it step by
-step.  Let's see how those steps work.  Writing the code with line
-numbers for reference, the code is
+But it's best to do it step by step at first.  Let's see how those steps
+work.  Writing the code with line numbers for reference, the code is
 
 ``` r
 1  gt1200Indices <- which(Nile > 1200)
@@ -1994,6 +1996,8 @@ we have:
 > our lower bound.  We *could* keep typing the same pattern as above,
 > but if we're going to do this a lot, it's better to write a function
 > for it:
+
+Here is our function:
 
 ``` r
 > mgd <- function(x,d) mean(x[x > d])
@@ -2134,11 +2138,15 @@ the function 'range', as there is already a built-in R function of that
 name.
 
 > **Your Turn:**  Try your hand at writing some simple functions along
-> the lines seen here.  You might start by writing a function **n0(x)**,
-> that returns the number of 0s in the vector ***x***.  (Hint:  Make use
-> of R's **==** and **sum**.) Another suggestion would be a function
-> **hld(x,d)**, which draws a histogram for those elements in the vector
-> ***x*** that are less than ***d***.
+> the lines seen here.  You might start by writing a function **cgd()**,
+> like **mgd()** above, but returning the count of the number of
+> elements in **x** that are greater than **d**.  Then may try writing a
+> function **n0(x)**, that returns the number of 0s in the vector
+> ***x***.  (Hint:  Make use of R's **==** and **sum**.) Another
+> suggestion would be a function **hld(x,d)**, which draws a histogram
+> for those elements in the vector ***x*** that are less than ***d***.
+> Write at least 4 or 5 functions; the more you write, the easier it
+> will be in later lessons.
 
 Functions are R objects, just as are vectors, lists and so on.  Thus, we
 can print them by just typing their names!
