@@ -1950,16 +1950,40 @@ This gave us the count of the elements in the **Nile** data larger than 1200.
 Now, say we want the mean of those elements:
 
 ``` r
+> gt1200 <- which(Nile > 1200)
+> nileSubsetGT1200 <- Nile[gt1200]
+> mean(nileSubsetGT1200)
+[1] 1250
+```
+
+As before, we could compactify this as
+
+``` r
 > mean(Nile[Nile > 1200])
 [1] 1250
 ```
 
-Let's review how this works.  The expression 'Nile > 1200' gives us a
-bunch of TRUEs and FALSEs, one for each element of **Nile**.  The result
-of that, i.e. the vector of TRUEs and FALSEs, is then fed into the
-**Nile** vector, giving us 'Nile[Nile > 1200]'; it gives us the
-subvector of **Nile** corresponding to the TRUEs, i.e. the stated
-condition.  We then take the mean of that subvector.
+But until you can even do R in your sleep, it's best to do it step by
+step.  Let's see how those steps work.  Writing the code with line
+numbers for reference, the code is
+
+``` r
+1  gt1200Indices <- which(Nile > 1200)
+2  nileSubsetGT1200 <- Nile[gt1200Indices]
+3  mean(nileSubsetGT1200)
+```
+
+Let's review how this works:  
+
+* In line 1, we find the indices in **Nile** for the elements larger than 1200.
+
+* In line 2, we extract the subset of **Nile** consisting of those
+  elements.
+
+* In line 3, we compute the desired mean.
+
+But we may wish to do this kind thing often, on many datasets etc.  Then
+we have:
 
 > <span style="color:red">Tip:</span>
 > If we have an operation we will use a lot, we should consider writing a
@@ -1975,8 +1999,9 @@ condition.  We then take the mean of that subvector.
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
-I named it 'mgd' for "mean of elements greater than d," but any name is
-fine.
+Here I've used the compactified form for convenience.  (Otherwise I'd
+need to use *blocks* to be covered in a later lesson.)  I named it 'mgd'
+for "mean of elements greater than d," but any name is fine.
 
 Let's try it out, then explain:
 
@@ -2009,13 +2034,23 @@ There is a lot going on here.  Bear with me for a moment, as I bring in
 a little of the "theory" of R:
  
 Odd to say, but there is a built-in function in R itself named
-'function'!  We've already seen several R functions, e.g. **mean()**,
-**sum()** and **plot()**.  Well, here is another, **function()**.  We're
-calling it here.  And its job is to build a function. Yes, as I like to
-say, to my students' amusement,
+'function'!  We've already seen several built-in R functions, e.g.
+**mean()**, **sum()** and **plot()**.  Well, here is another,
+**function()**.  We're calling it here.  And its job is to build a
+function. Yes, as I like to say, to my students' amusement,
 
 > "The function of the function named **function** is to build functions!
 > And the class of object returned by **function** is 'function'!"
+
+So, in the line
+
+``` r
+> mgd <- function(x,d) mean(x[x > d])
+```
+
+we are telling R, "R, I want to write my own function.  I'd like to name
+it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x > d])'. Thanks in advance, R!"
+
 
 Here we called **function** to build a 'function' object, and then
 assigned to **mgd**.  We can then call the latter, as we saw above,
@@ -2026,14 +2061,14 @@ repeated here for convenience:
 [1] 1250
 ```
 
-The line of code 
+In executing
+
 ``` r
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
 
-says that **mgd** will have two arguments, ***x***
-and ***d***.  These are known as *formal* arguments, as they are just
+***x*** and ***d*** are known as *formal* arguments, as they are just
 placeholders.  For example, in 
 
 ``` r
@@ -2041,8 +2076,8 @@ placeholders.  For example, in
 ```
 
 we said, "R, please execute **mgd** with **Nile** playing the role of
-***x***, and 1200 playing the role of ***d***.  (Here **Nile** and 1200 are
-known as the *actual* arguments.)  
+***x***, and 1200 playing the role of ***d***.  Here **Nile** and 1200 are
+known as the *actual* arguments.
 
 As with variables, we can pretty much name functions and their arguments
 as we please.
