@@ -1415,7 +1415,7 @@ clutter in the code.
 - The second line determines which elements of **glc**
 are 0s, resulting in **z** being a vector of TRUEs and FALSEs.  
 - The third line then assigns NA to those elements in **glc** corresponding to
-the TRUEs.
+the TRUEs. (Note the recycling of NA.)
 - Finally, we need to have the changes in the original data, so we copy
   **glc** to it.
 
@@ -1959,7 +1959,7 @@ Now, say we want the mean of those elements:
 [1] 1250
 ```
 
-As before, we could compactify this as
+As before, we could instead write a more compact version,
 
 ``` r
 > mean(Nile[Nile > 1200])
@@ -2003,7 +2003,7 @@ Here is our function:
 > mgd <- function(x,d) mean(x[x > d])
 ```
 
-Here I've used the compactified form for convenience.  (Otherwise I'd
+Here I've used a compact form for convenience.  (Otherwise I'd
 need to use *blocks* to be covered in a later lesson.)  I named it 'mgd'
 for "mean of elements greater than d," but any name is fine.
 
@@ -2171,7 +2171,8 @@ for the glucose variable:
 But there are several columns like this, and we'd like to avoid doing
 this all repeatedly by hand.  (What if there were several *hundred* such
 columns?) Instead, we'd like to do this *programmatically*.  This can be
-done with R's **for** loop construct.  
+done with R's **for** loop construct (which by the way most programming
+languages have as well).
 
 Let's first check which columns seem appropriate for recoding.  Recall
 that there are 9 columns in this data frame.
@@ -2241,6 +2242,11 @@ column that are 0, exactly what we wanted.
 
 The variable **i** in "for (i in 1:9)..." is known as the *index* of the
 loop.  It's just an ordinary R variable, so name it what you wish.
+Instead of **i**, we might name it, say, **colNumber**.
+
+``` r
+for (colNumber in 1:9) print(sum(pima[,colNumber] == 0))
+```
 
 A technical point:  Why did we need the explicit call to **print**?
 Didn't we say earlier that just typing an expression at the R '>' prompt
@@ -2309,12 +2315,15 @@ involved) form:
 + }
 ```
 
+You can enter the code for a loop or function etc. line by line at the
+prompt, as we've done here.  R helpfully uses its '+' prompt (which I
+did *not* type) to remind me that I am still in the midst of typing the
+code. (After the '}' I simply hit Enter.)
+
 Here I intended the body of the loop to consist of a *block* of two
 statements, not one, so I needed to tell R that, by typing '{' before
 writing my two statements, then letting R know I was finished with the
-block, by typing '}'.  Meanwhile R was helpfully using its '+' prompt
-(which I did *not* type) to remind me that I was still in the midst of
-typing the block. (After the '}' I simply hit Enter.)
+block, by typing '}'.  
 
 For your convenience, below is the code itself, no '+' symbols.  You can
 copy-and-paste into R, with the result as above.
@@ -2384,6 +2393,17 @@ If our accumulated total meets our goal, we leave the loop.
 A better approach is to use 'while' loops, covered later in this
 tutorial.
 
+> <span style="color:red">Tip:</span>
+> There is a school of thought among some R enthusiasts that one
+> should avoid writing loops, using something called *functional
+> programming*.  We will cover this in Lesson 28, but I do not recommend
+> it for R beginners.  As the name implies, functional programming uses
+> functions, and it takes a while for most R beginners to master writing
+> functions.  It makes no sense to force beginners to use functional
+> programming before they really can write function code well.  I
+> myself, with my several decades as a coder, write some code with loops
+> and some with functional programming.  Write in whatever style you
+> feel comfortable with, rather than being a "slave to fashion."
 
 ## <a name="ftnbl"> </a> Lesson 18:  Functions with Blocks 
 
@@ -2412,13 +2432,25 @@ The loop goes through **d**, one column at a time.  Since **d[,j] == 0**
 means all of column **j** of **d**, then **which(d[,j] == 0)** will give
 us the indices in that column of elements that are 0s.  Those indices in
 turn mean row numbers in **d**, which we've named **NArows**.  In line
-5, then, we replace the 0s we've found in column **j** by NAs.
+5, then, we replace the 0s we've found in column **j** by NAs.  Before
+continuing, work through this little example in your mind:
 
-When we reach line 7, we've already finished the loop, and exited from
-it.  So, we are ready to return the new value of **d**.  Recall that we
-could do this via the expression **return(d)**, but we can save
-ourselves some typing by simply writing 'd'.  That value becomes the
-last value computed, and R automatically returns that last value.
+``` r
+> d <- data.frame(x=c(1,0,3),y=c(0,0,13)) 
+> d
+  x  y
+1 1  0
+2 0  0
+> which(d[,2] == 0)
+[1] 1 2  # ah yes; the 0 elements in column 2 are at indices 1 and 2
+```
+
+Returning the the above loop code, note that when we reach line 7, we've
+already finished the loop, and exited from it.  So, we are ready to
+return the new value of **d**.  Recall that we could do this via the
+expression **return(d)**, but we can save ourselves some typing by
+simply writing 'd'.  That value becomes the last value computed, and R
+automatically returns that last value.
 
 We could use this in the Pima data:
 
@@ -2429,15 +2461,15 @@ We could use this in the Pima data:
 There is an important subtlety here.  All of this will produce a new
 data frame, rather than changing **pima** itself.  That does look odd;
 isn't **d** changing, and isn't **d** the same as **pima**?  Well, no;
-**d** is only a separate *copy* of **pima**. So, when **d** changes,
+**d** is only a *separate copy* of **pima**. So, when **d** changes,
 **pima** does not.  So, if we want **pima** to change, we must reassign
 the output of the function back to **pima**, as we did above.
 
-> **Your Turn**: Write a function with call form **countNAs(dfr)**, which
-> prints the numbers of NAs in each column of the data frame **dfr**.
-> You can do this by replacing the second line in the **for** block
-> above by a well-chosen call to the **sum** function.  Test it on a small
-> artificial dataset that you create.
+> **Your Turn**: Write a function with call form **countNAs(dfr)**,
+> which prints the numbers of NAs in each column of the data frame
+> **dfr**.  You'll need to use the built-in **is.na()** functon; execute
+> **is.na(c(5,NA,13,28,NA))** at the R command prompt to see what it
+> does.  Test it on a small artificial dataset that you create.
 
 ## <a name="edt"> </a> Lesson 19:  Text Editing and IDEs
 
