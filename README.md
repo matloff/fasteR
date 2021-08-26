@@ -4611,6 +4611,10 @@ SAGE
 Linear Models, Logistic and Ordinal Regression, and Survival Analysis*,
 Springer 
 
+*  Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani,
+*Introduction to Statistical Learning: with Applications in R*, 
+Springer, 2nd ed. 
+
 * Max Kuhn, *Applied Predictive Modeling*, Springer
 
 * Max Kuhn and Kjell Johnson, Feature Engineering and Selection: *A
