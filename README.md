@@ -367,7 +367,7 @@ it:
 The function **sd** finds the standard deviation.  
 
 Note that we used R's *assignment operator* here to copy ("assign")
-those particular  **Nile** elements to **n80100**.  (In most situations,
+those particular  **Nile** elements to **n81100**.  (In most situations,
 you can use "=" instead of "<-", but why worry about what the exceptions
 might be?  They are arcane, so it's easier just to always use "<-".
 And though "keyboard shortcuts" for this are possible, again let's just
@@ -379,21 +379,21 @@ made a copy of those elements.  The original vector **Nile** remains
 intact.
 
 > <span style="color:red">Tip:</span>
-> We can pretty much choose any name we want; "n80100" just was chosen
+> We can pretty much choose any name we want; "n81100" just was chosen
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
 
-Note that **n80100** now is a 21-element vector.  Its first element is
-now element 80 of **Nile**:
+Note that **n81100** now is a 21-element vector.  Its first element is
+now element 81 of **Nile**:
 
 ``` r
-> n80100[1]
-[1] 890
-> Nile[80]
-[1] 890
+> n81100[1]
+[1] 744
+> Nile[81]
+[1] 744
 ```
 
-Keep in mind that although **Nile** and **n80100** now have identical
+Keep in mind that although **Nile** and **n81100** now have identical
 contents, they are *separate* vectors; if one changes, the other will
 not.
 
@@ -409,6 +409,9 @@ elements in the vector, e.g.
 > length(Nile)
 [1] 100
 ```
+
+Can you guess the value of **length(n81100)**?  Type this expression in
+at the '>' prompt to check your answer.
 
 Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
@@ -2053,8 +2056,8 @@ So, in the line
 ```
 
 we are telling R, "R, I want to write my own function.  I'd like to name
-it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x > d])'. Thanks in advance, R!"
-
+it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x >
+d])'. Please build the function for me. Thanks in advance, R!"
 
 Here we called **function** to build a 'function' object, and then
 assigned to **mgd**.  We can then call the latter, as we saw above,
@@ -4647,7 +4650,8 @@ I also would recommend various Web tutorials:
 ## <a name="thanks"> Thanks </a>
 
 This tutorial has benefited from feedback from (in alphabetical order)
-Reese Goding, Ira Sharenow, and Aaron Wichman.
+Reese Goding, Ira Sharenow, and Aaron Wichman, as well as various
+anonymous suggestions.
 
 ## <a name="ide"> Installing and Using IDEs </a>
 
