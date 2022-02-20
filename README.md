@@ -215,7 +215,7 @@ Here we are asking R to find the mean of the Nile data, then print the
 result.
 
 But whenever we are at the R '>' prompt, any expression we type will be
-printed out anyway, so there is no need to call **print()**.
+printed out anyway, so there is no need to call **print**.
 
 Since there are only 100 data points here, it's not unwieldy to print
 them out.  Again, all we have to do is type ``Nile,'' no need to call
