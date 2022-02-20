@@ -210,8 +210,12 @@ function.  We could have typed,
 > print(mean(Nile))
 ```
 
-but whenever we are at the R '>' prompt, any expression we type will be
-printed out.
+Function calls in R (and other languages) work "from the inside out."
+Here we are asking R to find the mean of the Nile data, then print the
+result.
+
+But whenever we are at the R '>' prompt, any expression we type will be
+printed out anyway, so there is no need to call **print()**.
 
 Since there are only 100 data points here, it's not unwieldy to print
 them out.  Again, all we have to do is type ``Nile,'' no need to call
@@ -4623,7 +4627,7 @@ Practical Approach for Predictive Models*, CRC
 * Norm Matloff, *Statistical Regression and Classification: from Linear
 Models to Machine Learning*, CRC
 
-* Norm Matloff, *The Art of Machine Learing: Algorithms+Data+R*, NSP,
+* Norm Matloff, *The Art of Machine Learning: Algorithms+Data+R*, NSP,
   coming soon
 
 **Other**
