@@ -421,7 +421,7 @@ Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
 ### Recap: What have we learned in these first two lessons?
 
-* Starting and existing R.
+* Starting and exiting R.
 
 * Some R functions:  **mean**, **hist**, **length**.
 
