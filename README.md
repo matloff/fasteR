@@ -595,7 +595,7 @@ row and third column would be the age of the second person in our data.
 The second row as a whole would be all the data for that second person,
 i.e. the height, weight and age of that person.  
 
-**Note that that row would also be cnsidered a vector.  The third column
+**Note that that row would also be considered a vector.  The third column
 as a whole would be the vector of all ages in our dataset.**
 
 As our first example, consider the **ToothGrowth** dataset built-in to
