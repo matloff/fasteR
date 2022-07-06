@@ -387,7 +387,7 @@ intact.
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
 
-Note that **n81100** now is a 21-element vector.  Its first element is
+Note that **n81100** now is a 20-element vector.  Its first element is
 now element 81 of **Nile**:
 
 ``` r
