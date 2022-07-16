@@ -44,18 +44,18 @@ be using RStudio or an external editor, and the treatment here will
 include special instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the popular
-      but self-described "opinionated" Tidyverse is not treated, partly
-due to its controversial nature (I am a
-[skeptic](http://github.com/matloff/TidyverseSkeptic)), but again mainly
-because it would be an obstacle to your becoming productive in R
-quickly. 
+      but self-described "opinionated" Tidyverse is not treated at first, 
+      partly due to its controversial nature (I am a [skeptic](http://github.com/matloff/TidyverseSkeptic)), 
+      but again mainly because it would be an obstacle to your 
+      becoming productive in R quickly.  A later lesson to be added will 
+      introduce Tidy (defined as **dplyr** and pipes) and compare it to base-R.
 
-    While you can learn a few simple things in Tidy quickly, thinking
-you are learning a lot, those things are quite limited in scope, and
-Tidy learners often find difficulty in applying R to real world data.
-<span style="color:red"> Our tutorial here is aimed at learners whose
-goal is to USE the R system productively in their own data analysis.
-</span>  
+      While you can learn a few simple things in Tidy quickly, thinking
+      you are learning a lot, those things are quite limited in scope,
+      and Tidy learners often find difficulty in applying R to real
+      world data.  <span style="color:red"> Our tutorial here is aimed
+      at learners whose goal is to USE the R system productively in
+      their own data analysis.  </span>  
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
