@@ -85,7 +85,7 @@ coder.
 * [Lesson 14: Introduction to Base R Graphics ](#less8)
 * [Lesson 15: More on Base Graphics ](#less9)
 * [Lesson 16: Writing Your Own Functions](#less10)
-* [Lesson 17: 'For' Loops](#less11)
+* [Lesson 17: `For` Loops](#less11)
 * [Lesson 18: Functions with Blocks](#ftnbl)
 * [Lesson 19: Text Editing and IDes](#edt)
 * [Lesson 20: If, Else, Ifelse](#ifelse)
@@ -106,7 +106,7 @@ coder.
 * [Lesson 33: Tips on R Coding Style and Strategy](#style)
 * [Lesson 34: The Logistic Model](#logit)
 * [Lesson 35: Files and Directories](#fd)
-* [Lesson 36: R 'while' Loops](#whl)
+* [Lesson 36: R `while` Loops](#whl)
 * [To Learn More](#forMore)
 * [Thanks](#thanks)
 * [Appendix: Installing and Using RStudio](#rstudio)
@@ -148,7 +148,7 @@ you're pretty good at it.  After all, we can all work puzzles.
 You'll need to [install
 R](https://www.datacamp.com/community/tutorials/installing-R-windows-mac-ubuntu),
 from [the R Project site](https://www.r-project.org).  Start up R,
-either by clicking an icon or typing 'R' in a terminal window.  We are
+either by clicking an icon or typing `R` in a terminal window.  We are
 not requiring RStudio here, but if you already have it, start it; you'll
 be typing into the R console, the Console pane.
 
@@ -156,33 +156,33 @@ As noted, this tutorial will be "bare bones."  In particular, there is
 no script to type your command for you.  Instead, you will either
 copy-and-paste from the text here into the R console, or type them there
 by hand.  (Note that the code lines here will all begin with the R
-interactive prompt, '>'; that should not be typed.)
+interactive prompt, `>`; that should not be typed.)
 
 This is a Markdown file.  You can read it right there on GitHub, which
 has its own Markdown renderer. Or you can download it to your own
 machine in Chrome and use the Markdown Reader extension to view it (be
 sure to enable Allow Access to File URLs).  
 
-When you end your R session, exit by typing 'quit()'.
+When you end your R session, exit by typing `quit()`.
 
 Good luck!  And if you have any questions, feel free to e-mail me, at
 matloff@cs.ucdavis.edu
 
 ## <a name="firstr"> </a> Lesson 2: First R Steps
 
-The R command prompt is '>'.  Again, it will be shown here, but you don't type
+The R command prompt is `>`.  Again, it will be shown here, but you don't type
 it.  It is just there in your R window to let you know R is inviting you
 to submit a command.  (If you are using RStudio, you'll see it in the
 Console pane.) 
 
-So, just type '1+1' then hit Enter.  Sure enough, it prints out 2 (you
+So, just type `1+1` then hit Enter.  Sure enough, it prints out 2 (you
 were expecting maybe 12108?):
 
 ``` r
 > 1 + 1
 [1] 2
 ```
-But what is that '[1]' here?  It's just a row label.  We'll go into that
+But what is that `[1]` here?  It's just a row label.  We'll go into that
 later, not needed quite yet.
 
 ### Example: Nile River data
@@ -214,11 +214,11 @@ Function calls in R (and other languages) work "from the inside out."
 Here we are asking R to find the mean of the Nile data, then print the
 result.
 
-But whenever we are at the R '>' prompt, any expression we type will be
+But whenever we are at the R `>` prompt, any expression we type will be
 printed out anyway, so there is no need to call **print**.
 
 Since there are only 100 data points here, it's not unwieldy to print
-them out.  Again, all we have to do is type ``Nile,'' no need to call
+them out.  Again, all we have to do is type `Nile`, no need to call
 **print**:
 
 ``` r
@@ -237,8 +237,8 @@ Frequency = 1
 ```
 
 Now you can see how the row labels work.  There are 15 numbers per row
-here, so the second row starts with the 16th, indicated by '[16]'.  The
-third row starts with the 31st output number, hence the '[31]' and so
+here, so the second row starts with the 16th, indicated by `[16]`.  The
+third row starts with the 31st output number, hence the `[31]` and so
 on.
 
 Note that a set of numbers such as **Nile** is called a *vector*.
@@ -278,7 +278,7 @@ graph.
 > different options, specifiable via various arguments.  For now, we'll
 > just keep things simple, and resist the temptation to explore them
 > all.
-R has lots of online help, which you can access via '?'.  E.g. typing
+R has lots of online help, which you can access via `?`.  E.g. typing
 
 ``` r
 > ?hist
@@ -372,8 +372,8 @@ The function **sd** finds the standard deviation.
 
 Note that we used R's *assignment operator* here to copy ("assign")
 those particular  **Nile** elements to **n81100**.  (In most situations,
-you can use "=" instead of "<-", but why worry about what the exceptions
-might be?  They are arcane, so it's easier just to always use "<-".
+you can use `=` instead of `<-`, but why worry about what the exceptions
+might be?  They are arcane, so it's easier just to always use `<-`.
 And though "keyboard shortcuts" for this are possible, again let's just
 stick to the basics for now.)
 
