@@ -66,6 +66,9 @@ Remember:  You get out what you put in!</span>  The more actively you
 work the **Your Turn** sections, the more powerful you will be as an R
 coder.
 
+Acknowledgement:  The author is grateful to Kyle Butts for some format
+improvements in July 2022.
+
 ## Table of Contents
 
 **PART I**
