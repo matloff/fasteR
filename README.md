@@ -390,7 +390,7 @@ intact.
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
 
-Note that **n81100** now is a 21-element vector.  Its first element is
+Note that **n81100** now is a 20-element vector.  Its first element is
 now element 81 of **Nile**:
 
 ``` r
@@ -521,7 +521,7 @@ years had that property.  Well, R actually has a **which** function:
 ```
 
 So the 4th, 8th, 9th etc. elements in **Nile** had the queried property.
-(Note that those were years 1875, 1879 and so on.)
+(Note that those were years 1874, 1878 and so on.)
 
 In fact, that gives us another way to get the count of the years with
 that trait:
@@ -598,7 +598,7 @@ row and third column would be the age of the second person in our data.
 The second row as a whole would be all the data for that second person,
 i.e. the height, weight and age of that person.  
 
-**Note that that row would also be cnsidered a vector.  The third column
+**Note that that row would also be considered a vector. The third column
 as a whole would be the vector of all ages in our dataset.**
 
 As our first example, consider the **ToothGrowth** dataset built-in to
@@ -606,7 +606,8 @@ R.  Again, you can read about it in the online help by typing
 
 ``` r
 > ?ToothGrowth
-``` (The data turn out to be on guinea pigs, with orange juice or
+```
+(The data turn out to be on guinea pigs, with orange juice or
 Vitamin C as growth supplements.)  Let's take a quick look from the
 command line.
 
@@ -716,7 +717,7 @@ case?  R's **nrow** function tells us the number of rows in any data
 frame:
 
 ``` r
-> nrow(ToothGrowth)
+> nrow(tg)
 [1] 60
 ```
 
@@ -725,7 +726,6 @@ Ah, 60 rows (60 guinea pigs, 3 measurements each).
 Or, alternatively:
 
 ``` r
-> tg <- ToothGrowth
 > length(tg$len)
 [1] 60
 > length(tg$supp)
@@ -743,7 +743,7 @@ number 60.*
 The **head** function works on vectors too:
 
 ``` r
->  head(ToothGrowth$len)
+>  head(tg$len)
 [1]  4.2 11.5  7.3  5.8  6.4 10.0
 ```
 
@@ -751,7 +751,7 @@ Like many R functions, **head** has an optional second argument,
 specifying how many elements to print:
 
 ``` r
-> head(ToothGrowth$len,10)
+> head(tg$len,10)
  [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
 ```
 
