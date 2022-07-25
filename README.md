@@ -390,7 +390,7 @@ intact.
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
 
-Note that **n81100** now is a 21-element vector.  Its first element is
+Note that **n81100** now is a 20-element vector.  Its first element is
 now element 81 of **Nile**:
 
 ``` r
@@ -521,7 +521,7 @@ years had that property.  Well, R actually has a **which** function:
 ```
 
 So the 4th, 8th, 9th etc. elements in **Nile** had the queried property.
-(Note that those were years 1875, 1879 and so on.)
+(Note that those were years 1874, 1878 and so on.)
 
 In fact, that gives us another way to get the count of the years with
 that trait:
@@ -598,7 +598,7 @@ row and third column would be the age of the second person in our data.
 The second row as a whole would be all the data for that second person,
 i.e. the height, weight and age of that person.  
 
-**Note that that row would also be cnsidered a vector.  The third column
+**Note that that row would also be considered a vector. The third column
 as a whole would be the vector of all ages in our dataset.**
 
 As our first example, consider the **ToothGrowth** dataset built-in to
@@ -606,7 +606,8 @@ R.  Again, you can read about it in the online help by typing
 
 ``` r
 > ?ToothGrowth
-``` (The data turn out to be on guinea pigs, with orange juice or
+```
+(The data turn out to be on guinea pigs, with orange juice or
 Vitamin C as growth supplements.)  Let's take a quick look from the
 command line.
 
@@ -716,7 +717,7 @@ case?  R's **nrow** function tells us the number of rows in any data
 frame:
 
 ``` r
-> nrow(ToothGrowth)
+> nrow(tg)
 [1] 60
 ```
 
@@ -725,7 +726,6 @@ Ah, 60 rows (60 guinea pigs, 3 measurements each).
 Or, alternatively:
 
 ``` r
-> tg <- ToothGrowth
 > length(tg$len)
 [1] 60
 > length(tg$supp)
@@ -743,7 +743,7 @@ number 60.*
 The **head** function works on vectors too:
 
 ``` r
->  head(ToothGrowth$len)
+>  head(tg$len)
 [1]  4.2 11.5  7.3  5.8  6.4 10.0
 ```
 
@@ -751,7 +751,7 @@ Like many R functions, **head** has an optional second argument,
 specifying how many elements to print:
 
 ``` r
-> head(ToothGrowth$len,10)
+> head(tg$len,10)
  [1]  4.2 11.5  7.3  5.8  6.4 10.0 11.2 11.2  5.2  7.0
 ```
 
@@ -1516,7 +1516,7 @@ $`8`
 ```
 
 In English, the call to **split** said, "Split **mtmpg** into multiple
-vectors, with the splitting criterion being the correspond
+vectors, with the splitting criterion being the corresponding
 values in **mtcars$cyl**."
 
 
@@ -1569,7 +1569,7 @@ $b
 Note that here we can give names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
 according to the values of the vector beiing split.  (In that earlier
-case, we also needed backquotes ``   ``, since the names were numbers.)
+case, we also needed backquotes `` ` ``, since the names were numbers.)
 
 
 If we don't like those default names, we can change them:
@@ -2378,8 +2378,8 @@ the R **break** construct.  Say we are adding cubes of numbers
 to exceed **s**:
 
 ``` r
-> f
-function(n,s) 
+> f <-
+function(n,s)
 {
    tot <- 0
    for (i in 1:n) {
@@ -2641,7 +2641,7 @@ worked):
 
 Now how did that work?  As you see above, R's **ifelse** function
 has three arguments, and its return value is a new vector, that in this
-case we've reassigned to **pe$educ**.  Here, **edu < 12** produces a vector
+case we've reassigned to **pe$educ**.  Here, **edu < 13** produces a vector
 of TRUEs and FALSEs.  For each TRUE, we set the corresponding element of
 the output to 12; for each FALSE, we set the corresponding element of
 the output to the corresponding element of **edu**.  That's exactly what
@@ -2732,7 +2732,7 @@ using data on professional baseball players.  (Dataset courtesy of the
 UCLA Statistics Dept.)
 
 ``` r
-> mlb <- read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/mlb.txt',header=TRUE)
+> mlb <- read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/mlb.txt',header=TRUE,stringsAsFactors=TRUE)
 > head(mlb)
              Name Team       Position Height Weight   Age PosCategory
 1   Adam_Donachie  BAL        Catcher     74    180 22.99     Catcher
@@ -3444,7 +3444,7 @@ The latter has the call form
 sapply(X,FUN)
 ```
 
-where **X** is an R factor and **FUN** is a function.  We will assume
+where **X** is an R vector and **FUN** is a function.  We will assume
 here that **FUN** returns a number, not a vector or other R object.  The
 action of the function is to apply **FUN** on each element of **X**,
 producing a new vector.  (It of course can be reassigned to the old
@@ -3611,7 +3611,7 @@ My recommendation is to take things on a case-by-case basis.
 Now, let's turn to another central function in the **apply** family.
 Not surprisingly, it's named **apply**!  It is usually used on
 **matrix** objects (like data frames, but with the contents being all of
-the same type, e.g. all numerical), on either rows or columnṡ, but can
+the same type, e.g. all numerical), on either rows or columns, but can
 be used on data frames too.
 
 The call form is
@@ -3912,7 +3912,7 @@ in text processing.  For instance, the **tm** package has a
 **removePunctuation** function.  But let's see how we can do this with
 the basics.
 
-We'll use R's **gsub** function.  It's call form, as we'll use it, is
+We'll use R's **gsub** function.  Its call form, as we'll use it, is
 
 ``` r
 gsub(string_to_change,replacement,input_vector,fixed=TRUE)
@@ -3956,7 +3956,7 @@ It's in a **.zip** file, so it will need a little extra preprocessing:
 # fetch from Web, and store the downloaded data to the file 'bike.sip'
 > download.file('https://archive.ics.uci.edu/ml/machine-learning-databases/00275/Bike-Sharing-Dataset.zip','bike.zip')
 > unzip('bike.zip')  # out come the files 'day.csv' and 'hour.csv'
-> day <- read.csv('day.csv',header=TRUE)
+> day <- read.csv('day.csv',header=TRUE, stringsAsFactors=TRUE)
 > head(day)  # always take a look around!
   instant     dteday season yr mnth holiday weekday workingday weathersit
 1       1 2011-01-01      1  0    1       0       6          0          2
@@ -4021,7 +4021,7 @@ cold or very hot days, so we may wish to add a quadratic term to the
 model, say by doing
 
 ``` r
-day1$temp2 <- temp^2  # the caret symbol means exponentiation, 
+day1$temp2 <- day1$temp^2  # the caret symbol means exponentiation, 
                       # i.e. 2nd power here
 ```
 
@@ -4069,7 +4069,7 @@ be printed out automatically.
 
 Again, the purpose of this tutorial is to present R, not statistics.
 The interested reader should consult a statistics book regarding
-*p-values* and *confidence intervals.*  The former are show in the last
+*p-values* and *confidence intervals.*  The former are shown in the last
 column of the above summary.  An approximate 95% confidence interval
 for, say, the population coefficient of humidity is -812.74 plus or
 minus 1.96 times the *standard error*, 112.98.  Note carefully that
@@ -4132,7 +4132,7 @@ Fine, but R has a special class for date data, not surprisingly called
 ```
 
 Though it prints out just as before, there are extra properties now, and
-even bettery, in POSIX form:
+even better, in POSIX form:
 
 ``` r
 > hp <- as.POSIXlt(hd)
@@ -4157,10 +4157,10 @@ just a little sample.
 
 Programming is a creative activity, and thus different programmers will
 have different coding styles.  Some people feel so strongly that they
-will publish there own particular style guides, such as 
+will publish their own particular style guides, such as 
 [this one](https://google.github.io/styleguide/Rguide.xml) 
 by the R community at Google.  Mine is
-[here`](https://github.com/matloff/R-Style-Guide).
+[here](https://github.com/matloff/R-Style-Guide).
 
 Needless to say, style is a matter of personal taste.  But:
 
@@ -4174,7 +4174,7 @@ Needless to say, style is a matter of personal taste.  But:
 **Equally important is strategy, the way you approach a coding project.**
 
 There is no magic formula on how to write code.  As noted earlier, I
-cannot *teach* yow how to code.  I can only show you how the
+cannot *teach* you how to code.  I can only show you how the
 ingredients work -- loops, variables, functions, if/else etc. -- and you
 must creatively put them together into code that achieves goals.  It's
 like solving a big puzzle, and like many big puzzles, you may need to
@@ -4305,7 +4305,7 @@ in the **test** column of the dataset, 1 for having the disease, 0 for
 not.
 
 As a simple example, say we try to predict **test** from the variables
-**bim** and **age**.  A linear model would be
+**bmi** and **age**.  A linear model would be
 
 mean test = &beta;<sub>0</sub> + &beta;<sub>1</sub> bmi + &beta;<sub>2</sub> age
 
@@ -4359,7 +4359,7 @@ of age 40.
 [1] 0.3928424
 ```
 
-So, the risk of diabetes increases substantial over that 10-year period,
+So, the risk of diabetes increases substantially over that 10-year period,
 but this population and BMI level.
 
 ## <a name="fd"> </a> Lesson 35:  Files and Folders/Directories
@@ -4543,8 +4543,7 @@ Key points here:
 * The '&&' operator stands for "and".  
 
 * The condition within the 'while' says that (a) we are not yet at the
-  end of the **airpass** vector, AND (b) our total is still less than
-10000.
+  end of the **airpass** vector, AND (b) our total is still less than 10000.
 
 * Note the need for the condition **i <= length(airpass)**.  It's
   possible that **tot** will never exceed 10000 (not true here, but we
@@ -4552,7 +4551,7 @@ wouldn't know that *a priori*), so we need that condition so that the
 loop doesn't iterate forever!
 
 There's more, though.  The **cumsum** function is vectorized, so using
-it, though seemingly wasteful, may actually be faster than the loop
+it, though seemingly wasteful, may actually be faster than the loop.
 
 ## <a name="forMore"> </a> Lesson 37:  To Learn More 
 
@@ -4666,12 +4665,12 @@ anonymous suggestions.
 
 ## <a name="ide"> Installing and Using IDEs </a>
 
-An *interactive development environment* (IDE) is a software tool that
+An *integrated development environment* (IDE) is a software tool that
 enables editing, saving and running your code, as well as related
 actions such as installing packages.
 
 The real "power users" tend to use either Emacs Speaks Statistics (ESS),
-a plugin for the Emacs editor, or Nvim-r,, a plugin for the vim editor.
+a plugin for the Emacs editor, or Nvim-r, a plugin for the vim editor.
 However, since this tutorial is aimed at those with little or no prior
 coding background, we will not cover them.  Instead, we introduce 
 RStudio.  Here are some pros and cons:
