@@ -244,7 +244,18 @@ here, so the second row starts with the 16th, indicated by `[16]`.  The
 third row starts with the 31st output number, hence the `[31]` and so
 on.
 
-Note that a set of numbers such as **Nile** is called a *vector*.
+Note that a set of numbers such as **Nile** is called a *vector*.  This
+one is a special kind of vector, a *time series*, with each element of
+the vector recording a particular point in time, here consisting of the
+years 1871 through 1970.  We thus know that this vector has length 100
+elements.  But in general, we can find the length of any vector by
+calling the **length()** function, e.g.
+
+``` r
+> length(Nile)
+[1] 100
+
+```  
 
 ### A first graph
 
@@ -390,7 +401,7 @@ intact.
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
 
-Note that **n81100** now is a 21-element vector.  Its first element is
+Note that **n81100** now is a 20-element vector.  Its first element is
 now element 81 of **Nile**:
 
 ``` r
@@ -409,8 +420,8 @@ not.
 > mean over the years 1945-1960.
 
 
-Another oft-used function is **length**, which gives the number of
-elements in the vector, e.g.
+Recall that another oft-used function is **length**, which gives the
+number of elements in the vector, e.g.
 
 ``` r
 > length(Nile)
@@ -598,7 +609,7 @@ row and third column would be the age of the second person in our data.
 The second row as a whole would be all the data for that second person,
 i.e. the height, weight and age of that person.  
 
-**Note that that row would also be cnsidered a vector.  The third column
+**Note that that row would also be considered a vector.  The third column
 as a whole would be the vector of all ages in our dataset.**
 
 As our first example, consider the **ToothGrowth** dataset built-in to
@@ -661,7 +672,7 @@ fact that **tg$len** is a vector:
 ```
 
 The element in row 3, column 1 in the *data frame* **tg** is element 3
-in the *vector* **tg$letn**.  This duality between data frames and
+in the *vector* **tg$len**.  This duality between data frames and
 vectors is often exploited in R.
 
 > **Your Turn:**  The above examples are fundamental to R, so you should
@@ -2438,11 +2449,12 @@ before.
 Here the formal argument **d** is the data frame to be worked on, and
 **cols** specifies the columns in which 0s are to be replaced.
 
-The loop goes through **d**, one column at a time.  Since **d[,j] == 0**
+The loop goes through **d**, one column at a time.  Since **d[,j]**
 means all of column **j** of **d**, then **which(d[,j] == 0)** will give
 us the indices in that column of elements that are 0s.  Those indices in
-turn mean row numbers in **d**, which we've named **NArows**.  In line
-5, then, we replace the 0s we've found in column **j** by NAs.  Before
+turn are row numbers in **d**.  In other words, **NArows** is a vector
+cntaining the row numbers of the 0s in column **j**.  In line 5, then,
+we replace the 0s we've found in column **j** by NAs.  Before
 continuing, work through this little example in your mind:
 
 ``` r
@@ -2451,11 +2463,12 @@ continuing, work through this little example in your mind:
   x  y
 1 1  0
 2 0  0
+3 3 13
 > which(d[,2] == 0)
 [1] 1 2  # ah yes; the 0 elements in column 2 are at indices 1 and 2
 ```
 
-Returning the the above loop code, note that when we reach line 7, we've
+Returning to the above loop code, note that when we reach line 7, we've
 already finished the loop, and exited from it.  So, we are ready to
 return the new value of **d**.  Recall that we could do this via the
 expression **return(d)**, but we can save ourselves some typing by
@@ -2592,7 +2605,7 @@ loads file, and then you run as above.
 
 ## <a name="ifelse"> </a> Lesson 20:  If, Else, Ifelse
 
-If our Census data example above, it was stated that education codes 0-9
+In our Census data example above, it was stated that education codes 0-9
 all corresponded to having no college education at all.  For instance, 9
 means high school graduate, while 6 means schooling through the 10th
 grade.  (Of course, few if any programmers and engineers have
