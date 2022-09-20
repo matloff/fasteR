@@ -2745,7 +2745,7 @@ using data on professional baseball players.  (Dataset courtesy of the
 UCLA Statistics Dept.)
 
 ``` r
-> mlb <- read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/mlb.txt',header=TRUE)
+> load(url('https://github.com/matloff/fasteR/blob/master/data/mlb.RData?raw=true'))
 > head(mlb)
              Name Team       Position Height Weight   Age PosCategory
 1   Adam_Donachie  BAL        Catcher     74    180 22.99     Catcher
