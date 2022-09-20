@@ -1777,9 +1777,8 @@ programmers and engineers, from the US 2000 census.  Let's read
 in the data and take a look at the first records:
 
 ``` r
-> pe <- 
-   read.table('https://raw.githubusercontent.com/matloff/fasteR/master/data/prgeng.txt',header=TRUE)
-> head(pe)
+> load(url('https://github.com/matloff/fasteR/blob/master/data/prgeng.RData?raw=true'))
+> head(prgeng)
        age educ occ sex wageinc wkswrkd
 1 50.30082   13 102   2   75000      52
 2 41.10139    9 101   1   12300      20
@@ -1789,8 +1788,10 @@ in the data and take a look at the first records:
 6 57.70413   11 100   1       0       0
 ```
 
-We used **read.table** here because the file is not of the CSV type. It
-uses blank spaces rather than commas as its delineator between fields.
+Here we use **load()** to input the data.  This a function will be 
+explained in [Lesson 16](#less10), but for now, the point is that this
+was necessary to preserve the R factor structure of some of the
+variables.
 
 Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
@@ -1802,7 +1803,7 @@ variable.)
 Let's start with a scatter plot of wage vs. age:
 
 ``` r
-> plot(pe$age,pe$wageinc)
+> plot(prgeng$age,prgeng$wageinc)
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge1.png)
@@ -1813,8 +1814,8 @@ random sample, say 2500.  (There are other ways of handling the problem,
 say with smaller dots or *alpha blending*.)
 
 ``` r
-> indxs <- sample(1:nrow(pe),2500)
-> pe2500 <- pe[indxs,]
+> indxs <- sample(1:nrow(prgeng),2500)
+> prgeng2500 <- prgeng[indxs,]
 ```
 
 Recall that the **nrow()** function returns the number of rows in the
@@ -1822,14 +1823,14 @@ argument, which in this case is 20090, the number of rows in **pe**.
 
 R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
-rows of **pe**, in a new data frame **pe2500**.
+rows of **prgeng**, in a new data frame **prgeng2500**.  
 
 > <span style="color:red">Tip:</span>
 > Note again that it's clearer to break complex operations into simpler,
 > smaller ones.  I could have written the more compact
 
 ``` r
-> pe2500 <- pe[sample(1:nrow(pe),2500),]
+> prgeng2500 <- prgeng[sample(1:nrow(prgeng),2500),]
 ```
 
 but it would be hard to read that way.  I also use direct function
@@ -1850,10 +1851,14 @@ h(z)
 So, here is the new plot:
 
 ``` r
-> plot(pe2500$age,pe2500$wageinc)
+> plot(prgeng2500$age,prgeng2500$wageinc)
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge2.png)
+
+Note that since I plotted a random sample of rows, the ones you get may
+differ from the ones I got.  The resulting graph will be largely similar
+but possibly not identical.  
 
 OK, now we are in business.  A few things worth noting:
 
@@ -1871,12 +1876,11 @@ $350,000 (probably out of privacy concerns).
 We can break things down by gender, via color coding:
 
 ``` r
-> plot(pe2500$age,pe2500$wageinc,col=as.factor(pe2500$sex))
+> plot(prgeng2500$age,prgeng2500$wageinc,col=prgeng2500$sex)
 ```
 
 The **col** argument indicates we wish to color code, in this case by
-gender.  Note that **pe2500$sex** is a numeric vector, but **col**
-requires an R factor; the function **as.factor** does the conversion.
+gender.  It is required to be an R factor. 
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge3.png)
 
@@ -1918,7 +1922,7 @@ wages in the census data.
 First we use **split** to separate the data by gender:
 
 ``` r
-> wageByGender <- split(pe$wageinc,pe$sex)
+> wageByGender <- split(prgeng$wageinc,prgeng$sex)
 > dm <- density(wageByGender[[1]])
 > dw <- density(wageByGender[[2]])
 ```
