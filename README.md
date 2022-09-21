@@ -7061,7 +7061,7 @@ So, how to fix it?
 
 ```
 
-So, **y2** is just what we need---the original file contents broken down
+So, **allWords** is just what we need---the original file contents broken down
 into individual words, with no empty words.
 
 R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
@@ -7076,35 +7076,10 @@ R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
 We'll continue with this example in the next lesson, but first, time for
 a **Your Turn** session.
 
-> **Your Turn:** That [[1]] expression in the body of
-> **extractNonemptyWords** was crucial!  Try the code without it, and
-> see if you can explain the result, which is not what we desire.
-> <span style="color:red">Tip:</span>  This illustrates a common error
-> for beginners and veterans alike.  The error message probably won't be
-> helpful!  So keep this frequent error in mind, both when you're
-> writing code and viewing cryptic error messages.
-
-We can then call our **extractNonemptyWords** function on each line of
-the file, say in a loop.  We'll do this in the next section.
-
-> **Your Turn:** Write a function with call form **delNAs(x)**, that
-> returns **x** with NAs deleted.  
+> **Your Turn:**  Write code to determine which line in 
+> **abt** is longest, in terms of the number of characters.
 
 ## <a name="txt1"> </a> Lesson 30:  Simple Text Processing, II
-
-So, let's use our **extractNonemptyWords** function on our **abt** vector.
-Here's a loop way to do it:
-
-``` r
-allWords <- NULL  # start with empty vector
-for (i in 1:70) {
-   thisLine <- extractNonemptyWords(abt[i])
-   allWords <- c(allWords,thisLine)
-}
-```
-
-Note that the result, i.e. the final value of **allWords**, will be one
-long vector, consisting of all the words in the file.
 
 As usual, it is a must to inspect the result, say the first 25 elements:
 
@@ -7151,7 +7126,7 @@ that the first two arguments are identical, but it makes sense:
     in each pile, exactly what we needed.
 
 <span style="color:red">Tip:</span>  In coding, certain patterns do
-arise often, one did here. In fact, there are coding books with "design
+arise often, one did here. In fact, there are even coding books with "design
 patterns" in their titles.  Take note when you see the same pattern a
 lot.
 
@@ -7191,10 +7166,7 @@ So, to remove all periods in **allWords**, we can do:
 [1] "graphics"
 ```
 
-<!--
-empty strings; empty lines; 'for' loop to get tot number of words;
-fancier, Reduce()
--->
+We could continue to fine-tune the output in this manner.
 
 ## <a name="linreg2"> </a> Lesson 31:  Linear Regression Analysis, II
 
