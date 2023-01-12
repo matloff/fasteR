@@ -623,9 +623,11 @@ R.  Again, you can read about it in the online help by typing
 
 ``` r
 > ?ToothGrowth
-``` (The data turn out to be on guinea pigs, with orange juice or
-Vitamin C as growth supplements.)  Let's take a quick look from the
-command line.
+``` 
+
+The data turn out to be on guinea pigs, with orange juice or
+Vitamin C as growth supplements.  Let's take a quick look 
+from the command line.
 
 ``` r
 > head(ToothGrowth)
