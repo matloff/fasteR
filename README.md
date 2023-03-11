@@ -1025,6 +1025,9 @@ By the way, note that the original row numbers are displayed too.  For
 example, the first case satisfying the conditions was row number 11 in
 the original data frame **tg**.
 
+Typically we want not only to extract part of the data frame, but also
+save the results:
+
 ``` r
 > w <- tg[tg$len > 28 | tg$dose == 1.0,]
 ```
@@ -1087,7 +1090,7 @@ number:
 
 The logical operations work on vectors too.  For example, say in the
 **Nile** data we wish to know how many years had flows in the extremes,
-say below 500 or above 1200:
+say below 800 or above 1300:
 
 ``` r
 > exts <- Nile[Nile < 800 | Nile > 1300]
@@ -1107,7 +1110,8 @@ things directly:
 ```
 
 This is fine for advanced, experienced R users, but really, "one step at
-a time" is better for beginners.
+a time" is better for beginners.  It's clearer, and most important,
+easier to debug if something goes wrong.
 
 ### Recap:  What we've learned in this lesson
 
