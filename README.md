@@ -1387,7 +1387,7 @@ of women having those values.  For instance, 3 women had the glucose =
 68.
 
 Uh, oh!  5 women in the study had glucose level 0.  And 1 had level 44,
-etc.  Presumably 0 is not physiologically possible, and maybe not 44
+etc.  Presumably 0 is not physiologically possible, and maybe not 1
 either.
 
 Let's consider a version of the glucose data that at least excludes these 0s.
