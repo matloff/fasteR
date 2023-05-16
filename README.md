@@ -496,7 +496,7 @@ look at a small example first:
 
 First, notice something odd here, in the expression **x > 8**. Here
 **x** is a vector, 3 elements in length, but 8 is just a number.  It
-would seem that it's nnonsense to ask whether a vector is greater than a
+would seem that it's nonsense to ask whether a vector is greater than a
 number; they're different animals.
 
 But R makes them "the same kind" of animal, by extending that number 8
@@ -552,7 +552,7 @@ that trait:
 ```
 
 Of course, as usual, my choice of the variable name "which1200" was
-arbirary, just something to help me remember what is stored in that
+arbitrary, just something to help me remember what is stored in that
 variable.
 
 R's **length** function does what it says, i.e. finding the length of a
@@ -928,7 +928,7 @@ recorded those row numbers in **whichOJ**.  Then we did the same for VC.
 
 Now, look at the expression **tg[whichOJ,1]**.  Remember, data frames
 are accessed with two subscript expressions, one for rows, one for
-colums, in the format
+columns, in the format
 
 ``` r
 d[the rows we want, the columns we want]
@@ -936,7 +936,7 @@ d[the rows we want, the columns we want]
 
 So, **tg[whichOJ,1]** says to restrict attention to the OJ rows, and
 only column 1, tooth length.  We then find the mean of those restricted
-numberss.  This turned out to be 20.66333.  Then do the same for VC.
+numbers.  This turned out to be 20.66333.  Then do the same for VC.
 
 Again, if we are pretty experienced, we can skip steps:
 
@@ -1121,7 +1121,7 @@ example of using **nrow** as a means of counting how many rows satisfy
 given conditions.
 
 Again, these are all "bread and butter" operations that arise quite
-freqently in real world R usage.
+frequently in real world R usage.
 
 By the way, note how the essence of R is "combining little things in
 order to do big things," e.g. combining the subsetting operation, the
@@ -1226,7 +1226,7 @@ assigned 10 plants to the control, 10 to treatment 1 and 10 to treatment
 
 > **Your Turn:**  One of the most famous built-in R datasets is
 > **mtcars**, which has various measurements on cars from the 60s and 70s.
-> Lots of opportunties for you to cook up little experiments here!  You
+> Lots of opportunities for you to cook up little experiments here!  You
 > may wish to start by comparing the mean miles-per-gallon values for 4-,
 > 6- and 8-cylinder cars.  Another suggestion would be to find how many
 > cars there are in each cylinder category, using **tapply**.  As usual,
@@ -1315,8 +1315,8 @@ function!  But this is not the place to go into that.)
 Most real-world data is "dirty," i.e. filled with errors.  The famous
 [New York taxi trip
 dataset](https://data.cityofnewyork.us/Transportation/2017-Yellow-Taxi-Trip-Data/biws-g3hs),
-for instance, has one trip destination whose lattitude and longitude
-place it in Antartica! The impact of such erroneous data on one's statistical
+for instance, has one trip destination whose latitude and longitude
+place it in Antarctica! The impact of such erroneous data on one's statistical
 analysis can be anywhere from mild to disabling.  Let's see below how one
 might ferret out bad data.  And along the way, we'll cover several new R
 concepts.
@@ -1591,7 +1591,7 @@ $b
 
 Note that here we can give names to the list elements, 'a' and 'b'.  In
 forming **mtl** using **split** above, the names were assigned
-according to the values of the vector beiing split.  (In that earlier
+according to the values of the vector being split.  (In that earlier
 case, we also needed backquotes ``   ``, since the names were numbers.)
 
 
@@ -2460,7 +2460,7 @@ before.
      8	}
 ```
 
-(We've added line numbers to this display for convenence.)
+(We've added line numbers to this display for convenience.)
 
 Here the formal argument **d** is the data frame to be worked on, and
 **cols** specifies the columns in which 0s are to be replaced.
@@ -2469,7 +2469,7 @@ The loop goes through **d**, one column at a time.  Since **d[,j]**
 means all of column **j** of **d**, then **which(d[,j] == 0)** will give
 us the indices in that column of elements that are 0s.  Those indices in
 turn are row numbers in **d**.  In other words, **NArows** is a vector
-cntaining the row numbers of the 0s in column **j**.  In line 5, then,
+containing the row numbers of the 0s in column **j**.  In line 5, then,
 we replace the 0s we've found in column **j** by NAs.  Before
 continuing, work through this little example in your mind:
 
@@ -2506,7 +2506,7 @@ the output of the function back to **pima**, as we did above.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**,
 > which prints the numbers of NAs in each column of the data frame
-> **dfr**.  You'll need to use the built-in **is.na()** functon; execute
+> **dfr**.  You'll need to use the built-in **is.na()** function; execute
 > **is.na(c(5,NA,13,28,NA))** at the R command prompt to see what it
 > does.  Test it on a small artificial dataset that you create.
 
@@ -2709,7 +2709,7 @@ Let's revisit the above statement with this point in mind.
 ```
 
 It would be helpful to keep in mind that both the 13 and the 12 will be
-recycled, as expained before.  The **edu** vector is 20090 elements
+recycled, as explained before.  The **edu** vector is 20090 elements
 long, so in order to be compared on an element-to-element basis, the 13
 has to be recycled to a vector consisting of 20090 elements that are
 each 13.  The same holds for the 12.
@@ -2946,7 +2946,7 @@ line, superimposed on our scatter plot:
 but we really shouldn't have to type those numbers in by hand -- and we
 don't have to.  Here's why:
 
-As mentioned earlier, R is an *object-oriented language*. Everthing is
+As mentioned earlier, R is an *object-oriented language*. Everything is
 an *object*, and every object has a *class*.  One of the most common
 class structures is called 'S3'.  
 
@@ -3043,7 +3043,7 @@ This says:
 So, under this more refined analysis, things are even more pessimistic;
 players on average gain about 0.9 pounds per year.  And by the way, an
 extra inch of height corresponds on average to about 4.9 pounds of extra
-weight; taller players are indeed heavier, as we surmized.
+weight; taller players are indeed heavier, as we surmised.
 
 <span style="color:red">Warning:</span>
 Though this is not a statistics tutorial *per se*, an important point
@@ -3584,7 +3584,7 @@ one:
 (Intercept)         Age 
 180.8280290   0.7949252 
 ``` 
-jibing with **m[1,]** in our data-frame/loop appraoch above.
+jibing with **m[1,]** in our data-frame/loop approach above.
 
 Well, then, what did we accomplish -- if anything -- by using **lapply**
 here rather than our earlier approach using a loop?  Certainly the
@@ -3632,7 +3632,7 @@ for beginning coders*, but even for myself.
 
 Beginners are in the process of learning functions.  FP by definition is
 based on writing functions, thus making FP a more abstract and difficult
-process.  And I certainly disagree with the doctrinnaire view of some
+process.  And I certainly disagree with the doctrinaire view of some
 that one should never write loops.
 
 My recommendation is to take things on a case-by-case basis.
@@ -3640,7 +3640,7 @@ My recommendation is to take things on a case-by-case basis.
 Now, let's turn to another central function in the **apply** family.
 Not surprisingly, it's named **apply**!  It is usually used on
 **matrix** objects (like data frames, but with the contents being all of
-the same type, e.g. all numerical), on either rows or columnṡ, but can
+the same type, e.g. all numerical), on either rows or columns, but can
 be used on data frames too.
 
 The call form is
@@ -3736,7 +3736,7 @@ Recall, our goal here is to tabulate the various words in the file.  We
 won't be tabulating each individual line, so let's just make one long
 line out of **abt**.
 
-The main R function for concatening strings is **paset()**.  For
+The main R function for concatenating strings is **paste()**.  For
 instance, 
 
 ``` r
@@ -4028,7 +4028,7 @@ are functions that take on different roles for objects of different
 classes.  One such example is the **plot** function we saw earlier.
 
 Try typing "plot(lmout)" at the R prompt.  You will be shown several
-plots desribing the fitted regression model.  What happened was that the
+plots describing the fitted regression model.  What happened was that the
 function **plot** is just a placeholder.  When we type "plot(lmout)" R
 says, "Hmm, what kind of object is **lmout**?  Oh, it's of class
 **'lm'**.  So I'm going to transfer (*dispatch*) this call to one
@@ -4101,7 +4101,7 @@ Let's see how many holidays there were:
 [19] 2012-11-12 2012-11-22 2012-12-25
 ```
 
-Once again, let's review how the above code works.  The expression "[day$holiday == 1]" yields a bunch of TRUEs and FALSEs.  Using them as indices in the vecotr **day$dteday** gives us exactly the dates that are holidays. 
+Once again, let's review how the above code works.  The expression "[day$holiday == 1]" yields a bunch of TRUEs and FALSEs.  Using them as indices in the vector **day$dteday** gives us exactly the dates that are holidays. 
 
 We see above that there were 21 holidays during the time period of the
 data.  But we can do more.  First, what kind of object is **hds** above?
@@ -4127,7 +4127,7 @@ Fine, but R has a special class for date data, not surprisingly called
 ```
 
 Though it prints out just as before, there are extra properties now, and
-even bettery, in POSIX form:
+even better, in POSIX form:
 
 ``` r
 > hp <- as.POSIXlt(hd)
@@ -4291,7 +4291,7 @@ More on this in a later lesson!
 
 In our earlier examples of regression analysis, we were predicting a
 continuous variable such as human weight.  But what if we wish to
-predict a *dichotomous* varible, i.e. one recording which of two
+predict a *dichotomous* variable, i.e. one recording which of two
 outcomes occurs?
 
 Consider the Pima dataset from earlier examples.  Say we are predicting
@@ -4309,7 +4309,7 @@ take the average of a bunch of 1s and 0s?  The answer is that we get the
 proportion of 1s.  For instance, the mean of the numbers 1,0,1,1 is 3/4,
 which is exactly the proportion of 1s in that data.
 
-In statististical terms, what the above equation is doing is expressing
+In statistical terms, what the above equation is doing is expressing
 the probability of a 1 -- i.e. the probability of having diabetes --
 in terms of Body Mass Index and age.
 
@@ -4364,7 +4364,7 @@ is said to be a *directory*.  You will frequently see this in Mac
 discussions as well.  (The Mac OS is a Unix-family system.)  We will
 typically use the term *directory* here, as that is what R uses.
 
-In assmebling a dataset for my **regtools** package, I needed to collect
+In assembling a dataset for my **regtools** package, I needed to collect
 the records of several of my course offerings.  I started in a directory
 that had one subdirectory for each offering.  In turn, there was a file
 named **Results**.  As an intermediate step, wanted to find all such
@@ -4679,7 +4679,7 @@ RStudio.  Here are some pros and cons:
 shortcuts etc.  
 
 * That however also has a downside, since as noted earlier, the
-  compexity of RStudio can be "overwhelming."
+  complexity of RStudio can be "overwhelming."
 
 In light of that last point, we recommend that you NOT try to learn
 RStudio to any degree of complexity at the outset.  Just learn how to
