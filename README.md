@@ -1141,10 +1141,19 @@ ones to buy and combine into a meal.
 
 ## <a name="tapply"> </a> Lesson 9:  The tapply Function
 
-> <span style="color:red">Tip:</span> Often in R there is a shorter, more
+> 📘 Pro Tip
+> 
+> Often in R there is a shorter, more
 > compact way of doing things.  That's the case here; we can use the
 > magical **tapply** function in the above example.  In fact, we can do it
 > in just one line.
+
+The general form of a call to **tapply** is
+
+``` r
+tapply(what to split, what criterion to use for splitting, 
+   what to do with the resulting grouped data)
+```
 
 ``` r
 > tapply(tg$len,tg$supp,mean)
@@ -1202,7 +1211,9 @@ child's age in **x**.  Similarly, it wouldn't be right if **g** had had
 only 3 elements, apparently leaving the fourth child without a specified
 gender.
 
-> <span style="color:red">Tip:</span>
+
+> 📘 Pro Tip
+> 
 > If **g** had been of the wrong length, we would have gotten an error,
 > "Arguments must be of the same length."  This is a common error in R
 > code, so watch out for it, keeping in mind WHY the lengths must be the
@@ -3871,7 +3882,9 @@ A couple of other points:
 ```
 
 * Material following '#' is a `comment`, a note the programmer inserts
-to explain the code, for clarity and future maintainability.
+to explain the code, for clarity and future maintainability, to
+aid him/herself and/or others who read the code.  (In many cases,
+comments are here to benefit you, the reader.)
 
 We'll continue with this example in the next lesson, but first, time for
 a **Your Turn** session.
@@ -3915,9 +3928,15 @@ desired.  But how to get the word counts?  Why, it's our old friend,
             2            27             4             1             1 
 ```
 
-Actually, this really the same pattern we saw before, with the
-**length** function as our third argument.  It may look a little odd
-that the first two arguments are identical, but it makes sense:
+We got rid of the blank words, but the report here is still a little
+rough, for example treating ';' as a "word."  But overall, it's doing
+what we want, showing for instance that the word "analysis" occurs 2
+times in the original text.
+
+Now, how did this call to **tapply()** work here?  Actually, this really
+the same pattern we saw with **tapply()** before, with the **length**
+function as our third argument.  It may look a little odd that the first
+two arguments are identical, but it makes sense:
 
 1.  We split up the **allWords** vector into piles, according to the
     second argument, which happens to be the same vector.
@@ -3925,10 +3944,12 @@ that the first two arguments are identical, but it makes sense:
 2.  We apply the **length** function to each pile, giving us the count
     in each pile, exactly what we needed.
 
-<span style="color:red">Tip:</span>  In coding, certain patterns do
-arise often, one did here. In fact, there are even coding books with "design
-patterns" in their titles.  Take note when you see the same pattern a
-lot.
+
+> 📘 Pro Tip
+
+> In coding, certain patterns do arise often, one did here. In fact,
+> there are even coding books with "design patterns" in their titles.
+> Take note when you see the same pattern a lot.
 
 We're not fully done yet.  For instance, we have a punctuation problem,
 where periods, commas and so on are considered parts of words, such as
@@ -4394,7 +4415,7 @@ is said to be a *directory*.  You will frequently see this in Mac
 discussions as well.  (The Mac OS is a Unix-family system.)  We will
 typically use the term *directory* here, as that is what R uses.
 
-In assmebling a dataset for my **regtools** package, I needed to collect
+In assembling a dataset for my **regtools** package, I needed to collect
 the records of several of my course offerings.  I started in a directory
 that had one subdirectory for each offering.  In turn, there was a file
 named **Results**.  As an intermediate step, wanted to find all such
@@ -4515,11 +4536,12 @@ of loop, **while**.  It keeps iterating until some specified condition
 is met.  We don't know how many iterations will be needed, unlike the
 **for** case, with a fixed number of iterations.
 
-As our example, consider **AirPassengers**, which consists of number of
-air travelers in thousands, in monthly data from January 1949.  As
-usual, let's glance at it first:
+As our example, consider r's built-in dataset **AirPassengers**, which
+consists of number of air travelers in thousands, in monthly data from
+January 1949.  As usual, let's glance at it first:
 
 ``` r
+> airpass <- AirPassengers  # less typing below
 > str(airpass)
  Time-Series [1:144] from 1949 to 1961: 112 118 132 129 121 135 148 148 136 119 ...
 ```
@@ -4544,20 +4566,19 @@ exceeded 10 million.  A crude way would be to use R's **cumsum**
 [133] 35066 35457 35876 36337 36809 37344 37966 38572 39080 39541 39931 40363
 ```
 
-We see that that occurred in the 59th month.  But though this approach
+We see that that occurred in the 60th month.  But though this approach
 would be convenient, it also would be wasteful:  We are calculating *all*
 the cumulative sums, even though we don't need them all.  In a really
 long vector, this could be slow.  Here is a less wasteful way:
 
 ``` r
- tot <- 0
-> i <- 0
-> while (i <= length(airpass) && tot < 10000) {
-+    i <- i + 1
-+    tot <- tot + airpass[i]
-+ }
-> i
-[1] 59
+tot <- 0
+i <- 1
+while (i <= length(airpass) && tot < 10000) {  ## && means 'and'
+    i <- i + 1
+    tot <- tot + airpass[i]
+}
+i  # prints 60
 ```
 
 So, the **while** loop keeps iterating until we get the desired
@@ -4568,8 +4589,7 @@ Key points here:
 * The '&&' operator stands for "and".  
 
 * The condition within the 'while' says that (a) we are not yet at the
-  end of the **airpass** vector, AND (b) our total is still less than
-10000.
+  end of the **airpass** vector, AND (b) our total is still less than 10000.
 
 * Note the need for the condition **i <= length(airpass)**.  It's
   possible that **tot** will never exceed 10000 (not true here, but we
