@@ -3736,7 +3736,7 @@ Recall, our goal here is to tabulate the various words in the file.  We
 won't be tabulating each individual line, so let's just make one long
 line out of **abt**.
 
-The main R function for concatening strings is **paset()**.  For
+The main R function for concatening strings is **paste()**.  For
 instance, 
 
 ``` r
@@ -3753,8 +3753,11 @@ abt1 <- paste(abt,collapse=' ')
 
 ```
 
-This joined the elements of **abt** into one long string, **abt1**, with
-successive elements of **abt** being separated by a blank.
+This says, "Take all the 70 strings in **abt**, collapse them into one
+big string, with a single space separating each of the original
+strings."  So, it joined the elements of **abt** into one long string,
+**abt1**, with successive elements of **abt** being separated by a
+blank (in addition to whatever blanks were in the original strings).
 
 ``` r
 > str(abt1)
@@ -3777,64 +3780,88 @@ characters are in **abt1** in all?
 [1] 3461
 ```
 
-We now need to bring **abt1** into individual words.  We can do so using
+We now need to break **abt1** down into individual words.  We can do so using
 **strsplit()**:
 
 ``` r
 > y <- strsplit(abt1,' ')
 > str(y)
 List of 1
- $ : chr [1:722] "" "What" "is" "R?" ...
+```
+
+That second argument, ' ', means we want the blank character to be our
+splitting delimiter.  In some other setting, we may wish to use, say, a
+comma as the splitting delimiter, or whatever.
+
+Now let's look at **y**.  Keeping in mind that that object is an R list. 
+
+We can use double brackets to inspect the first element of **y** (which
+is the *only* element of **y**, as we saw above that **y** is a "list of
+1").
+
+``` r
 > str(y[[1]])
  chr [1:722] "" "What" "is" "R?" "" "Introduction" "to" "R" "" "" "" "" "R" ..
 ```
-(That second argument, ' ', means we want the blank character to be our
-splitting delimiter.)`
 
-Good, it split the line into the three words on that line,
-"Introduction", "to", and "R".  
+So, **y[[1]]** is a character vector of length 722.  There is one
+element for each word in the original text, though some of the "words"
+are actually empty.  We see here that the first word in the text,
+**y[[1]][1]**,
+was empty, the second word,
+**y[[1]][2]**,
+was 'What', the third was 'is' and so on.
 
-But be careful!  What is that [[1]] doing there?  Remember, the double
-bracket notation is for R lists.  So, **strsplit** has split **abt[4]**
-a list with one element, and that element is in turn the three-element
-character vector **c("Introduction","to","R")**.  So for instance,
+> 📘 **ALWAYS KEEP IN MIND**
+> 
+> When one gets to this level of R, it is crucial to pay close attention
+> to the class and size of all R objects. 
+>
+> Here, **abt** is a character vector of length 70; **abt1** is a
+> character vector of length 1; **y** is an R list of length 1;
+> **y[[1]]** is a character vector of length 722, **y[[1]][i]** is a
+> string.  Subtle differences between object types can make big
+> differences in actions.  
+>
+> *Dealing with this is not rocket science, just something that
+> requires patience.*
+
+Now, why does the R list **y** have length only 1?  The answer is that
+only string was fed into **strsplit()**.  Recall what we did:
 
 ``` r
-> y[[1]][2]  # check word 2
-[1] "What"
+> y <- strsplit(abt1,' ')
+
 ```
 
-> This attention to detail is essential to effective programming, whether
-> in R or any other language.  
-<br>
-> The material beginning with the # sign is what is called a *comment* in
-> the programming world.  It does not get executed by R, but it is a memo
-> to us, the programmer, a note to help us remember what we did.  
-<br> 
-> Comments are extremely important.  When we read our code six months from
-> now, we will have forgotten most of it, so comments help us reorient.
-> The same holds if someone else reads our code.  Comments -- *meaningful*
-> comments -- are key to good coding.  More on this in a future lesson.
+If **abt1** had consisted of, say, 5 strings rather than just 1, **y**
+would have been an R list of 5 elements.
 
-But we also see a snag.  (Recall the point made [above](#noteasy):  Good
-coding requires patience and persistence!) The above output shows we
-have a lot of empty words "".  This is because at some places in the
-input, we had several consecutive blanks.  When there is more than one
-consecutive blank, the **strsplit** function treats the excess blanks as
-"words."  (This comes as quite a surprise to Python programmers.)
+
+At some places in the original input, we had several consecutive blanks.
+When there is more than one consecutive blank, the **strsplit** function
+treats the excess blanks as "words."  (This comes as quite a surprise to
+Python programmers.)
 
 So, how to fix it?  
 
 ``` r
 > y1 <- y[[1]]  # easier to read, less cluttered
-> y2 <- y1[y1 != '']
-
+> allWords <- y1[y1 != '']
+> allWords
+> allWords
+  [1] "What"                      "is"
+  [3] "R?"                        "Introduction"
+  [5] "to"                        "R"
+...
 ```
 
 So, **allWords** is just what we need---the original file contents broken down
 into individual words, with no empty words.
 
-R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
+A couple of other points:
+
+* R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
 
 ``` r
 > 3 < 8
@@ -3842,6 +3869,9 @@ R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
 > !(3 < 8)
 [1] FALSE
 ```
+
+* Material following '#' is a `comment`, a note the programmer inserts
+to explain the code, for clarity and future maintainability.
 
 We'll continue with this example in the next lesson, but first, time for
 a **Your Turn** session.
