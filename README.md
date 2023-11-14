@@ -398,7 +398,8 @@ Note too that though we will speak of the above operation as having
 made a copy of those elements.  The original vector **Nile** remains
 intact.
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > We can pretty much choose any name we want; "n81100" just was chosen
 > to easily remember this new vector's provenance.  (But names can't
 > include spaces, and must start with a letter.)
@@ -643,7 +644,8 @@ columns, which the curator of the data decided to name 'len', 'supp' and
 column, a vector-like object called a *factor*, to be discussed
 shortly).  
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > To avoid writing out the long words repeatedly, it's handy to
 > make a copy with a shorter name.
 
@@ -846,7 +848,8 @@ class too; actually, a single number is considered to be a vector of
 length 1.  So, **c('abc','xw')**, for instance, is  **'character'**
 as well.
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > Computers require one to be very, very careful and very, very precise.
 > In that expression **c('abc','xw')** above, one might wonder why it does
 > not evaluate to 'abcxw'.  After all, didn't I say that the 'c' stands
@@ -1308,7 +1311,8 @@ function!  But this is not the place to go into that.)
 > **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
 > finding the mean horsepower for 6-cylinder cars.
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > As a beginner (and for that matter later on), you should NOT be obsessed
 > with always writing code in the "optimal" way, including in terms of
 > compactness of the code.  It's much more important
@@ -3972,31 +3976,41 @@ that the first two arguments are identical, but it makes sense:
 1.  The first argument says we want to split up the **allWords** vector into 
     piles. 
 
-2.  The second argument says we want the definition of the piles to
+2.  The second argument says we want the *definition* of the piles to
     also be based on **allWords**.  In other words, we want a separate
     pile for each distinct word.
 
-2.  We apply the **length** function to each pile, giving us the count
-    in each pile, exactly what we needed.
+3.  Each entity that we are informally calling a "pile" above is an R
+    vector:
+
+``` r
+    > str(allWords)
+   chr [1:515] "What" "is" "R?" "Introduction" "to" "R" "R" "is" "a" ...
+```
+
+Applying the **length** function to each vector gives us the count
+in each pile, exactly what we needed.
 
 
 > 📘 Pro Tip
 
-> In coding, certain patterns do arise often, one did here. In fact,
+> In coding, certain patterns do arise often, such as the
+> **tapply(x,x,length)** trick we saw here.  In fact,
 > there are even coding books with "design patterns" in their titles.
-> Take note when you see the same pattern a lot.
+> Take note when you see the same pattern a lot, as it may come in handy.
 
 We're not fully done yet.  For instance, we have a punctuation problem,
 where periods, commas and so on are considered parts of words, such as
 the period in **allWords[17]** seen above, 'graphics.'  We also probably
-should change capital letters to lower  
+should change capital letters to lower case, so that 'What' and 'what'
+are not counted as two different words.
 
 For major usage, we should consider using one of the advanced R packages
 in text processing.  For instance, the **tm** package has a
 **removePunctuation** function.  But let's see how we can do this with
 the basics.
 
-We'll use R's **gsub** function.  It's call form, as we'll use it, is
+We'll use R's **gsub** function.  Its call form, as we'll use it, is
 
 ``` r
 gsub(string_to_change,replacement,input_vector,fixed=TRUE)
@@ -4006,7 +4020,7 @@ E.g.
 
 ``` r
 > a <- c('abc','de.')
-> gsub('.','',a,fixed=TRUE)  # replace '.' by empty stringW
+> gsub('.','',a,fixed=TRUE)  # replace '.' by empty string
 [1] "abc" "de" 
 ```
 
