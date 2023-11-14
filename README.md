@@ -28,34 +28,33 @@ conversational, story-telling manner.
 
     - Notably, in the first few lessons, we do NOT use Integrated
       Development Environments (IDEs).  RStudio, ESS etc. are great, but
-you shouldn't be burdened with learning R *and* learning an IDE at the
-same time, a distraction from the goal of becoming productive in R as
-fast as possible.  
+      you shouldn't be burdened with learning R *and* learning an IDE at the
+      same time, a distraction from the goal of becoming productive in R as
+      fast as possible.  
 
-     Note that even the excellent course by [R-Ladies
-Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
-which does start with RStudio, laments that RStudio can be
-**"way too overwhelming."**  
+      Note that even the excellent course by [R-Ladies
+      Sydney](https://threadreaderapp.com/thread/1119025557830684673.html),
+      which does start with RStudio, laments that RStudio can be
+      **"way too overwhelming."**  
 
-     So, in the initial lessons,  we stick to the R command line, and
-focus on data analysis, not tools such as IDEs, which we will cover as
-an intermediate-level topic.  (Some readers of this tutorial may already
-be using RStudio or an external editor, and the treatment here will
-include special instructions for them when needed.)
+      So, in the initial lessons,  we stick to the R command line, and
+      focus on data analysis, not tools such as IDEs, which we will cover as
+      an intermediate-level topic.  (Some readers of this tutorial may already
+      be using RStudio or an external editor, and the treatment here will
+      include special instructions for them when needed.)
 
     - Coverage is mainly limited to base R. So for instance the popular
       but self-described "opinionated" Tidyverse is not treated, partly
-due to its controversial nature (I am a
-[skeptic](http://github.com/matloff/TidyverseSkeptic)), but again mainly
-because it would be an obstacle to your becoming productive in R
-quickly. 
+      due to its controversial nature (I am a
+      [skeptic](http://github.com/matloff/TidyverseSkeptic)), but 
+      again mainly because it would be an obstacle to your 
+      becoming productive in R quickly. 
 
-    While you can learn a few simple things in Tidy quickly, thinking
-you are learning a lot, those things are quite limited in scope, and
-Tidy learners often find difficulty in applying R to real world data.
-<span style="color:red"> Our tutorial here is aimed at learners whose
-goal is to USE the R system productively in their own data analysis.
-</span>  
+      While you can learn a few simple things in Tidy quickly, thinking
+      you are learning a lot, those things are quite limited in scope, and
+      Tidy learners often find difficulty in applying R to real world
+      situations.  Our tutorial here is aimed at learners whose
+      goal is to *use the R system productively in their own data analysis.*
 
 * **Nonpassive approach:**  Passive learning, just watching the screen, is NO
 learning.  There will be occasional **Your Turn** sections, in which you the 
@@ -65,9 +64,6 @@ you should cook up your own variants to try.  <span style="color:red">
 Remember:  You get out what you put in!</span>  The more actively you
 work the **Your Turn** sections, the more powerful you will be as an R
 coder.
-
-Acknowledgement:  The author is grateful to Kyle Butts for some format
-improvements in July 2022.
 
 ## Table of Contents
 
@@ -3721,7 +3717,7 @@ surprisingly, **readLines**:
 ```
 
 So, what exactly is in **abt** now?  Let's turn to our usual inspection
-tools, **str** and **head**.
+tool, **str**.
 
 ``` r
 > str(abt)
@@ -3764,7 +3760,7 @@ abt1 <- paste(abt,collapse=' ')
 
 ```
 
-This says, "Take all the 70 strings in **abt**, collapse them into one
+This says, "Take all the 70 strings in **abt**, and collapse them into one
 big string, with a single space separating each of the original
 strings."  So, it joined the elements of **abt** into one long string,
 **abt1**, with successive elements of **abt** being separated by a
@@ -3804,9 +3800,8 @@ That second argument, ' ', means we want the blank character to be our
 splitting delimiter.  In some other setting, we may wish to use, say, a
 comma as the splitting delimiter, or whatever.
 
-Now let's look at **y**.  Keeping in mind that that object is an R list. 
-
-We can use double brackets to inspect the first element of **y** (which
+Now let's look at **y**.  Keeping in mind that that object is an R list, 
+we can use double brackets to inspect the first element of **y** (which
 is the *only* element of **y**, as we saw above that **y** is a "list of
 1").
 
@@ -3818,24 +3813,30 @@ is the *only* element of **y**, as we saw above that **y** is a "list of
 So, **y[[1]]** is a character vector of length 722.  There is one
 element for each word in the original text, though some of the "words"
 are actually empty.  We see here that the first word in the text,
-**y[[1]][1]**,
-was empty, the second word,
-**y[[1]][2]**,
-was 'What', the third was 'is' and so on.
+**y[[1]][1]**, was empty, the second word, **y[[1]][2]**, was 'What',
+the third was 'is' and so on.
 
 > 📘 **ALWAYS KEEP IN MIND**
-> 
-> When one gets to this level of R, it is crucial to pay close attention
+>  
+> When one gets to this level of R (or for that matter, *any* language)
+, it is crucial to pay close attention
 > to the class and size of all R objects. 
+> 
+> Here we have:
 >
-> Here, **abt** is a character vector of length 70; **abt1** is a
-> character vector of length 1; **y** is an R list of length 1;
-> **y[[1]]** is a character vector of length 722, **y[[1]][i]** is a
-> string.  Subtle differences between object types can make big
+> * **abt** is a character vector of length 70 (70 lines in the text)
+> * **abt1** is a character vector of length 1 (entire text in 1 long string)
+> * **y** is an R list of length 1
+> * **y[[1]]** is a character vector of length 722 (722 words in text)
+> * **y[[1]][1]**, **y[[1]][2]** etc. are strings (1st word, 2nd word...)
+>
+> Subtle differences between object types can make big
 > differences in actions.  
 >
 > *Dealing with this is not rocket science, just something that
-> requires patience.*
+> requires patience.*  You the reader should take some time at this point to
+> ensure that you understand the above accounting for the various
+> variables.
 
 Now, why does the R list **y** have length only 1?  The answer is that
 only string was fed into **strsplit()**.  Recall what we did:
@@ -3854,11 +3855,11 @@ When there is more than one consecutive blank, the **strsplit** function
 treats the excess blanks as "words."  (This comes as quite a surprise to
 Python programmers.)
 
-So, how to fix it?  
+So, how to get rid of the blank "words"?
 
 ``` r
 > y1 <- y[[1]]  # easier to read, less cluttered
-> allWords <- y1[y1 != '']
+> allWords <- y1[y1 != '']  # != means "not equal to"
 > allWords
 > allWords
   [1] "What"                      "is"
@@ -3867,12 +3868,38 @@ So, how to fix it?
 ...
 ```
 
+The expression 
+
+``` r
+y1[y1 != '']
+```
+
+may look a little mysterious, but actually it works in the same way as
+we've seen before in extracting subsets of vectors, data frames and so
+on:
+
+1. As noted, **!=** means not equal, so **!= ''** means "not an empty word."
+   (Warning: This will cause some double negatives below.  Again, just
+   be patient (the supreme trait of any programmer).
+
+2. Remember, each element of **y1** is a "word," 722 of them.  We saw
+   above that the first word is '', i.e. an empty string, the 
+   second is "What" and so on.  The expression **y1 != ''** produces 
+   722 TRUEs and FALSEs, the first one being FALSE (no, the first word
+   was not nonempty), the second one being TRUE (yes, the second word was 
+   nonempty), etc.
+
+3. As we saw before, a vector (**y1** here) evaluated
+   at indices taking on TRUE and FALSE values will retain the 
+   vector elements corresponding to the TRUEs.  In other words, the
+   expression **y1[y1 != '']** consists of the nonempty words.
+
 So, **allWords** is just what we need---the original file contents broken down
 into individual words, with no empty words.
 
 A couple of other points:
 
-* R's '!=' means "not equal to."  By the way, '!' means "not" in R, e.g.
+* '!' means "not" in R, e.g.
 
 ``` r
 > 3 < 8
@@ -3893,6 +3920,10 @@ a **Your Turn** session.
 > **abt** is longest, in terms of the number of characters.
 
 ## <a name="txt1"> </a> Lesson 30:  Simple Text Processing, II
+
+Now, let's complete our goal of producing a word count for the original
+text, i.e. which words appeared in the text and how many times did each
+one appear?
 
 As usual, it is a must to inspect the result, say the first 25 elements:
 
@@ -3933,13 +3964,17 @@ rough, for example treating ';' as a "word."  But overall, it's doing
 what we want, showing for instance that the word "analysis" occurs 2
 times in the original text.
 
-Now, how did this call to **tapply()** work here?  Actually, this really
-the same pattern we saw with **tapply()** before, with the **length**
-function as our third argument.  It may look a little odd that the first
-two arguments are identical, but it makes sense:
+Now, how did this call to **tapply()** work here?  Actually, this is
+really the same pattern we saw with **tapply()** before, with the
+**length** function as our third argument.  It may look a little odd
+that the first two arguments are identical, but it makes sense:
 
-1.  We split up the **allWords** vector into piles, according to the
-    second argument, which happens to be the same vector.
+1.  The first argument says we want to split up the **allWords** vector into 
+    piles. 
+
+2.  The second argument says we want the definition of the piles to
+    also be based on **allWords**.  In other words, we want a separate
+    pile for each distinct word.
 
 2.  We apply the **length** function to each pile, giving us the count
     in each pile, exactly what we needed.
@@ -4599,7 +4634,7 @@ loop doesn't iterate forever!
 There's more, though.  The **cumsum** function is vectorized, so using
 it, though seemingly wasteful, may actually be faster than the loop
 
-## <a name="forMore"> </a> Lesson 37:  To Learn More 
+## <a name="forMore"> </a> To Learn More 
 
 These are books and other resources that I myself consult a lot (yes, I
 do consult my own books; can't keep it all in my head :-) ), plus others
@@ -4676,7 +4711,7 @@ Practical Approach for Predictive Models*, CRC
 Models to Machine Learning*, CRC
 
 * Norm Matloff, *The Art of Machine Learning: Algorithms+Data+R*, NSP,
-  coming soon
+  coming January 2024
 
 **Other**
 
@@ -4705,9 +4740,12 @@ I also would recommend various Web tutorials:
 
 ## <a name="thanks"> Thanks </a>
 
-This tutorial has benefited from feedback from (in alphabetical order)
-Reese Goding, Ira Sharenow, and Aaron Wichman, as well as various
-anonymous suggestions.
+author is grateful to Kyle Butts for some format improvements in July
+2022.
+
+This tutorial has also benefited from feedback from (in alphabetical order)
+Clay Ford, Reese Goding, Ira Sharenow, and Aaron Wichman, as well as
+numerous anonymous suggestions.
 
 ## <a name="ide"> Installing and Using IDEs </a>
 
