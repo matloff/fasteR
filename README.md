@@ -208,18 +208,20 @@ Let's find the mean flow:
 Here **mean** is an example of an R *function*, and in this case Nile is
 an *argument* -- fancy way of saying "input" -- to that function.  That
 output, 919.35, is called the *return value* or simply *value*.  The act
-of running the function is termed *calling* the function.
+of running the function is termed *calling* the function.  (Remember
+these terms!)
 
 Another point to note is that we didn't need to call R's **print**
-function.  We could have typed,
+function; the mean flow just printed out automatically.  We will see the
+reason for that shortly, but we could have typed,
 
 ``` r
 > print(mean(Nile))
 ```
 
 Function calls in R (and other languages) work "from the inside out."
-Here we are asking R to find the mean of the Nile data, then print the
-result.
+Here we are asking R to find the mean of the Nile data (our inner call),
+then print the result (the outer call, to the function **print**).
 
 But whenever we are at the R `>` prompt, any expression we type will be
 printed out anyway, so there is no need to call **print**.
@@ -246,7 +248,8 @@ Frequency = 1
 Now you can see how the row labels work.  There are 15 numbers per row
 here, so the second row starts with the 16th, indicated by `[16]`.  The
 third row starts with the 31st output number, hence the `[31]` and so
-on.
+on.  So, if we want to find, say, the 78th value, we look at the third
+number in the row labeled [76], obtaining 874.
 
 Note that a set of numbers such as **Nile** is called a *vector*.  This
 one is a special kind of vector, a *time series*, with each element of
@@ -258,8 +261,40 @@ calling the **length()** function, e.g.
 ``` r
 > length(Nile)
 [1] 100
-
 ```  
+
+If you are ever unsure of the arguments a function has, R provides the
+**args** function.  For instance, we will later use the **sort**
+function, which orders a set of numbers from lowest to highest (or vice
+versa).  
+
+For example:
+
+``` r
+> sort(Nile)
+  [1]  456  649  676  692  694  698  701  702  714  718  726  740  742  744  744
+ [16]  746  749  759  764  768  771  774  781  796  797  799  801  812  813  815
+ [31]  821  822  824  831  832  833  838  840  845  845  845  846  848  860  862
+ [46]  864  865  874  874  890  897  901  906  912  916  918  919  923  935  940
+ [61]  944  958  960  963  969  975  984  986  994  995 1010 1020 1020 1020 1030
+ [76] 1040 1040 1050 1050 1100 1100 1100 1110 1120 1120 1140 1140 1150 1160 1160
+ [91] 1160 1170 1180 1210 1210 1220 1230 1250 1260 1370
+```
+
+(Again, the return value from the call to **sort** was printed out
+automatically.)
+
+We can query **sort**'s arguments:
+
+``` r
+> args(sort)
+function (x, decreasing = FALSE, ...) 
+NULL
+```
+
+We see that the **sort** function has arguments named **x**
+and **decreasing** (and more, actually, but put that aside for now).
+
 
 ### A first graph
 
@@ -274,12 +309,10 @@ We'll start with a very simple, non-dazzling one, a no-frills histogram:
 > hist(Nile)
 ```
 
-No return value for the **hist** function (there is one, but it is
-seldom used, and we won't go into it here), but it does create the
-graph.
+Like any function, **hist** has a return value, but in this case, it's
+been designed internally so that printing it produces a graph.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
-
 
 > **Your Turn:**  The **hist** function draws 10 bins for this dataset
 > in the histogram by default, but you can choose other values, by
@@ -291,12 +324,12 @@ graph.
 > 
 > would draw the histogram with 20 bins.  Try plotting using several
 > different large and small values of the number of bins.
-> 
-> **Note:**  The **hist** function, as with many R functions, has many
-> different options, specifiable via various arguments.  For now, we'll
-> just keep things simple, and resist the temptation to explore them
-> all.
-R has lots of online help, which you can access via `?`.  E.g. typing
+
+**Note:**  The **hist** function, as with many R functions, has many
+different options, specifiable via various arguments.  For now, we'll
+just keep things simple, and resist the temptation to explore them all,
+but R has lots of online help, which you can access via `?`.  E.g.
+typing
 
 ``` r
 > ?hist
@@ -306,6 +339,35 @@ will tell you to full story on all the options available for the
 **hist** function.  Again, there are far too many for you to digest for
 now (most users don't ever find a need for the more esoteric ones), but
 it's a vital resource to know.
+
+> 📘 Pro Tip
+>
+> Many people like to designate functions by adding parentheses.  For
+> instance, instead of writing something like, "The **length** function
+> often comes in handy," they will write, "The **length()** function
+> often comes in handy," in order to make sure others know they are
+> talking about a function.  I do that myself sometimes, but it can lead
+> to trouble in some settings.  Consider:
+>
+> ``` r
+> > args(sort)
+> function (x, decreasing = FALSE, ...) 
+> NULL
+> > args(sort())
+> Error in sort.default() : argument "x" is missing, with no default
+> ```
+>
+> What went wrong?  In the first case, we asked **args** about an object
+> **sort** that happens to be of type 'function'.  In the second case, we
+> actually *called* **sort**.  And the latter function itself expected an
+> argument, which we did not supply.  (And one wouldn't have been
+> appropriate anyway.)
+> 
+> This illustrates the point that in coding, one must be extremely careful
+> in recognizing subtle differences, in this case between a *function* and
+> a *call* to that function.  In ordinary English, we might say, "That car
+> wants to turn left" instead of "The *driver* of that car wants to turn
+> left," but in coding we must be very picky.
 
 > **Your Turn:**  Look at the online help for **mean** and **Nile**.
 
@@ -1444,7 +1506,8 @@ one object:
 > pima$glucose[pima$glucose == 0] <- NA
 ```
 
-Here is the same action, but broken into smaller steps:
+This is a bit complicated.  Here is the same action, but broken into
+smaller steps:
 
 ``` r
 > glc <- pima$glucose
@@ -1469,12 +1532,13 @@ the TRUEs. (Note the recycling of NA.)
 > We broke our original 1 line of code into 4 simpler lines.
 > This is MUCH clearer, and by the way, easier to debug. 
 > I recommend this especially for beginners, but also for everyone, and
-> use this approach a lot in my own code.
+> I use this approach a lot in my own code.
 >
 > There is an advanced R concept, *pipes*, that also breaks longer
-> computations into smaller steps.  I do not use them (either their
+> computations into smaller steps.  I do not use pipes (either the
 > Tidyverse version or the newer base-R pipes), as I believe they are
-> less clear and, very important, hard to debug.
+> less clear and, very important, hard to debug.  You may find you like
+> them, which of course is fine, but we will not use them here.
 
 > 📘 Pro Tip
 >
@@ -1700,7 +1764,7 @@ can use R's **which** function to see when that occurred:
 ```
 
 As before, make sure to understand what happened in this code.  The
-expression "Nile < 600" yields 100 TRUEs and FALSEs.  The **which**
+expression **Nile < 600** yields 100 TRUEs and FALSEs.  The **which**
 then tells us which of those were TRUEs.
 
 So, element 43 is the culprit here, corresponding to year 1871+42=1913.
@@ -1713,7 +1777,8 @@ entire data and visually scanned it for a low number.  But what if the
 length of the data vector had been 100,000 instead of 100?  Then the
 visual approach wouldn't work.  
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > Remember, a goal of programming is to automate tasks, rather 
 > than doing them by hand.
 
@@ -1785,21 +1850,22 @@ things by hand as little as possible.
 
 ## <a name="pause1"> </a> Lesson 13:  Pause to Reflect
 
-<span style="color:red">Tip:</span>
-Repeating an earlier point:
-How does one build a house?  There of course is no set formula.  One has
-various tools and materials, and the goal is to put these together in a
-creative way to produce the end result, the house.
-
-It's the same with R.  The tools here are the various functions, e.g.
-**mean** and **which**, and the materials are one's data.  One then must
-creatively put them together to achieve one's goal, say ferreting out
-patterns in ridership in a public transportation system.  Again, it is a
-creative process; there is no formula for anything.  But that is what
-makes it fun, like solving a puzzle.
-
-And...we can combine various functions in order to build *our own*
-functions.  This will come in future lessons.
+> 📘 Pro Tip
+>
+> Repeating an earlier point:
+> How does one build a house?  There of course is no set formula.  One has
+> various tools and materials, and the goal is to put these together in a
+> creative way to produce the end result, the house.
+> 
+> It's the same with R.  The tools here are the various functions, e.g.
+> **mean** and **which**, and the materials are one's data.  One then must
+> creatively put them together to achieve one's goal, say ferreting out
+> patterns in ridership in a public transportation system.  Again, it is a
+> creative process; there is no formula for anything.  But that is what
+> makes it fun, like solving a puzzle.
+> 
+> And...we can combine various functions in order to build *our own*
+> functions.  This will come in future lessons.
 
 ## <a name="less8"> </a> Lesson 14:  Introduction to Base R Graphics
 
@@ -4007,7 +4073,7 @@ in each pile, exactly what we needed.
 
 
 > 📘 Pro Tip
-
+>
 > In coding, certain patterns do arise often, such as the
 > **tapply(x,x,length)** trick we saw here.  In fact,
 > there are even coding books with "design patterns" in their titles.
