@@ -256,7 +256,7 @@ one is a special kind of vector, a *time series*, with each element of
 the vector recording a particular point in time, here consisting of the
 years 1871 through 1970.  We thus know that this vector has length 100
 elements.  But in general, we can find the length of any vector by
-calling the **length()** function, e.g.
+calling the **length** function, e.g.
 
 ``` r
 > length(Nile)
@@ -362,6 +362,9 @@ it's a vital resource to know.
 > actually *called* **sort**.  And the latter function itself expected an
 > argument, which we did not supply.  (And one wouldn't have been
 > appropriate anyway.)
+>
+> The problem here was rather obvious, but it can occur much more
+> subtly as well.
 > 
 > This illustrates the point that in coding, one must be extremely careful
 > in recognizing subtle differences, in this case between a *function* and
@@ -510,7 +513,7 @@ Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
 * Extracting vector subsets.
 
-* Forming vectors, using **c()** and ":".
+* Forming vectors, using the function **c** and ":".
 
 Not bad for Lesson 1!  And needless to say, you'll be using all of these
 frequently in the subsequent lessons and in your own usage of R.
@@ -1891,10 +1894,10 @@ in the data and take a look at the first records:
 6 57.70413   11 100   1       0       0
 ```
 
-Here we use **load()** to input the data.  This a function will be 
-explained in [Lesson 16](#less10), but for now, the point is that this
-was necessary to preserve the R factor structure of some of the
-variables.
+Here we use **load** to input the data, which was stored in R's
+compressed form.  This a function will be explained in [Lesson
+16](#less10), but for now, the point is that this was necessary to
+preserve the R factor structure of some of the variables.
 
 Here **educ** and **occ** are codes, for levels of education and
 different occupations.  For now, let's not worry about the specific
@@ -1917,39 +1920,45 @@ random sample, say 2500.  (There are other ways of handling the problem,
 say with smaller dots or *alpha blending*.)
 
 ``` r
-> indxs <- sample(1:nrow(prgeng),2500)
-> prgeng2500 <- prgeng[indxs,]
+> rowNumbers <- sample(1:nrow(prgeng),2500)
+> prgeng2500 <- prgeng[rowNumbers,]
 ```
 
-Recall that the **nrow()** function returns the number of rows in the
-argument, which in this case is 20090, the number of rows in **pe**.
+Recall that the **nrow** function returns the number of rows in the
+argument, which in this case is 20090, the number of rows in **prgeng**.
 
 R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
 rows of **prgeng**, in a new data frame **prgeng2500**.  
 
 > <span style="color:red">Tip:</span>
-> Note again that it's clearer to break complex operations into simpler,
-> smaller ones.  I could have written the more compact
-
-``` r
-> prgeng2500 <- prgeng[sample(1:nrow(prgeng),2500),]
-```
-
-but it would be hard to read that way.  I also use direct function
-composition sparingly, preferring to break
-
-``` r
-h(g(f(x),3)
-```
-
-into
-
-``` r
-y <- f(x) 
-z <- g(y,3) 
-h(z) 
-```
+> 📘 Pro Tip
+>
+> Note again that it's usually clearer to break complex operations into 
+> simpler, smaller ones.  I could have written the more compact
+> 
+> ``` r
+> > prgeng2500 <- prgeng[sample(1:nrow(prgeng),2500),]
+> ```
+> 
+> but it would be hard to read that way.  I also use direct function
+> composition sparingly, preferring to break
+> 
+> ``` r
+> h(g(f(x),3)
+> ```
+> 
+> into
+> 
+> ``` r
+> y <- f(x) 
+> z <- g(y,3) 
+> h(z) 
+> ```
+> 
+> (As noted earlier, my personal view is that pipes, though also breaking
+> complex statements into smaller ones, is less clear and harder to debug,
+> so I don't use them.)
 
 So, here is the new plot:
 
@@ -1961,7 +1970,7 @@ So, here is the new plot:
 
 Note that since I plotted a random sample of rows, the ones you get may
 differ from the ones I got.  The resulting graph will be largely similar
-but possibly not identical.  
+but probably  not identical.  
 
 OK, now we are in business.  A few things worth noting:
 
@@ -1974,7 +1983,8 @@ does seem there is an age discrimination problem in Silicon Valley.
 * Note the horizontal streaks at the very top and very bottom of the
   picture.  Some people in the census had 0 income (or close to it), as
 they were not working.  And the census imposed a top wage limit of
-$350,000 (probably out of privacy concerns).
+$350,000 (probably out of privacy concerns), so that higher numbers were
+truncated to that value.
 
 We can break things down by gender, via color coding:
 
@@ -2115,7 +2125,8 @@ Let's review how this works:
 But we may wish to do this kind thing often, on many datasets etc.  Then
 we have:
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > If we have an operation we will use a lot, we should consider writing a
 > function for it.
 >
@@ -2124,35 +2135,35 @@ we have:
 > our lower bound.  We *could* keep typing the same pattern as above,
 > but if we're going to do this a lot, it's better to write a function
 > for it:
-
-Here is our function:
-
-``` r
-> mgd <- function(x,d) mean(x[x > d])
-```
-
-Here I've used a compact form for convenience.  (Otherwise I'd
-need to use *blocks* to be covered in a later lesson.)  I named it 'mgd'
-for "mean of elements greater than d," but any name is fine.
-
-Let's try it out, then explain:
-
-``` r
-> mgd(Nile,1200)
-[1] 1250
-> mgd(tg$len,10.2)
-[1] 21.58125
-```
-
-This saved me typing.  In the second call, I would have had to type
-
-``` r
-mean(tg$len[tg$len > 10.2])
-```
-
-considerably longer.  But even more importantly, I'd have to think about
-the operation each time I used it; by making a function out of it, I've
-got it ready to go, all debugged, whenever I need it.
+> 
+> Here is our function:
+> 
+> ``` r
+> > mgd <- function(x,d) mean(x[x > d])
+> ```
+> 
+> Here I've used a compact form for convenience.  (Otherwise I'd
+> need to use *blocks* to be covered in a later lesson.)  I named it 'mgd'
+> for "mean of elements greater than d," but any name is fine.
+> 
+> Let's try it out, then explain:
+> 
+> ``` r
+> > mgd(Nile,1200)
+> [1] 1250
+> > mgd(tg$len,10.2)
+> [1] 21.58125
+> ```
+> 
+> This saved me typing.  In the second call, I would have had to type
+> 
+> ``` r
+> mean(tg$len[tg$len > 10.2])
+> ```
+> 
+> considerably longer.  But even more importantly, I'd have to think about
+> the operation each time I used it; by making a function out of it, I've
+> got it ready to go, all debugged, whenever I need it.
 
 So, how does all this work?  Again, look at the code:
 
@@ -2167,8 +2178,8 @@ a little of the "theory" of R:
  
 Odd to say, but there is a built-in function in R itself named
 'function'!  We've already seen several built-in R functions, e.g.
-**mean()**, **sum()** and **plot()**.  Well, here is another,
-**function()**.  We're calling it here.  And its job is to build a
+**mean**, **sum** and **plot**.  Well, here is another,
+**function**.  We're calling it here.  And its job is to build a
 function. Yes, as I like to say, to my students' amusement,
 
 > "The function of the function named **function** is to build functions!
@@ -2184,9 +2195,9 @@ we are telling R, "R, I want to write my own function.  I'd like to name
 it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x >
 d])'. Please build the function for me. Thanks in advance, R!"
 
-Here we called **function** to build a 'function' object, and then
-assigned to **mgd**.  We can then call the latter, as we saw above,
-repeated here for convenience:
+Here we called **function** to build and return a 'function' object, and
+then assigned that returned object to **mgd**.  We can then call the
+latter, as we saw above, repeated here for convenience:
 
 ``` r
 > mgd(Nile,1200)
@@ -2200,15 +2211,15 @@ In executing
 ```
 
 
-***x*** and ***d*** are known as *formal* arguments, as they are just
-placeholders.  For example, in 
+***x*** and ***d*** are known as *formal* arguments, meaning
+that they are just placeholders.  For example, in 
 
 ``` r
 > mgd(Nile,1200)
 ```
 
 we said, "R, please execute **mgd** with **Nile** playing the role of
-***x***, and 1200 playing the role of ***d***.  Here **Nile** and 1200 are
+***x***, and 1200 playing the role of ***d***."  Here **Nile** and 1200 are
 known as the *actual* arguments.
 
 As with variables, we can pretty much name functions and their arguments
@@ -2246,7 +2257,9 @@ and then **mgd** will be restored, ready for us to use again.
 the subject of a later lesson.)
 
 Let's write another function, this one to find the range of a vector,
-i.e. the difference between the minimal and maximal values:
+i.e. the difference between the minimal and maximal values.  (Actually,
+there is already such a function in R, unsurprisingly named 'range', but
+just as an example, let's write our own.)
 
 ``` r
 > rng <- function(y) max(y) - min(y)
@@ -2256,18 +2269,13 @@ i.e. the difference between the minimal and maximal values:
 
 Here we made use of the built-in R functions **max** and **min**.
 
-> <span style="color:red">Tip:</span>  Build new functions from old
-> ones (which may in turn depend on other old ones, etc.).
-
-Again, the last item computed is the subtraction, so it will be
-automatically returned, just what we want.  As before, I chose to name
-the argument **y**, but it could be anything.  However, I did not name
-the function 'range', as there is already a built-in R function of that
-name.
+Again, the last item computed in **rng** is the subtraction, so it will
+be automatically returned, just what we want.  I chose to name the
+argument **y**, but it could be anything.  
 
 > **Your Turn:**  Try your hand at writing some simple functions along
-> the lines seen here.  You might start by writing a function **cgd()**,
-> like **mgd()** above, but returning the count of the number of
+> the lines seen here.  You might start by writing a function **cgd**,
+> like **mgd** above, but returning the count of the number of
 > elements in **x** that are greater than **d**.  Then may try writing a
 > function **n0(x)**, that returns the number of 0s in the vector
 > ***x***.  (Hint:  Make use of R's **==** and **sum**.) Another
@@ -2283,6 +2291,14 @@ can print them by just typing their names!
 > mgd <- function(x,d) mean(x[x > d])
 > mgd
 function(x,d) mean(x[x > d])
+```
+
+For that matter, we can assign them, e.g.
+
+``` r
+> crazynamedfunction <- mgd
+> crazynamedfunction(Nile,1200)
+[1] 1250
 ```
 
 ## <a name="less11"> </a> Lesson 17:  'For' Loops
@@ -2401,12 +2417,12 @@ each command would be issued at the prompt.  But in the
 for (i in 1:9) print(sum(pima[,i] == 0))
 ```
 
-we are calling **print()** from *within the loop*, not at the prompt.
-So, the explicit call to **print()** is needed.
+we are calling **print** from *within the loop*, not at the prompt.
+So, the explicit call to **print** is needed.
 
-We now see there are a lot of erroneous 0s in this dataset, e.g. 35 of them in
-column 3.  We probably have forgotten which column is which, so let's
-see, using yet another built-R function:
+We see in the output of the loop that there are a lot of erroneous 0s in
+this dataset, e.g. 35 of them in column 3.  We probably have forgotten
+which column is which, so let's see, using yet another built-R function:
 
  
 ``` r
@@ -2431,10 +2447,9 @@ there too:
 ```
 
 You'll probably find this line quite challenging, but be patient and, as
-with everything in R, you'll find you can master it.
+with everything in R, you'll find you can master it.  Here goes:
 
-First, let's write it in more easily digestible (though a bit more
-involved) form:
+First, let's write it in more easily digestible form:
 
 ``` r
 > for (i in 2:6) {
@@ -2446,12 +2461,11 @@ involved) form:
 You can enter the code for a loop or function etc. line by line at the
 prompt, as we've done here.  R helpfully uses its '+' prompt (which I
 did *not* type) to remind me that I am still in the midst of typing the
-code. (After the '}' I simply hit Enter.)
+code. (After the '}' I simply hit Enter to tell R that I'm done.)
 
 Here I intended the body of the loop to consist of a *block* of two
-statements, not one, so I needed to tell R that, by typing '{' before
-writing my two statements, then letting R know I was finished with the
-block, by typing '}'.  
+statements, not one, so I needed to tell R that, by enclosing them with
+'{' and '}.
 
 For your convenience, below is the code itself, no '+' symbols.  You can
 copy-and-paste into R, with the result as above.
@@ -2462,13 +2476,6 @@ for (i in 2:6) {
    pima[zeroIndices,i] <- NA
 }
 ```
-
-(If you are using RStudio, set up some work space, by selecting File |
-New File | RScript. Copy-and-paste the above into the empty pane (named
-SOURCE) that is created, and run it, via Code | Run Region | Run All.
-If you are using an external text editor, type the code into the editor,
-save to a file, say **x.R**, then at the R '>' prompt, type
-**source(x.R)**.)
 
 So, the block (two lines here) will be executed with **i** = 2, then 3,
 4, 5 and 6.  The line 
@@ -2485,15 +2492,16 @@ determines where the 0s are in column **i**, and then the line
 
 replaces those 0s by NAs.
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > Note that I have indented the two lines in the block.  This is not
 > required but is considered good for clear code, in order to easily
 > spot the block when you or others read the code. 
 
 Sometimes our code needs to leave a loop early, which we can do using
 the R **break** construct.  Say we are adding cubes of numbers
-1,2,3,..., and for some reason want to determine which sum is the first
-to exceed **s**:
+1,2,3,..., and for some reason want to determine which sum--if any-- is
+the first to exceed **s**:
 
 ``` r
 > f
@@ -2521,17 +2529,23 @@ If our accumulated total meets our goal, we leave the loop.
 A better approach is to use 'while' loops, covered later in this
 tutorial.
 
-> <span style="color:red">Tip:</span>
-> There is a school of thought among some R enthusiasts that one
-> should avoid writing loops, using something called *functional
-> programming*.  We will cover this in Lesson 28, but I do not recommend
-> it for R beginners.  As the name implies, functional programming uses
-> functions, and it takes a while for most R beginners to master writing
-> functions.  It makes no sense to force beginners to use functional
-> programming before they really can write function code well.  I
-> myself, with my several decades as a coder, write some code with loops
-> and some with functional programming.  Write in whatever style you
-> feel comfortable with, rather than being a "slave to fashion."
+> 📘 Pro Tip
+>
+> There is a school of thought among some R enthusiasts that one should
+> avoid writing loops, using something called *functional programming*.
+> We will cover this in Lesson 28, but I do not recommend it for R
+> beginners.  
+>
+> As the name implies, functional programming uses functions, and it
+> takes a while for most R beginners to master writing functions.  It
+> makes no sense to force beginners to use functional programming before
+> they really can write function code well.  I myself, with my several
+> decades as a coder, write some code with loops and some with
+> functional programming.  
+>
+> I've seen some beginning R coders actually apologize on Twitter for
+> using a loop!  Write in whatever style you feel comfortable
+> with, rather than being a "slave to fashion."
 
 ## <a name="ftnbl"> </a> Lesson 18:  Functions with Blocks 
 
@@ -2597,7 +2611,7 @@ the output of the function back to **pima**, as we did above.
 
 > **Your Turn**: Write a function with call form **countNAs(dfr)**,
 > which prints the numbers of NAs in each column of the data frame
-> **dfr**.  You'll need to use the built-in **is.na()** functon; execute
+> **dfr**.  You'll need to use the built-in **is.na** functon; execute
 > **is.na(c(5,NA,13,28,NA))** at the R command prompt to see what it
 > does.  Test it on a small artificial dataset that you create.
 
@@ -2692,7 +2706,7 @@ is reassigned to **f**.
 
 How do you then run the code, say for computing **f(5,2)**?
 
-* If you had created **f()** using **edit()**, then execute as usual:
+* If you had created **f** using **edit**, then execute as usual:
 
 
 ``` r
@@ -2755,9 +2769,8 @@ worked):
 > pe$educ <- ifelse(edu < 13,12,edu)
 ```
 
-> <span style="color:red">Tip:</span>
-> Once again, we've broken what could have been one line into two, for
-> clarity.
+(Once again, we've broken what could have been one line into two, for
+clarity.)
 
 Now how did that work?  As you see above, R's **ifelse** function
 has three arguments, and its return value is a new vector, that in this
@@ -2867,9 +2880,8 @@ UCLA Statistics Dept.)
 [1] "factor"
 ```
 
-> <span style="color:red">Tip:</span>
-> As usual, after reading in the data, we took a look around, glancing at
-> the first few records, and looking at a couple of data types.
+(As usual, after reading in the data, we took a look around, glancing at
+the first few records, and looking at a couple of data types.)
 
 Now, as a first try in assessing the question of weight gain over time,
 let's look at the mean weight for each age group.  In order to have
@@ -3025,17 +3037,18 @@ line, superimposed on our scatter plot:
 
 ## <a name="s3"> </a> Lesson 23:  S3 classes
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > Remember, the point of computers is to alleviate us of work.  We should
 > avoid doing what the computer could do.  For instance,
-> concerning the graph in the last lesson: We had typed
-
-``` r
-> abline(181.4366,0.6936)
-```
-
-but we really shouldn't have to type those numbers in by hand -- and we
-don't have to.  Here's why:
+> consider the graph in the last lesson: We had typed
+> 
+> ``` r
+> > abline(181.4366,0.6936)
+> ```
+> 
+> but we really shouldn't have to type those numbers in by hand -- and we
+> don't have to.  Here's why:
 
 As mentioned earlier, R is an *object-oriented language*. Everthing is
 an *object*, and every object has a *class*.  One of the most common
@@ -3050,7 +3063,7 @@ When we call **lm**, the latter returns an S3 object of 'lm' class:
 ```
 
 A handy way to take a quick glance at the contents of an object is
-**str**:
+via the **str** function:
 
 ``` r
 > str(lmout)
@@ -3065,7 +3078,7 @@ List of 12
 Our use of ... here is to indicate that we've omitted a lot of the
 output.  But a couple of things stand out even in this excerpt:
 
-1. Our **lmout** object here is an R list (which is typical of S3
+1. Our **lmout** object here is an R list (which is the nature of S3
    objects).  That R list here has 12 elements.
 
 2. But it has an extra *attribute*, which is the class name, in this
@@ -3082,13 +3095,18 @@ So, we don't have to type the slope and intercept in by hand after all.
 > abline(a = cfs[1], b = cfs[2])
 ```
 
-By the way, **abline()** is actually a *generic* function, like
-**print()** and **plot()**.  So if we want to be clever, we can add our
-line to the graph using this approach:
+By the way, **abline** is actually a *generic* function, like **print**
+and **plot**.  That is, it works on various kinds of object classes.
+One such class is 'lm'!  So if we want to be clever, we can add our line
+to the graph using this approach:
 
 ``` r
 > abline(lmout)
 ```
+
+The internal code for **abline** recognizes that **lmout** is of 'lm'
+class, and thus knows it can find the coefficients in the **coefficients**
+element of the **lmout** list.  Saves us a lot of work!
 
 Now, what about our original question -- do baseball players gain weight
 as they age?  The answer appears to be yes; for each additional year of
@@ -3496,9 +3514,9 @@ What happened here?  Quite a bit, actually, so let's take this slowly.
 directed **ggplot2** to add to the plot **p**.  
 
 * Now, WHAT do we want added?  We are saying, "**ggplot2**, please add
-  to the plot **p** whatever **geom_point()** returns."  
+  to the plot **p** whatever **geom_point** returns."  
 
-* Note that **geom_point()** is a **ggplot2** function.  Its task is to
+* Note that **geom_point** is a **ggplot2** function.  Its task is to
   produce scatter plots.
 
 * Here are the details on the arguments to **geom_point**: 
@@ -3531,7 +3549,7 @@ argument for it in **plot**.
 Earlier in this tutorial, we've found R's **tapply** function to be
 quite handy.  There are several others in this family, notably
 **apply**, **lapply** and **sapply**.  In addition, there are other
-related functions, such as **do.call** and **Reduce()**.  And there are
+related functions, such as **do.call** and **Reduce**.  And there are
 a number of counterparts in the Tidyverse **purrr** package.
 All of these go under the aegis of *functional programming* (FP).
 
@@ -3827,7 +3845,7 @@ Recall, our goal here is to tabulate the various words in the file.  We
 won't be tabulating each individual line, so let's just make one long
 line out of **abt**.
 
-The main R function for concatening strings is **paste()**.  For
+The main R function for concatening strings is **paste**.  For
 instance, 
 
 ``` r
@@ -3856,7 +3874,7 @@ blank (in addition to whatever blanks were in the original strings).
 ```
 
 So, **abt1** is now a single character string.  We can inspect parts of
-it with the **substr()** function,, e.g.
+it with the **substr** function,, e.g.
 
 ``` r
 > substr(abt1,288,336)
@@ -3872,7 +3890,7 @@ characters are in **abt1** in all?
 ```
 
 We now need to break **abt1** down into individual words.  We can do so using
-**strsplit()**:
+**strsplit**:
 
 ``` r
 > y <- strsplit(abt1,' ')
@@ -3923,7 +3941,7 @@ the third was 'is' and so on.
 > variables.
 
 Now, why does the R list **y** have length only 1?  The answer is that
-only string was fed into **strsplit()**.  Recall what we did:
+only string was fed into **strsplit**.  Recall what we did:
 
 ``` r
 > y <- strsplit(abt1,' ')
@@ -4048,8 +4066,8 @@ rough, for example treating ';' as a "word."  But overall, it's doing
 what we want, showing for instance that the word "analysis" occurs 2
 times in the original text.
 
-Now, how did this call to **tapply()** work here?  Actually, this is
-really the same pattern we saw with **tapply()** before, with the
+Now, how did this call to **tapply** work here?  Actually, this is
+really the same pattern we saw with **tapply** before, with the
 **length** function as our third argument.  It may look a little odd
 that the first two arguments are identical, but it makes sense:
 
@@ -4554,16 +4572,16 @@ a slightly adapted version.)
 
 The chief R functions I used were:
 
-* **list.dirs():**  Returns a character vector with the names of all the
+* **list.dirs:**  Returns a character vector with the names of all the
   directories (i.e. subdirectories) within the current directory.
 
-* **dir():**  Returns a character vector with the names of all files
+* **dir:**  Returns a character vector with the names of all files
   within the current directory.
 
 * **%in%:**  Determines whether a specified object is an element in a
   specified vector. 
 
-* **setwd():**  Changes to the specified directory.
+* **setwd:**  Changes to the specified directory.
 
 Here is the code:
 
@@ -4600,8 +4618,8 @@ getData <- function() {
 Before we go into the details, note the following:
 
 * The code is written in a top-down manner.  Much of the work of
-**getData()** is offloaded to other functions (code not shown),
-**delComments()** and **extractCols()**.
+**getData** is offloaded to other functions (code not shown),
+**delComments** and **extractCols**.
 
 * There are lots of comments!
 
@@ -4611,7 +4629,7 @@ Now, consider the line
    dirs <- list.dirs(recursive=FALSE)
 ```
 
-As mentioned, **list.dirs()** will determine all the subdirectories
+As mentioned, **list.dirs** will determine all the subdirectories
 within the current directory.  But what about subdirectories of
 subdirectories, and subdirectories of subdirectories of subdirectories,
 and so on?  Setting **recursive** to FALSE means we want only
