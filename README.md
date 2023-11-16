@@ -1588,7 +1588,22 @@ the function to skip the NAs:
 ## <a name="less6"> </a> Lesson 11:  The R List Class
 
 We saw earlier how handy the **tapply** function can be.  Let's look at
-a related one, **split**.
+a related one, **split**.  The general call form of the latter is
+
+``` r
+split(what to split, what criterion to use for splitting) 
+```
+
+This looks similar to the form for **tapply** that we saw earlier,
+
+``` r
+tapply(what to split, what criterion to use for splitting, 
+   what to do with the resulting grouped data)
+```
+
+But this is no surprise, because the internal code for **tapply**
+actually calls **split**.  (You can check this via **edit(tapply)**.)
+
 
 Earlier we mentioned the built-in dataset **mtcars**, a data frame.
 Consider **mtcars$mpg**, the column containing the miles-per-gallon
@@ -1931,7 +1946,6 @@ R's **sample** function does what its name implies.  Here it randomly
 samples 2500 of the numbers from 1 to 20090.  We then extracted those
 rows of **prgeng**, in a new data frame **prgeng2500**.  
 
-> <span style="color:red">Tip:</span>
 > 📘 Pro Tip
 >
 > Note again that it's usually clearer to break complex operations into 
@@ -3210,9 +3224,13 @@ the infielders and so on.  So we can take all the row numbers,
 > rownums <- split(1:nrow(mlb),mlb$PosCategory)
 ```
 
-> <span style="color:red">Tip:</span>
-> As usual, following an intricate operation like this, we should glance
-> at the result:
+There are 1015 rows in **mlb**, so this says, "Take the row numbers
+1:1015, and split them according to the **PosCategory** column of **mlb**."
+The resulting piles of row numbers will be the row numbers for catchers,
+then the row numbers for infielders and so on.
+
+As usual, following an intricate operation like this, we should glance
+at the result:
 
 ``` r
 > str(rownums)
@@ -3223,33 +3241,36 @@ List of 4
  $ Pitcher   : int [1:535] 17 18 19 20 21 22 23 24 25 26 ...
 ```
 
-So the output is an R list; no surprise there, as we knew before before
+So the output is an R list; no surprise there, as we knew beforehand 
 that **split** produces an R list.  Also not surprisingly, the elements
 of the list are named "Catcher" etc.  So for example, the third
 outfielder is in row 12 of the data frame.
 
-> <span style="color:red">Tip:</span>
+> 📘 Pro Tip
+>
 > The idea here, using **split** on **1:nrow(mlb)**, was a bit of a trick.
 > Actually, it is a common ploy for experienced R coders, but you might
-> ask, "How could a novice come up with this idea?"  The answer, as noted
-> several times already here, is that programming is a creative process.
-> Creativity may not come quickly!  In some case, one might need to mull
-> over a problem for a long time before coming up with a solution.  Don't
-> give up!  The more you think about a problem, the more skilled you will
-> get, even if you sometimes come up empty-handed.  And of course, 
-> there are many forums on the Web at which you can ask questions,
-> e.g. Stack Overflow.
+> ask, "How could a novice come up with this idea?"  
+>
+> The answer, as noted several times already here, is that programming
+> is a creative process.  This was a creative solution.
+>
+> Creativity may not come quickly!  Of course, there are many forums on
+> the Web at which you can ask questions, e.g. Stack Overflow, but
+> *resist the temptation to immediately go that route*.  Don't give up!
+> The more you think about a problem, the more skilled you will get,
+> even if you sometimes come up empty-handed.  
 
-> <span style="color:red">Tip:</span>
-> Now, remember, a nice thing about R lists is that we can reference their
-> elements in various ways.  The first element above, for instance, is any
-> of **rownums$Catcher**, **rownums[['Catcher']]** and **rownums[[1]]**,
-> This versatility is great, as for example we can use the latter two
-> forms to write loops.
+Now, remember, a nice thing about R lists is that we can reference their
+elements in various ways.  The first element above, for instance, is any
+of **rownums$Catcher**, **rownums[['Catcher']]** and **rownums[[1]]**,
+This versatility is great, as for example we can use the latter two
+forms to write loops.
 
-And a loop is exactly what we need here.  We want to call **lm** four
-times, once for each position.  We could do this, say, with a loop
-beginning with
+And a loop is exactly what we need here.  (One can also do this with
+*functional programming*, which we will cover in a later lesson.) We
+want to call **lm** four times, once for each position.  We could do
+this, say, with a loop beginning with
 
 ``` r
 for (i in 1:4)
@@ -3262,7 +3283,7 @@ use the names:
 for (pos in c('Catcher','Infielder','Outfielder','Pitcher'))
 ```
 
-Just an ordinary 'for' loop.  Recall such loops are of the form
+Recall 'for' loops are of the form
 
 ``` r
 for (variable in vector)...
@@ -3270,7 +3291,7 @@ for (variable in vector)...
 
 Instead of having a numeric vector, e.g. the 1:4 above, we now have a
 character vector, which each element of the vector being a character
-string, but the principles are the same.
+string, i.e. 'Catcher', 'Infielder' etc., but the principles are the same.
 
 We could have **lm** and **print** calls in the body of the loop.
 But let's be a little fancier, building up a data frame with the output.
@@ -3303,32 +3324,36 @@ Here is the output:
 Some key things to note here.  
 
 *  The overall strategy is to start with an empty data frame, then keep
-   adding rows to it, one row of regression coefficients per playing position.
+   adding rows to it, one row of regression coefficients per player position.
 
 *  In order to add rows to **m**, we used R's **rbind** ("row bind")
    function.  The expression **rbind(m,newrow)** forms a new data frame,
-by tacking **newrow** onto **m**.  Here we reassign the result back to
-**m**, also a common operation.  (Note carefully: The **rbind**
-operation did not change **m**; it merely created a new data frame.  To
-update **m**, we needed to assign that new data frame to **m**.)
-By the way, there is also a **cbind** function for columns.
+   by tacking **newrow** onto **m** and returning the result.  Here we
+   reassign the result back to **m**, also a common operation.  (Note
+   carefully: The **rbind** operation did not change **m**; it merely
+   created a new data frame.  To update **m**, we needed to assign that
+   new data frame to **m**.) By the way, there is also a **cbind**
+   function for columns.
    
 *  In the call to **lm**, we used **mlb[rownums[[pos]],]** instead of
    **mlb** as previously, since here we wanted to fit a regression line
-on each position subgroup.  So, we restricted attention to only those
-rows of **mlb** for which the position was equal to the current value of
-**pos**.
+   on each position subgroup.  So, we restricted attention to only those
+   rows of **mlb** for which the position was equal to the current value
+   of **pos**.
 
 So, what happens is:  **m** is initially an empty data frame.  Then the
 loop, for its first iteration, sets **pos** to 'Catcher'.  Then a
 regression line will be fit to the rows of **mlb** that are for
-catchers.  That line is returned to us from **lm**, and we assign it to
-**lmo**.  (Once again, the name is arbitrary; I chose this one to
-symbolize "lm output.")  We extract the coefficients and tack them on at
-the end of **m**.
+catchers.  That fit is returned to us from **lm**, and we extract the
+coefficients, assigning them to **lmo**.  (Once again, the name is
+arbitrary; I chose this one to symbolize "lm output.")  We extract the
+coefficients and tack them on at the end of **m**.
 
-> <span style="color:red">Tip:</span> This is a very common *design
-> pattern* in R (and most other languages)
+> 📘 Pro Tip
+>
+> This is a very common *design
+> pattern* in R (and most other languages), to build up a data frame (or
+> similar structure) row by row in a loop.
 
 Nice output, with the two columns aligned.  But those column names are
 awful, and the row labels should be nicer than 1,2,3,4.  We can fix
@@ -3382,16 +3407,18 @@ So, the better way to set **posNames** is
 posNames <- names(rownums)
 ```
 
-> <span style="color:red">Tip:</span> Again, the reader may be thinking,
+> 📘 Pro Tip
+>
+> Again, the reader may be thinking,
 > "How in the world would I have been able to realize this?"  Again, the
 > answer is that as you acquire more experience in coding, you will be
-> more and more ability to come up with insights like this.  Patience!
+> more and more able to come up with creative insights like this.  Patience!
 
 Finally, what about those numerical results?  There is substantial
 variation in those estimated slopes, but again, they are only estimates.
 The question of whether there is substantial variation at the population
-level is one of statistical inference, beyond the scope of this R
-course. 
+level is one of statistical inference, to be discussed in a later
+lesson.
 
 ## <a name="cran"> </a> Lesson 25:  R Packages, CRAN, Etc.
 
