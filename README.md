@@ -314,7 +314,10 @@ been designed internally so that printing it produces a graph.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
-> **Your Turn:**  The **hist** function draws 10 bins for this dataset
+> ❄️  Your Turn
+>
+>
+> The **hist** function draws 10 bins for this dataset
 > in the histogram by default, but you can choose other values, by
 > specifying an optional second argument to the function, named
 > **breaks**.  E.g.  
@@ -372,7 +375,10 @@ it's a vital resource to know.
 > wants to turn left" instead of "The *driver* of that car wants to turn
 > left," but in coding we must be very picky.
 
-> **Your Turn:**  Look at the online help for **mean** and **Nile**.
+> ❄️  Your Turn
+>
+> Write code to sort the **Nile** data from largest value to smallest,
+> rather than vice versa.
 
 ## <a name="vecidxs"> </a> Lesson 3:  Vectors and Indices
 
@@ -486,7 +492,9 @@ contents, they are *separate* vectors; if one changes, the other will
 not.
 
 
-> **Your Turn:** Devise and try variants of the above, say finding the
+> ❄️  Your Turn
+>
+> Devise and try variants of the above, say finding the
 > mean over the years 1945-1960.
 
 
@@ -587,7 +595,9 @@ recycled into a vector of one hundred copies of 1200.  The '>'
 comparison will then yield 100 TRUEs and FALSEs, so summing gives us the
 number of TRUEs, exactly what we want.
 
-> **Your Turn:** Try a few other experiments of your choice using **sum**.
+> ❄️  Your Turn
+>
+> Try a few other experiments of your choice using **sum**.
 > I'd suggest starting with finding the sum of the first 25 elements in
 > **Nile**.  You may wish to start with experiments on a small vector, say
 > (2,1,1,6,8,5), so you will know that your answers are correct.
@@ -748,7 +758,9 @@ The element in row 3, column 1 in the *data frame* **tg** is element 3
 in the *vector* **tg$len**.  This duality between data frames and
 vectors is often exploited in R.
 
-> **Your Turn:**  The above examples are fundamental to R, so you should
+> ❄️  Your Turn
+>
+> The above examples are fundamental to R, so you should
 > conduct a few small experiments on your own this time, little variants
 > of the above.  The more you do, the better!
 
@@ -882,7 +894,9 @@ One can use negative indices for rows and columns as well, e.g.
 6 10.0  0.5
 ```
 
-> **Your Turn:** Devise your own little examples with the **ToothGrowth**
+> ❄️  Your Turn
+>
+> Devise your own little examples with the **ToothGrowth**
 > data.  For instance, write code that finds the number of cases in which
 > the tooth length was less than 16.  Also, try some examples with another
 > built-in R dataset, **faithful**.  This one involves the Old Faithful
@@ -1301,7 +1315,9 @@ subset.  We see that each subset had length 10, i.e. the experiment had
 assigned 10 plants to the control, 10 to treatment 1 and 10 to treatment
 2.
 
-> **Your Turn:**  One of the most famous built-in R datasets is
+> ❄️  Your Turn
+>
+> One of the most famous built-in R datasets is
 > **mtcars**, which has various measurements on cars from the 60s and 70s.
 > Lots of opportunties for you to cook up little experiments here!  You
 > may wish to start by comparing the mean miles-per-gallon values for 4-,
@@ -1375,7 +1391,9 @@ have a function call on the *left* side of an assignment.  This is
 actually common in R.  It stems from the fact that '<-' is actually a
 function!  But this is not the place to go into that.)
 
-> **Your Turn:**  Try some experiments with the **mtcars** data, e.g.
+> ❄️  Your Turn
+>
+> Try some experiments with the **mtcars** data, e.g.
 > finding the mean horsepower for 6-cylinder cars.
 
 > 📘 Pro Tip
@@ -1577,7 +1595,9 @@ the function to skip the NAs:
 [1] 121.6868
 ```
 
-> **Your Turn:**  Determine which other columns in **pima** have
+> ❄️  Your Turn
+>
+> Determine which other columns in **pima** have
 > suspicious 0s, and replace them with NA values.  
 > 
 > Now, look again at the plot we made earlier of the Nile flow histogram.
@@ -1623,7 +1643,9 @@ one for 4-cylinder cars, one for 6 and one for 8.  We *could* do
 
 and so on for **mt6** and **mt8**.
 
-> **Your Turn:**  In order to keep up, make sure you understand how that
+> ❄️  Your Turn
+>
+> In order to keep up, make sure you understand how that
 > line of code works, with the TRUEs and FALSEs etc.  First print out the
 > value of **mtcars$cyl == 4**, and go from there.
 
@@ -1750,7 +1772,9 @@ Each column is one element of the list.  So for instance,
 Here we used the double-brackets list notation to get the first element
 of the list, which is the first column of the data frame.
 
-> **Your Turn** Try using **split** on the ToothGrowth data, say splitting
+> ❄️  Your Turn
+>
+> Try using **split** on the ToothGrowth data, say splitting
 > into groups according to the supplement, and finding various quantities.
 
 ## <a name="less7"> </a> Lesson 12:  Another Look at the Nile Data
@@ -1800,7 +1824,9 @@ visual approach wouldn't work.
 > Remember, a goal of programming is to automate tasks, rather 
 > than doing them by hand.
 
-> **Your Turn:**  There appear to be some unusually high values as well,
+> ❄️  Your Turn
+>
+> There appear to be some unusually high values as well,
 > e.g. one around 1875.  Determine which year this was, using the
 > techniques presented here.  
 >
@@ -2033,7 +2059,9 @@ black, and the women color 2, red.
 
 There are many, many other features.  More in a future lesson.
 
-> **Your Turn:**  Try some scatter plots on various datasets.  I suggest
+> ❄️  Your Turn
+>
+> Try some scatter plots on various datasets.  I suggest
 > first using the above data with wage against age again, but this time
 > color-coding by education level.  (By the way, 1-9 codes no college;
 > 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
@@ -2087,7 +2115,9 @@ curve.  Remember, the curves are just smoothed histograms, so, if a
 curve is really high at, say 168.0, that means that 168.0 is a very
 frequently-occurring value.)
 
-> **Your Turn:**  Try plotting multiple such curves on the same graph, for other
+> ❄️  Your Turn
+>
+> Try plotting multiple such curves on the same graph, for other
 > data.
 
 ## <a name="less10"> </a> Lesson 16:  Writing Your Own Functions
@@ -2287,7 +2317,9 @@ Again, the last item computed in **rng** is the subtraction, so it will
 be automatically returned, just what we want.  I chose to name the
 argument **y**, but it could be anything.  
 
-> **Your Turn:**  Try your hand at writing some simple functions along
+> ❄️  Your Turn
+>
+> Try your hand at writing some simple functions along
 > the lines seen here.  You might start by writing a function **cgd**,
 > like **mgd** above, but returning the count of the number of
 > elements in **x** that are greater than **d**.  Then may try writing a
@@ -2623,7 +2655,9 @@ isn't **d** changing, and isn't **d** the same as **pima**?  Well, no;
 **pima** does not.  So, if we want **pima** to change, we must reassign
 the output of the function back to **pima**, as we did above.
 
-> **Your Turn**: Write a function with call form **countNAs(dfr)**,
+> ❄️  Your Turn
+>
+> Write a function with call form **countNAs(dfr)**,
 > which prints the numbers of NAs in each column of the data frame
 > **dfr**.  You'll need to use the built-in **is.na** functon; execute
 > **is.na(c(5,NA,13,28,NA))** at the R command prompt to see what it
@@ -2868,7 +2902,9 @@ Well, congratulations!  With **for** and now **ifelse**, you've really
 gotten into the programming business.  We'll be using them a lot in the
 coming lessons.
 
-> **Your Turn:**  Write a **for** loop version of the **Nile** example
+> ❄️  Your Turn
+>
+> Write a **for** loop version of the **Nile** example
 > above.
 
 ## <a name="keepfit"> </a> Lesson 21:  Do Professional Athletes Keep Fit?
@@ -2987,7 +3023,9 @@ plot.  For instance, in **taout** we see that for age group 25, the mean
 weight was 200.2427, so there is a dot in the graph for the point
 (25,200.2427).
 
-> **Your Turn:** There are lots of little experiments you can do on this
+> ❄️  Your Turn
+>
+> There are lots of little experiments you can do on this
 > dataset.  For instance, use **tapply** to find the mean weight for
 > each position; is the stereotype of the "beefy" catcher accurate, i.e.
 > is the mean weight for that position higher than for the others?
@@ -3045,7 +3083,9 @@ line, superimposed on our scatter plot:
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Add_abline.png)
 
-> **Your Turn:** In the **mtcars** data, fit a linear model of the
+> ❄️  Your Turn
+>
+> In the **mtcars** data, fit a linear model of the
 > regression of MPG against weight; what is the estimated
 > effect of 100 pounds of extra weight?
 
@@ -3181,7 +3221,9 @@ might bias the age coefficient downward.  Thus great care must be taken
 in interpreting coefficients in the Description setting.  For
 Prediction, it is not as much of an issue.
 
-> **Your Turn:** In the **mtcars** data, fit a linear model of the
+> ❄️  Your Turn
+>
+> In the **mtcars** data, fit a linear model of the
 > regression of MPG against weight and horsepower; what is the estimated
 > effect of 100 pounds of extra weight, for fixed horsepower?
 
@@ -4045,7 +4087,9 @@ comments are here to benefit you, the reader.)
 We'll continue with this example in the next lesson, but first, time for
 a **Your Turn** session.
 
-> **Your Turn:**  Write code to determine which line in 
+> ❄️  Your Turn
+>
+> Write code to determine which line in 
 > **abt** is longest, in terms of the number of characters.
 
 ## <a name="txt1"> </a> Lesson 30:  Simple Text Processing, II
