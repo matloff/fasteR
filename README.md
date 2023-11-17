@@ -316,6 +316,12 @@ been designed internally so that printing it produces a graph.
 
 > ❄️  Your Turn
 >
+> The *median* of a set of numbers is a value x such that half the
+> numbers are less than x and half are greater than x. (There are issues
+> with tied values, but not important here.) The median might be less
+> than the mean or larger than it.  Determine which of those two cases
+> holds for the **Nile`** data; the median function in R is of course
+> named **median**.
 >
 > The **hist** function draws 10 bins for this dataset
 > in the histogram by default, but you can choose other values, by
@@ -595,14 +601,6 @@ recycled into a vector of one hundred copies of 1200.  The '>'
 comparison will then yield 100 TRUEs and FALSEs, so summing gives us the
 number of TRUEs, exactly what we want.
 
-> ❄️  Your Turn
->
-> Try a few other experiments of your choice using **sum**.
-> I'd suggest starting with finding the sum of the first 25 elements in
-> **Nile**.  You may wish to start with experiments on a small vector, say
-> (2,1,1,6,8,5), so you will know that your answers are correct.
-> Remember, you'll learn best nonpassively.  Code away!
-
 A question related to *how many* years had a flow above 1200 is *which*
 years had that property.  Well, R actually has a **which** function:
 
@@ -659,7 +657,20 @@ beginners, it's really easier and more comfortable to break things into
 steps.  Once, you become experienced at R, you may wish to start
 skipping steps.  
 
-Less bold is the notion of negative indices, e.g.
+> ❄️  Your Turn
+>
+> Say we are interested in years in which the Nile had under 950. Write
+> code to determine (a) how many such years there were, (b) which
+> specific years these were, and (c) the median height during those
+> years.
+>
+> Try a few other experiments of your choice using **sum**.
+> I'd suggest starting with finding the sum of the first 25 elements in
+> **Nile**.  You may wish to start with experiments on a small vector, say
+> (2,1,1,6,8,5), so you will know that your answers are correct.
+> Remember, you'll learn best nonpassively.  Code away!
+
+Also very useful is the notion of negative indices, e.g.
 
 ``` r
 > x <- c(5,12,13,8)
@@ -896,15 +907,16 @@ One can use negative indices for rows and columns as well, e.g.
 
 > ❄️  Your Turn
 >
-> Devise your own little examples with the **ToothGrowth**
-> data.  For instance, write code that finds the number of cases in which
-> the tooth length was less than 16.  Also, try some examples with another
-> built-in R dataset, **faithful**.  This one involves the Old Faithful
-> geyser in Yellowstone National Park in the US.  The first column gives
-> duration of the eruption, and the second has the waiting time since the
-> last eruption.  As mentioned, these operations are key features of R,
-> so devise and run as many examples as possible; err on the side of
-> doing too many!
+> Devise your own little examples with the **ToothGrowth** data.  For
+> instance, write code that finds the number of cases in which the tooth
+> length was less than 16, and which rows had the VC supplement..  
+> 
+> Also, try some examples with another built-in R dataset, **faithful**.
+> This one involves the Old Faithful geyser in Yellowstone National Park
+> in the US.  The first column gives duration of the eruption, and the
+> second has the waiting time since the last eruption.  As mentioned,
+> these operations are key features of R, so devise and run as many
+> examples as possible; err on the side of doing too many!
 
 ### Recap:  What have we learned in this lesson?
 
@@ -969,9 +981,18 @@ Note carefully that the values of an R factor must be quoted. Either
 single or double quote marks is fine (though the marks don't show
 up when we use **head**).
 
-Factors can sometimes be a bit tricky to work with, but the above is
-enough for now.  Let's see how to apply the notion in the current
-dataset.
+> 📘 Pro Tip
+> 
+> The R **factor** class is one of the most powerful aspects of R.  We
+> will acquire this skill gradually in the coming lessons.  Make sure to
+> really become skilled in it.
+
+> ❄️  Your Turn
+>
+> As mentioned, R includes many built-in datasets, a list of which you
+> may obtain via the call **data()**.  Look through some of the
+> datasets, and find one that you think will have a factor column; then
+> verify.
 
 ## <a name="extractdf"> </a> Lesson 7:  Extracting Rows/Columns from Data Frames
 
@@ -1045,7 +1066,9 @@ continuing, trying some variations of the above example on his/her own.
 We'll be using this technique often in this tutorial, and it is central
 to R usage in the real world.
 
-> **Your turn:**  Try some of these operations on R's built-in
+> ❄️  Your Turn
+>
+> Try some of these operations on R's built-in
 > **faithful** dataset.  For instance, find the number of eruptions for
 > which the waiting time was more than 80 minutes.
 
@@ -1213,11 +1236,13 @@ is a creative process*.  It's like a grocery store and cooking:  The
 store has lots of different potential ingredients, and you decide which
 ones to buy and combine into a meal.
 
-> **Your turn:**  Try some of these operations on R's built-in
-> **faithful** dataset.  For instance, find the number of eruptions for
-> which 'eruptions' was greater than 3 and waiting time was more than 80
-> minutes.
 
+> ❄️  Your Turn
+
+> Try some of these operations on R's built-in **faithful** dataset.
+> For instance, find the number of rows for which the **eruptions**
+> column was greater than 3 and waiting time was more than 80 minutes.
+> Also, write code to print out the row numbers of these cases.
 
 ## <a name="tapply"> </a> Lesson 9:  The tapply Function
 
@@ -1319,11 +1344,12 @@ assigned 10 plants to the control, 10 to treatment 1 and 10 to treatment
 >
 > One of the most famous built-in R datasets is
 > **mtcars**, which has various measurements on cars from the 60s and 70s.
-> Lots of opportunties for you to cook up little experiments here!  You
-> may wish to start by comparing the mean miles-per-gallon values for 4-,
-> 6- and 8-cylinder cars.  Another suggestion would be to find how many
-> cars there are in each cylinder category, using **tapply**.  As usual,
-> the more examples you cook up here, the better!
+> Lots of opportunties for you to cook up little experiments here!  
+>
+> You may wish to start by comparing the mean miles-per-gallon values
+> for 4-, 6- and 8-cylinder cars.  Another suggestion would be to find
+> how many cars there are in each cylinder category, using **table**.
+> As usual, the more examples you cook up here, the better!
 
 By the way, the **mtcars** data frame has a "phantom" column.  
 
@@ -1390,11 +1416,6 @@ the "Dustpan" thing came from a funny TV commercial at the time.
 have a function call on the *left* side of an assignment.  This is
 actually common in R.  It stems from the fact that '<-' is actually a
 function!  But this is not the place to go into that.)
-
-> ❄️  Your Turn
->
-> Try some experiments with the **mtcars** data, e.g.
-> finding the mean horsepower for 6-cylinder cars.
 
 > 📘 Pro Tip
 >
@@ -4804,7 +4825,11 @@ cumulative total.
 
 Key points here:
 
-* The '&&' operator stands for "and".  
+* The **<=** operator means "less than or equal to."  There is also
+  **>=** for "greater than or equal to."
+
+* The **&&** operator stands for "and".  It is slightly different from 
+  the **&** operator, which involves vector operands.
 
 * The condition within the 'while' says that (a) we are not yet at the
   end of the **airpass** vector, AND (b) our total is still less than 10000.
