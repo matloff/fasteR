@@ -320,7 +320,7 @@ been designed internally so that printing it produces a graph.
 > numbers are less than x and half are greater than x. (There are issues
 > with tied values, but not important here.) The median might be less
 > than the mean or larger than it.  Determine which of those two cases
-> holds for the **Nile`** data; the median function in R is of course
+> holds for the **Nile** data; the median function in R is of course
 > named **median**.
 >
 > The **hist** function draws 10 bins for this dataset
@@ -372,7 +372,8 @@ it's a vital resource to know.
 > argument, which we did not supply.  (And one wouldn't have been
 > appropriate anyway.)
 >
-> The problem here was rather obvious, but it can occur much more
+> The problem here was rather obvious--well, many things are "obvious"
+> in retrospect, right?--, but it can occur much more
 > subtly as well.
 > 
 > This illustrates the point that in coding, one must be extremely careful
@@ -385,6 +386,10 @@ it's a vital resource to know.
 >
 > Write code to sort the **Nile** data from largest value to smallest,
 > rather than vice versa.
+>
+> Look up the **order** function ('?order'), and try it out on the
+> **Nile** data, and do a check that it is working as you expect.
+>
 
 ## <a name="vecidxs"> </a> Lesson 3:  Vectors and Indices
 
@@ -514,8 +519,6 @@ number of elements in the vector, e.g.
 
 Can you guess the value of **length(n81100)**?  Type this expression in
 at the '>' prompt to check your answer.
-
-Leave R by typing 'q()' or ctrl-d.  (Answer no to saving the workspace.)
 
 ### Recap: What have we learned in these first two lessons?
 
@@ -669,17 +672,25 @@ skipping steps.
 > **Nile**.  You may wish to start with experiments on a small vector, say
 > (2,1,1,6,8,5), so you will know that your answers are correct.
 > Remember, you'll learn best nonpassively.  Code away!
+> 
+> Also very useful is the notion of negative indices, e.g.
+> 
+> ``` r
+> > x <- c(5,12,13,8)
+> > x[-1]  
+> [1] 12 13  8
+> ```
+> 
+> Here we are asking for all of **x** *except* for **x[1]**.  Can you
+> guess what **x[c(-1,-4)]** evaluates to?  Guess first, then try it out.
 
-Also very useful is the notion of negative indices, e.g.
+Concerning that last point:
 
-``` r
-> x <- c(5,12,13,8)
-> x[-1]  
-[1] 12 13  8
-```
-
-Here we are asking for all of **x** *except* for **x[1]**.  Can you
-guess what **x[c(-1,-4)]** evaluates to?  Guess first, then try it out.
+> 📘 Pro Tip
+>
+> A catchy motto I teach students is, "When in doubt, Try it out!" Get
+> in the habit of devising little experiments that you can try to check
+> the behavior of some R aspect that you are unsure of.
 
 ### Recap:  What have we learned in this lesson?
 
