@@ -1076,7 +1076,8 @@ to R usage in the real world.
 
 Often we need to extract rows or columns from a data frame, subject to
 more than one condition.  For instance, say we wish to extract from
-**tg** the sub-data frame consisting of OJ and length less than 8.8.  
+**tg** the sub-data frame consisting of rows in which
+OJ was the treatment and length was less than 8.8.  
 
 We could do this, using the ampersand symbol '&', which means a logical
 AND operation:
@@ -1216,6 +1217,69 @@ This is fine for advanced, experienced R users, but really, "one step at
 a time" is better for beginners.  It's clearer, and most important,
 easier to debug if something goes wrong.
 
+In the **Nile** data, say we are interested in the change in river
+height from one year to the next.  Recall the first few elements:
+
+``` r
+> head(Nile)
+[1] 1120 1160  963 1210 1160 1160
+```
+
+So the was a change of +40, then a change of -197 and so on.  How can we
+code up a vector of the changes?
+
+``` r
+> nile1 <- Nile[-1]
+> head(nile1)
+[1] 1160  963 1210 1160 1160  813
+> z <- nile1 - Nile
+Warning message:
+In `-.default`(nile1, Nile) :
+  longer object length is not a multiple of shorter object length
+> head(z)
+[1]   40 -197  247  -50    0 -347
+```
+
+Let's ignore the warning for a moment.  What happened here?
+
+1. Deleting element 1 of **Nile** had the effect of shifting all the
+   elments leftward by one spot; i.e.  **nile[1]** is **Nile[2][**, 
+   **nile[2]** is **Nile[3]** and so on.
+
+2. The subtraction **nile1 - Nile** is done element-by-element, so
+   it produced **nile1[1] - Nile[1]**, **nile1[2] - Nile[2]** etc.
+   But those are the year-to-year differences in the original **Nile**
+   data, so **z** now has exactly what we want!
+
+3. But, that subtraction wasn't quite right.  As the warning tells us,
+   we subtracted a vector of length 100 from one of length 99.  R used
+   recycling to extend the latter to length 100, but the 100th element
+   of **z** is meaningless.  We should probably finish by running
+
+   ``` r
+   z <- z[-100]
+   ```
+
+In extracting various vector elements, rows or columns, we
+don't have to use the same ordering, e.g.
+
+``` r
+> x <- c(5,12,13,8,168)
+> 
+> x
+[1]   5  12  13   8 168
+> w <- x[c(5,4)]
+> w
+[1] 168   8
+> x[c(4,5)] <- w
+> x
+[1]   5  12  13 168   8
+```
+
+We extracted the 5th and 4th elements of **x**, in that order.  We 
+then assigned the result to **w**, and (whether we had some purpose in
+mind or just for fun), we assigned the reversed numbers back into **x**.
+
 ### Recap:  What we've learned in this lesson
 
 Here we got more practice in manipulating data frames, and were
@@ -1240,9 +1304,12 @@ ones to buy and combine into a meal.
 > ❄️  Your Turn
 
 > Try some of these operations on R's built-in **faithful** dataset.
-> For instance, find the number of rows for which the **eruptions**
-> column was greater than 3 and waiting time was more than 80 minutes.
-> Also, write code to print out the row numbers of these cases.
+>
+> 1. Find the number of rows for which the **eruptions**
+>    column was greater than 3 and waiting time was more than 80 minutes.
+> 
+> 2.  Add code to print out the row numbers of those cases.
+> 
 
 ## <a name="tapply"> </a> Lesson 9:  The tapply Function
 
