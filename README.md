@@ -1643,7 +1643,8 @@ tapply(what to split, what criterion to use for splitting,
 ```
 
 But this is no surprise, because the internal code for **tapply**
-actually calls **split**.  (You can check this via **edit(tapply)**.)
+actually calls **split**.  (You can check this via **edit(tapply)**; hit
+ZZ to exit.)
 
 
 Earlier we mentioned the built-in dataset **mtcars**, a data frame.
@@ -1707,6 +1708,12 @@ Or, we can use indices, though now with double brackets:
 > mtl[[1]]
  [1] 22.8 24.4 22.8 32.4 30.4 33.9 21.5 27.3 26.0 30.4 21.4
 ```
+
+``` r
+> mtl[[2]][1:3]
+[1] 21.0 21.0 21.4
+```
+
 
 Looking a little closer:
 
@@ -1795,8 +1802,23 @@ of the list, which is the first column of the data frame.
 
 > ❄️  Your Turn
 >
-> Try using **split** on the ToothGrowth data, say splitting
-> into groups according to the supplement, and finding various quantities.
+> In the **mtcars** data, write code to do the following (individually,
+> separate code for each):
+>  
+>  * Print out the 5th through 8th values for horsepower in 4-cylinder
+>    cars.
+>  
+>  * Print the *last* 3 values in MPG for 6-cylinder cars. This should be
+>    done fully *programmatically*, i.e. without your setting values by
+>    had.  Make use of the **length** function.
+>  
+>  * Find the average horsepower among all cars in the dataset.
+>  
+>  * One can divide one vector by another, e.g. c(6,12,25) / c(3,2,5)
+>    will produce c(2,6,5).  Write code that first computes the vector of
+>    horsepower-to-weight ratios, and then computes their average.
+>    (Warning: This is *not* the same as average horsepower divided by
+>    average weight.)
 
 ## <a name="less7"> </a> Lesson 12:  Another Look at the Nile Data
 
