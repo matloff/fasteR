@@ -40,8 +40,8 @@ conversational, story-telling manner.
       So, in the initial lessons,  we stick to the R command line, and
       focus on data analysis, not tools such as IDEs, which we will cover as
       an intermediate-level topic.  (Some readers of this tutorial may already
-      be using RStudio or an external editor, and the treatment here will
-      include special instructions for them when needed.)
+      be using RStudio, in which case they will just run in the RS
+      Console pane.)
 
     - Coverage is mainly limited to base R. So for instance the popular
       but self-described "opinionated" Tidyverse is not treated, partly
@@ -56,6 +56,8 @@ conversational, story-telling manner.
       applying R to real world situations.  Our tutorial here is aimed
       at learners whose goal is to *use the R system productively in
       their own data analysis.*
+
+    - **Pro Tip sections:** Pitfalls, handy tricks, general advice.
 
 * **Nonpassive approach:**  Passive learning, just watching the screen,
   is NO learning.  Coding is not a "spectator sport"; you must try the
@@ -309,8 +311,9 @@ We'll start with a very simple, non-dazzling one, a no-frills histogram:
 > hist(Nile)
 ```
 
-Like any function, **hist** has a return value, but in this case, it's
-been designed internally so that printing it produces a graph.
+Like any function, **hist** has a return value, but in this case, we
+haven't save it.  The return value contains the bin counts, bin
+boundaries and so on.
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/Nile.png)
 
@@ -386,6 +389,12 @@ it's a vital resource to know.
 >
 > Write code to sort the **Nile** data from largest value to smallest,
 > rather than vice versa.
+>
+> By default, calling **hist()** will display that graph, but we can
+> suppress display, by setting one of its arguments.  If we wish to save
+> the return value of this function, we may wish to suppress the
+> display.  Check the online help to determine which argument does this,
+> and verify that it works, i.e. it does suppress display.
 >
 > Look up the **order** function ('?order'), and try it out on the
 > **Nile** data, and do a check that it is working as you expect.
@@ -503,11 +512,6 @@ contents, they are *separate* vectors; if one changes, the other will
 not.
 
 
-> ❄️  Your Turn
->
-> Devise and try variants of the above, say finding the
-> mean over the years 1945-1960.
-
 
 Recall that another oft-used function is **length**, which gives the
 number of elements in the vector, e.g.
@@ -520,9 +524,17 @@ number of elements in the vector, e.g.
 Can you guess the value of **length(n81100)**?  Type this expression in
 at the '>' prompt to check your answer.
 
+> ❄️  Your Turn
+>
+> Write code to find the mean height of the Nile  the
+> over the years 1945-1960.
+>
+> In which period did the Nile have a larger mean height, the first 50
+> years or the last 50?
+
 ### Recap: What have we learned in these first two lessons?
 
-* Starting and existing R.
+* Starting and exiting R.
 
 * Some R functions:  **mean**, **hist**, **length**.
 
@@ -532,7 +544,7 @@ at the '>' prompt to check your answer.
 
 * Forming vectors, using the function **c** and ":".
 
-Not bad for Lesson 1!  And needless to say, you'll be using all of these
+Not a bad start!  And needless to say, you'll be using all of these
 frequently in the subsequent lessons and in your own usage of R.
 
 ## <a name="less2"> </a> Lesson 4:  More on Vectors
@@ -920,14 +932,19 @@ One can use negative indices for rows and columns as well, e.g.
 >
 > Devise your own little examples with the **ToothGrowth** data.  For
 > instance, write code that finds the number of cases in which the tooth
-> length was less than 16, and which rows had the VC supplement..  
+> length was less than 16, and which rows had the VC supplement.. 
 > 
 > Also, try some examples with another built-in R dataset, **faithful**.
 > This one involves the Old Faithful geyser in Yellowstone National Park
 > in the US.  The first column gives duration of the eruption, and the
-> second has the waiting time since the last eruption.  As mentioned,
-> these operations are key features of R, so devise and run as many
-> examples as possible; err on the side of doing too many!
+> second has the waiting time since the last eruption.  
+>
+> For instance, write code to find the maximum value of the durations,
+> and also write code to determine the index (1st, 2nd, 3rd, ...) of
+> that largest duration value.
+>
+> As mentioned, these operations are key features of R, so devise and
+> run as many examples as possible; err on the side of doing too many!
 
 ### Recap:  What have we learned in this lesson?
 
@@ -1001,9 +1018,9 @@ up when we use **head**).
 > ❄️  Your Turn
 >
 > As mentioned, R includes many built-in datasets, a list of which you
-> may obtain via the call **data()**.  Look through some of the
-> datasets, and find one that you think will have a factor column; then
-> verify.
+> may obtain via the call **data()**.  One of them is **CO2**.  Using
+> the **class()** function as above, determine which of the columns in
+> this dataset, if any, are of **factor** class.
 
 ## <a name="extractdf"> </a> Lesson 7:  Extracting Rows/Columns from Data Frames
 
@@ -1079,8 +1096,8 @@ to R usage in the real world.
 
 > ❄️  Your Turn
 >
-> Try some of these operations on R's built-in
-> **faithful** dataset.  For instance, find the number of eruptions for
+> Try some of these operations on R's built-in **faithful** dataset.
+> For instance, extract the sub-data frame consisting of all rows in
 > which the waiting time was more than 80 minutes.
 
 ## <a name="moreextract"> </a> Lesson 8:  More Examples of Extracting Rows, Columns
@@ -1237,7 +1254,7 @@ height from one year to the next.  Recall the first few elements:
 ```
 
 So the was a change of +40, then a change of -197 and so on.  How can we
-code up a vector of the changes?
+code up a vector of all the changes?
 
 ``` r
 > nile1 <- Nile[-1]
@@ -1290,6 +1307,13 @@ don't have to use the same ordering, e.g.
 We extracted the 5th and 4th elements of **x**, in that order.  We 
 then assigned the result to **w**, and (whether we had some purpose in
 mind or just for fun), we assigned the reversed numbers back into **x**.
+
+Nor do the extracted entities need to be contiguous, e.g.
+
+``` r
+> x[c(1,4)]
+[1]   5 168
+```
 
 ### Recap:  What we've learned in this lesson
 
@@ -1954,6 +1978,13 @@ visual approach wouldn't work.
 > Also, try some similar analysis on the
 > built-in **AirPassengers** data.  Can you guess why those peaks are
 > occurring?
+>
+> Call **hist()** on the **AirPassengers** data, but save the return
+> value in a variable **z**.  The latter is technically of class
+> **histogram**, but is essentially an R list.  Type 'str(z)' to see
+> what's in it, and write code to find the mean value of the bin counts.
+> (Note that this does NOT mean copying the numbers by hand; it should
+> be all code.)
 
 Here is another point:  That function **plot** is not quite so innocuous
 as it may seem.  Let's run the same function, **plot**, but with two
