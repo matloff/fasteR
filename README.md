@@ -69,6 +69,13 @@ conversational, story-telling manner.
   you put in!</span>  The more actively you work the **Your Turn**
   sections, the more powerful you will be as an R coder.
 
+**HOW MUCH NEED YOU COVER?**
+
+* Part I is basics, Part II advanced topics
+
+* If you intend to cover only Part I, Lessons 1 through 11 should be
+  considered minimal.
+
 ## Table of Contents
 
 **PART I**
