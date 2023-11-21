@@ -2095,7 +2095,7 @@ in the data and take a look at the first records:
 ```
 
 Here we use **load** to input the data, which was stored in R's
-compressed form.  This a function will be explained in [Lesson
+compressed form.  This function will be explained in [Lesson
 16](#less10), but for now, the point is that this was necessary to
 preserve the R factor structure of some of the variables.
 
@@ -2204,7 +2204,8 @@ It would be good to have better labels on the axes, and maybe smaller
 dots:
 
 ``` r
-> plot(pe2500$age,pe2500$wageinc,col=as.factor(pe2500$sex),xlab='age',ylab='wage',cex=0.6)
+> plot(pe2500$age,pe2500$wageinc,col=as.factor(pe2500$sex),
+   xlab='age',ylab='wage',cex=0.6)
 ```
 
 ![alt text](https://raw.githubusercontent.com/matloff/fasteR/master/inst/images/WageVsAge4.png)
