@@ -2083,7 +2083,8 @@ programmers and engineers, from the US 2000 census.  Let's read
 in the data and take a look at the first records:
 
 ``` r
-> load(url('https://github.com/matloff/fasteR/blob/master/data/prgeng.RData?raw=true'))
+> load(url(
+'https://github.com/matloff/fasteR/blob/master/data/prgeng.RData?raw=true'))
 > head(prgeng)
        age educ occ sex wageinc wkswrkd
 1 50.30082   13 102   2   75000      52
@@ -2221,8 +2222,7 @@ There are many, many other features.  More in a future lesson.
 
 > ❄️  Your Turn
 >
-> Try some scatter plots on various datasets.  I suggest
-> first using the above data with wage against age again, but this time
+> Use the above data with wage against age again, but this time
 > color-coding by education level.  (By the way, 1-9 codes no college;
 > 10-12 means some college; 13 is a bachelor's degree, 14 a master's, 15 a
 > professional degree and 16 is a doctorate.)
