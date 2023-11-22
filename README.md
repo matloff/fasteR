@@ -2264,8 +2264,8 @@ And why did we plot the women's data first?  As you can see, the women's
 curve is taller, so if we plotted the men first, part of the women's
 curve would be cut off.  Of course, we didn't know that ahead of time,
 but graphics often is a matter of trial-and-error to get to the picture
-we really want.  (In the case of **ggplot2**, this is handled
-automatically by the software.)
+we really want.  (In the case of **ggplot2**, the rescaling and
+redrawing is done automatically by the software.)
 
 Well, then, what does the graph tell us?  The peak for women, occurring
 at a little less than $50,000, seems to be at a lower wage than that for
@@ -2277,8 +2277,15 @@ frequently-occurring value.)
 
 > ❄️  Your Turn
 >
-> Try plotting multiple such curves on the same graph, for other
-> data.
+> Recall the **prgeng** dataset analyzed earlier.  The **occ** 
+> column has data on six different occupations.
+>
+> 1. Draw the estimated density curves for **wageinc**, one for each
+>    occupation, color-coded for the latter..
+>
+> 2. Draw a scatter plot of **wageinc** versus **age**, one for each
+>    occupation, color-coded. Thin out the data first, as we did before,
+>    but now we have six subdatasets, which may require more thinning.
 
 ## <a name="less10"> </a> Lesson 16:  Writing Your Own Functions
 
