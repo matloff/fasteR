@@ -2403,8 +2403,9 @@ So, in the line
 ```
 
 we are telling R, "R, I want to write my own function.  I'd like to name
-it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x >
-d])'. Please build the function for me. Thanks in advance, R!"
+it 'mgd'; it will have arguments 'x' and 'd', and it will compute
+'mean(x[x > d])', and return that value. Please build the function for
+me. Thanks in advance, R!"
 
 Here we called **function** to build and return a 'function' object, and
 then assigned that returned object to **mgd**.  We can then call the
@@ -2487,15 +2488,23 @@ argument **y**, but it could be anything.
 > ❄️  Your Turn
 >
 > Try your hand at writing some simple functions along
-> the lines seen here.  You might start by writing a function **cgd**,
-> like **mgd** above, but returning the count of the number of
-> elements in **x** that are greater than **d**.  Then may try writing a
-> function **n0(x)**, that returns the number of 0s in the vector
-> ***x***.  (Hint:  Make use of R's **==** and **sum**.) Another
-> suggestion would be a function **hld(x,d)**, which draws a histogram
-> for those elements in the vector ***x*** that are less than ***d***.
-> Write at least 4 or 5 functions; the more you write, the easier it
-> will be in later lessons.
+> the lines seen above.  
+>
+> 1. Write a function **cgd()**, like **mgd()** above, but returning the
+>    count of the number of elements in **x** that are greater than
+>    **d**.  
+>
+> 2. Write a function **n0(x)**, that returns the number of 0s in the
+>    vector ***x***.  (Hint:  Make use of R's **==** and **sum**.) 
+>
+> 3. Write a function **hld(x,d)** that draws a histogram for those
+>    elements in the vector ***x*** that are less than ***d***.
+>
+> 4. Write a function **w(x,y)** for vector arguments **x** and **y**
+>    that outputs a vector of the same length as the inputs, with
+>    element **i** being the larger of **x[i]** and **y[i]**, except
+>    that in the case in which those two numbers are equal, the
+>    corresponding argument in the output vector is 0.
 
 Functions are R objects, just as are vectors, lists and so on.  Thus, we
 can print them by just typing their names!
@@ -2527,9 +2536,9 @@ for the glucose variable:
 
 But there are several columns like this, and we'd like to avoid doing
 this all repeatedly by hand.  (What if there were several *hundred* such
-columns?) Instead, we'd like to do this *programmatically*.  This can be
-done with R's **for** loop construct (which by the way most programming
-languages have as well).
+columns?) Instead, we'd like to do this *programmatically*, i.e. purely
+by code.  This can be done with R's **for** loop construct (which by the
+way most programming languages have as well).
 
 Let's first check which columns seem appropriate for recoding.  Recall
 that there are 9 columns in this data frame.
@@ -2590,6 +2599,11 @@ print(sum(pima[,8] == 0))
 print(sum(pima[,9] == 0))
 ```
 
+So, this gives us a report of the number of 0s in each column.
+
+Each run of the loop body is called an *iteration*.  We have an
+iteration for **i=1**, then one for **i=2** and so on.
+
 Now, it's worth reviewing what those statements do, say the first.  Once
 again, **pima[,1] == 0** yields a vector of TRUEs and FALSEs, each
 indicating whether the corresponding element of column 1 is 0.  When we
@@ -2623,8 +2637,8 @@ print(sum(pima[,8] == 0))
 print(sum(pima[,9] == 0))
 ```
 
-each command would be issued at the prompt.  But in the 
-**for** loop version
+each command would be issued at the prompt, and **print()** would not be
+needed.  But in the **for** loop version
 
 ``` r
 for (i in 1:9) print(sum(pima[,i] == 0))
@@ -2652,7 +2666,7 @@ diabetes came out positive, 1 for yes, 0 for no, so those 0s are
 legitimate too.  
 
 But 0s in columns 2 through 6 ought to be recoded as NAs.  And the fact
-that it's a repetitive action suggests that a **for** loop can be used
+that *it's a repetitive action* suggests that a **for** loop can be used
 there too:
 
 ``` r
@@ -2660,7 +2674,8 @@ there too:
 ```
 
 You'll probably find this line quite challenging, but be patient and, as
-with everything in R, you'll find you can master it.  Here goes:
+with everything in R, you'll find you can master it with patience.  Here
+goes:
 
 First, let's write it in more easily digestible form:
 
@@ -2679,6 +2694,11 @@ code. (After the '}' I simply hit Enter to tell R that I'm done.)
 Here I intended the body of the loop to consist of a *block* of two
 statements, not one, so I needed to tell R that, by enclosing them with
 '{' and '}.
+
+Entering code line-by-line as above, is a quick and convenient way to
+create a short loop or function.  But generally, we use a text editor,
+either standalone as with the famous Vim, and as part of an IDE like
+RStudio.  But for now, we'll work as above.
 
 For your convenience, below is the code itself, no '+' symbols.  You can
 copy-and-paste into R, with the result as above.
@@ -2737,7 +2757,27 @@ function(n,s)
 
 ```
 
-If our accumulated total meets our goal, we leave the loop.
+Here our creation of the function **f()** is not shown, but note what we
+did after creating it--we typed its name at the R prompt, and sure
+enough, it printed out!  Functions are objects, and R has been designed
+so that these objects can be printed.
+
+Let's see what the code does; there is quite a bit there.  
+
+First, note the **if** statement.  If the current total is greater than
+**s**, we execute the block that follows it (the **print** and
+**break**), so that we print out the value of **i** that had put us over
+the top and then leave the loop by executing the **break**.  And since
+there is no code in this function following the loop, we exit the
+function.
+
+On the other hand, if the current total is not greater than **s**
+we skip that block, and go to the next statement.  That latter turns out
+to be another **if**.  It checks
+
+
+
+
 
 A better approach is to use 'while' loops, covered later in this
 tutorial.
