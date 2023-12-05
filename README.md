@@ -2537,8 +2537,23 @@ for the glucose variable:
 But there are several columns like this, and we'd like to avoid doing
 this all repeatedly by hand.  (What if there were several *hundred* such
 columns?) Instead, we'd like to do this *programmatically*, i.e. purely
-by code.  This can be done with R's **for** loop construct (which by the
-way most programming languages have as well).
+by code.  This can be done with R's **for** loop construct, which is the
+topic of this unit.
+
+> 📘 Pro Tip
+> 
+> Loops are a major workhorse in most programming languages, e.g.
+> Python.  Most R programmers use them often as well, but oddly some R
+> coders believe loops should be used quite sparingly, in situations in
+> which a good  *functional programming* (FP) alternative is unavailable.
+> 
+> To me, this makes no sense.  Loops are easier to code, and very
+> important, *easier to debug* than FP code.  We will cover FP in Lesson
+> 28, but I do not recommend it for R beginners.  
+>  
+> I've seen some beginning R coders actually apologize on Twitter for
+> using a loop!  Write in whatever style you feel comfortable with,
+> rather than being a "slave to fashion."
 
 Let's first check which columns seem appropriate for recoding.  Recall
 that there are 9 columns in this data frame.
@@ -2665,8 +2680,8 @@ not be recoded.  And the last column states whether the test for
 diabetes came out positive, 1 for yes, 0 for no, so those 0s are
 legitimate too.  
 
-But 0s in columns 2 through 6 ought to be recoded as NAs.  And the fact
-that *it's a repetitive action* suggests that a **for** loop can be used
+But 0s in columns 2 through 6 ought to be recoded as NAs.  And *the fact
+that it's a repetitive action suggests that a **for** loop can be used*
 there too:
 
 ``` r
@@ -2697,7 +2712,7 @@ statements, not one, so I needed to tell R that, by enclosing them with
 
 Entering code line-by-line as above, is a quick and convenient way to
 create a short loop or function.  But generally, we use a text editor,
-either standalone as with the famous Vim, and as part of an IDE like
+either standalone as with the famous Vim, or as part of an IDE like
 RStudio.  But for now, we'll work as above.
 
 For your convenience, below is the code itself, no '+' symbols.  You can
@@ -2781,24 +2796,6 @@ to be another **if**.  It checks
 
 A better approach is to use 'while' loops, covered later in this
 tutorial.
-
-> 📘 Pro Tip
->
-> There is a school of thought among some R enthusiasts that one should
-> avoid writing loops, using something called *functional programming*.
-> We will cover this in Lesson 28, but I do not recommend it for R
-> beginners.  
->
-> As the name implies, functional programming uses functions, and it
-> takes a while for most R beginners to master writing functions.  It
-> makes no sense to force beginners to use functional programming before
-> they really can write function code well.  I myself, with my several
-> decades as a coder, write some code with loops and some with
-> functional programming.  
->
-> I've seen some beginning R coders actually apologize on Twitter for
-> using a loop!  Write in whatever style you feel comfortable
-> with, rather than being a "slave to fashion."
 
 ## <a name="ftnbl"> </a> Lesson 18:  Functions with Blocks 
 
