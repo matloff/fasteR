@@ -632,7 +632,7 @@ years had that property.  Well, R actually has a **which** function:
 ```
 
 So the 4th, 8th, 9th etc. elements in **Nile** had the queried property.
-(Note that those were years 1875, 1879 and so on.)
+(Note that those were years 1874, 1878 and so on.)
 
 In fact, that gives us another way to get the count of the years with
 that trait:
